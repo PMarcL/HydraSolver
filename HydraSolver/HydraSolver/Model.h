@@ -1,4 +1,7 @@
 #pragma once
+
+namespace hydra {
+
 class Model {
 public:
 	Model(int);
@@ -8,4 +11,7 @@ public:
 private:
 	int test;
 };
+
+} // namespace hydra
+
 

@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CudaCompile Include="functions.cu" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Model.cpp" />
+    <ClCompile Include="Constraint.cpp">
+      <Filter>constraints</Filter>
+    </ClCompile>
+    <ClCompile Include="Solver.cpp" />
+    <ClCompile Include="Variable.cpp">
+      <Filter>variables</Filter>
+    </ClCompile>
+    <ClCompile Include="Heuristic.cpp">
+      <Filter>heuristics</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="functions.cuh" />
+    <ClInclude Include="Model.h" />
+    <ClInclude Include="Constraint.h">
+      <Filter>constraints</Filter>
+    </ClInclude>
+    <ClInclude Include="Solver.h" />
+    <ClInclude Include="Variable.h">
+      <Filter>variables</Filter>
+    </ClInclude>
+    <ClInclude Include="Heuristic.h">
+      <Filter>heuristics</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="constraints">
+      <UniqueIdentifier>{1a72d7be-b2c5-43a9-af86-e5115fd35a05}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="variables">
+      <UniqueIdentifier>{d3f8a68d-e5fa-4818-aacb-185ad6f3a881}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="heuristics">
+      <UniqueIdentifier>{87d30b01-b043-41da-bfba-2e2273063d30}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

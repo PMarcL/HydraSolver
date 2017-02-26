@@ -155,11 +155,19 @@ copy "$(CudaToolkitBinDir)\cudart*.dll" "$(OutDir)"</Command>
     <CudaCompile Include="functions.cu" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Constraint.h" />
     <ClInclude Include="functions.cuh" />
+    <ClInclude Include="Heuristic.h" />
     <ClInclude Include="Model.h" />
+    <ClInclude Include="Solver.h" />
+    <ClInclude Include="Variable.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Constraint.cpp" />
+    <ClCompile Include="Heuristic.cpp" />
     <ClCompile Include="Model.cpp" />
+    <ClCompile Include="Solver.cpp" />
+    <ClCompile Include="Variable.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,17 +1,16 @@
 #include "stdafx.h"
 #include "CppUnitTest.h"
-#include "Model.h"
+#include "Solver.h"
 
 using namespace hydra;
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 namespace HydraSolverTest {
-	TEST_CLASS(ModelTest) {
+	TEST_CLASS(SolverTest) {
 public:
 
-	TEST_METHOD(GetTestShouldReturnTest) {
-		Model model(4);
-		Assert::AreEqual(4, model.getTest());
+	TEST_METHOD(Test) {
+
 	}
 
 	};
