@@ -1,7 +1,6 @@
 #pragma once
 
 #include "IntVariable.h"
-#include <string>
 
 namespace hydra {
 
@@ -21,6 +20,8 @@ namespace hydra {
 		bool containsValue(int value) const override;
 
 	private:
+		static std::string getErrorDescriptionForMehtod(const std::string& methodName);
+
 		int value;
 	};
 

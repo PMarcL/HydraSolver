@@ -1,4 +1,5 @@
 #include "FixedIntVariable.h"
+#include "IllegalVariableOperationException.h"
 
 using namespace std;
 
@@ -12,25 +13,34 @@ namespace hydra {
 	}
 
 	void FixedIntVariable::pushCurrentState() {
-		// fixed value doesn't need to push its state
+		// fixed values don't need to push their state
 		return;
 	}
 
 	void FixedIntVariable::popState() {
-		// fixed value doesn't need to pop an earlier state
+		// fixed values don't need to pop an earlier state
 		return;
 	}
 
 	void FixedIntVariable::filterValue(int value) {
-		return;
+		IllegalVariableOperationException e;
+		e.setDescription(getErrorDescriptionForMehtod("filterValue"));
+
+		throw e;
 	}
 
 	void FixedIntVariable::filterLowerBound(int newLowerBound) {
-		return;
+		IllegalVariableOperationException e;
+		e.setDescription(getErrorDescriptionForMehtod("filterLowerBound"));
+
+		throw e;
 	}
 
 	void FixedIntVariable::filterUpperBound(int newUpperBound) {
-		return;
+		IllegalVariableOperationException e;
+		e.setDescription(getErrorDescriptionForMehtod("filterUpperBound"));
+
+		throw e;
 	}
 
 	int FixedIntVariable::getLowerBound() const {
@@ -45,5 +55,8 @@ namespace hydra {
 		return this->value == value;
 	}
 
+	std::string FixedIntVariable::getErrorDescriptionForMehtod(const std::string& methodName) {
+		return methodName + " was called on a FixedIntVariable.";
+	}
 
 } // namespace hydra

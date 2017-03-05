@@ -18,7 +18,13 @@
     <ClCompile Include="IntVariable.cpp">
       <Filter>variables</Filter>
     </ClCompile>
-    <ClCompile Include="FixedIntVariable.cpp" />
+    <ClCompile Include="HydraException.cpp" />
+    <ClCompile Include="FixedIntVariable.cpp">
+      <Filter>variables</Filter>
+    </ClCompile>
+    <ClCompile Include="IllegalVariableOperationException.cpp">
+      <Filter>variables</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="functions.cuh" />
@@ -36,7 +42,13 @@
     <ClInclude Include="IntVariable.h">
       <Filter>variables</Filter>
     </ClInclude>
-    <ClInclude Include="FixedIntVariable.h" />
+    <ClInclude Include="HydraException.h" />
+    <ClInclude Include="FixedIntVariable.h">
+      <Filter>variables</Filter>
+    </ClInclude>
+    <ClInclude Include="IllegalVariableOperationException.h">
+      <Filter>variables</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="constraints">

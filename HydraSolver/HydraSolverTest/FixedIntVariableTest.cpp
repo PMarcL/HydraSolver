@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "CppUnitTest.h"
 #include "FixedIntVariable.h"
+#include "IllegalVariableOperationException.h"
 
 using namespace hydra;
 using namespace std;
@@ -27,6 +28,33 @@ public:
 
 		Assert::AreEqual(expectedValue, fixedInt.getLowerBound());
 		Assert::AreEqual(expectedValue, fixedInt.getUpperBound());
+	}
+
+	TEST_METHOD(ShouldThrowIllegalOperationWhenTryingToFilterValue) {
+		auto func = [] {
+			FixedIntVariable fixedInt("test", 42);
+			fixedInt.filterValue(10);
+		};
+
+		Assert::ExpectException<IllegalVariableOperationException, void>(func);
+	}
+
+	TEST_METHOD(ShouldThrowIllegalOperationWhenTryingToFilterLowerBound) {
+		auto func = [] {
+			FixedIntVariable fixedInt("test", 42);
+			fixedInt.filterLowerBound(10);
+		};
+
+		Assert::ExpectException<IllegalVariableOperationException, void>(func);
+	}
+
+	TEST_METHOD(ShouldThrowIllegalOperationWhenTryingToFilterUpperBound) {
+		auto func = [] {
+			FixedIntVariable fixedInt("test", 42);
+			fixedInt.filterUpperBound(10);
+		};
+
+		Assert::ExpectException<IllegalVariableOperationException, void>(func);
 	}
 
 	};
