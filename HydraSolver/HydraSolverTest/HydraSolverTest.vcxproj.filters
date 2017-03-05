@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Test Class Implementations">
+      <UniqueIdentifier>{2f70cf29-8ce0-47fc-92c5-9b1ffc74eb99}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -20,6 +23,9 @@
     </ClInclude>
     <ClInclude Include="targetver.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="VariableImpl.h">
+      <Filter>Test Class Implementations</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -37,6 +43,9 @@
     </ClCompile>
     <ClCompile Include="VariableTest.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="VariableImpl.cpp">
+      <Filter>Test Class Implementations</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

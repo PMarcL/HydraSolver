@@ -2,7 +2,7 @@
 #include "CppUnitTest.h"
 #include "Model.h"
 #include "Constraint.h"
-#include "Variable.h"
+#include "VariableImpl.h"
 
 using namespace hydra;
 using namespace std;
@@ -32,7 +32,7 @@ public:
 
 	TEST_METHOD(ShouldBeAbleToPostMultipleConstraints) {
 		Model m;
-		m.postConstraints({new Constraint, new Constraint, new Constraint });
+		m.postConstraints({ new Constraint, new Constraint, new Constraint });
 		size_t expectedSize = 3;
 		Assert::AreEqual(expectedSize, m.getConstraints().size());
 	}
@@ -44,7 +44,7 @@ public:
 
 	TEST_METHOD(ShouldBeAbleToAddVariable) {
 		Model m;
-		m.addVariable(new Variable);
+		m.addVariable(new VariableImpl);
 		size_t expectedSize = 1;
 		Assert::AreEqual(expectedSize, m.getVariables().size());
 	}

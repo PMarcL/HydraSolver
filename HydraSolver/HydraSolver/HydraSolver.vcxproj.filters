@@ -15,6 +15,7 @@
     <ClCompile Include="Heuristic.cpp">
       <Filter>heuristics</Filter>
     </ClCompile>
+    <ClCompile Include="IntVariable.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="functions.cuh" />
@@ -29,6 +30,7 @@
     <ClInclude Include="Heuristic.h">
       <Filter>heuristics</Filter>
     </ClInclude>
+    <ClInclude Include="IntVariable.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="constraints">
