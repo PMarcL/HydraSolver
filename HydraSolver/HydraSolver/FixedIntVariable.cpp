@@ -20,21 +20,21 @@ namespace hydra {
 		// fixed values don't need to pop an earlier state
 	}
 
-	void FixedIntVariable::filterValue(int value) {
+	void FixedIntVariable::filterValue(int) {
 		IllegalVariableOperationException e;
 		e.setDescription(getErrorDescriptionForMehtod("filterValue"));
 
 		throw e;
 	}
 
-	void FixedIntVariable::filterLowerBound(int newLowerBound) {
+	void FixedIntVariable::filterLowerBound(int) {
 		IllegalVariableOperationException e;
 		e.setDescription(getErrorDescriptionForMehtod("filterLowerBound"));
 
 		throw e;
 	}
 
-	void FixedIntVariable::filterUpperBound(int newUpperBound) {
+	void FixedIntVariable::filterUpperBound(int) {
 		IllegalVariableOperationException e;
 		e.setDescription(getErrorDescriptionForMehtod("filterUpperBound"));
 
