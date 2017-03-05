@@ -8,6 +8,6 @@ public:
 	~VariableImpl();
 
 	void pushCurrentState() override;
-	void popCurrentState() override;
+	void popState() override;
 };
 

@@ -15,7 +15,10 @@
     <ClCompile Include="Heuristic.cpp">
       <Filter>heuristics</Filter>
     </ClCompile>
-    <ClCompile Include="IntVariable.cpp" />
+    <ClCompile Include="IntVariable.cpp">
+      <Filter>variables</Filter>
+    </ClCompile>
+    <ClCompile Include="FixedIntVariable.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="functions.cuh" />
@@ -30,7 +33,10 @@
     <ClInclude Include="Heuristic.h">
       <Filter>heuristics</Filter>
     </ClInclude>
-    <ClInclude Include="IntVariable.h" />
+    <ClInclude Include="IntVariable.h">
+      <Filter>variables</Filter>
+    </ClInclude>
+    <ClInclude Include="FixedIntVariable.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="constraints">

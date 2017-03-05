@@ -158,6 +158,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ConstraintTest.cpp" />
+    <ClCompile Include="FixedIntVariableTest.cpp" />
     <ClCompile Include="ModelTest.cpp" />
     <ClCompile Include="SolverTest.cpp" />
     <ClCompile Include="stdafx.cpp">

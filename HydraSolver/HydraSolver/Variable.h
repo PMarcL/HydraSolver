@@ -12,7 +12,7 @@ namespace hydra {
 		std::string getName() const;
 
 		virtual void pushCurrentState() = 0;
-		virtual void popCurrentState() = 0;
+		virtual void popState() = 0;
 
 	private:
 		std::string name;

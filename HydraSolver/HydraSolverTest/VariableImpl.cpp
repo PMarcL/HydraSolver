@@ -13,7 +13,7 @@ void VariableImpl::pushCurrentState() {
 	return;
 }
 
-void VariableImpl::popCurrentState() {
+void VariableImpl::popState() {
 	return;
 }
 

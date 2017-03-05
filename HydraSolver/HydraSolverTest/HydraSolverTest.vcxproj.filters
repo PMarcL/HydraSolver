@@ -47,5 +47,8 @@
     <ClCompile Include="VariableImpl.cpp">
       <Filter>Test Class Implementations</Filter>
     </ClCompile>
+    <ClCompile Include="FixedIntVariableTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

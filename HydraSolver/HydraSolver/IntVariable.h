@@ -15,7 +15,7 @@ namespace hydra {
 		virtual void filterUpperBound(int newUpperBound) = 0;
 		virtual int getLowerBound() const = 0;
 		virtual int getUpperBound() const = 0;
-		virtual bool containsValue() const = 0;
+		virtual bool containsValue(int value) const = 0;
 	};
 
 } // namespace hydra
