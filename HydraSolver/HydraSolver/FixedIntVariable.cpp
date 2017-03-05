@@ -14,12 +14,10 @@ namespace hydra {
 
 	void FixedIntVariable::pushCurrentState() {
 		// fixed values don't need to push their state
-		return;
 	}
 
 	void FixedIntVariable::popState() {
 		// fixed values don't need to pop an earlier state
-		return;
 	}
 
 	void FixedIntVariable::filterValue(int value) {
