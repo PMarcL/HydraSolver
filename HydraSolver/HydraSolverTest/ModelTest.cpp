@@ -30,6 +30,13 @@ public:
 		Assert::AreEqual(expectedSize, m.getConstraints().size());
 	}
 
+	TEST_METHOD(ShouldBeAbleToPostMultipleConstraints) {
+		Model m;
+		m.postConstraints({new Constraint, new Constraint, new Constraint });
+		size_t expectedSize = 3;
+		Assert::AreEqual(expectedSize, m.getConstraints().size());
+	}
+
 	TEST_METHOD(ShouldNotHaveVariableOnCreation) {
 		Model m;
 		Assert::IsTrue(m.getVariables().empty());

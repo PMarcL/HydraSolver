@@ -6,7 +6,7 @@ using namespace std;
 
 namespace hydra {
 
-	Model::Model(string name) : name(name) {
+	Model::Model(const string& name) : name(name) {
 	}
 
 	Model::~Model() {
@@ -21,6 +21,10 @@ namespace hydra {
 
 	void Model::postConstraint(Constraint* constraint) {
 		constraints.push_back(constraint);
+	}
+
+	void Model::postConstraints(const std::vector<Constraint*>& constraintsList) {
+		constraints.insert(constraints.end(), constraintsList.begin(), constraintsList.end());
 	}
 
 	vector<Constraint*> Model::getConstraints() const {

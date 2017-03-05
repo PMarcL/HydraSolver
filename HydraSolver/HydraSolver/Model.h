@@ -10,10 +10,11 @@ namespace hydra {
 
 	class Model {
 	public:
-		explicit Model(std::string = "Model-");
+		explicit Model(const std::string& = "Model-");
 		~Model();
 
 		void postConstraint(Constraint*);
+		void postConstraints(const std::vector<Constraint*>&);
 		std::vector<Constraint*> getConstraints() const;
 		void addVariable(Variable*);
 		std::vector<Variable*> getVariables() const;
