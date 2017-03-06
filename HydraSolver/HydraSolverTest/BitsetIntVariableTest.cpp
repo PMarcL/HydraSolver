@@ -263,6 +263,8 @@ public:
 		Assert::AreEqual(1, iterator->next());
 		Assert::AreEqual(3, iterator->next());
 		Assert::AreEqual(5, iterator->next());
+
+		delete iterator;
 	}
 
 	TEST_METHOD(IteratorPreviousShouldGiveValuesOfSetBits) {
@@ -275,6 +277,31 @@ public:
 		Assert::AreEqual(1, iterator->previous());
 		Assert::AreEqual(5, iterator->previous());
 		Assert::AreEqual(3, iterator->previous());
+
+		delete iterator;
+	}
+
+	TEST_METHOD(IteratorShouldWrapWhenNextIteratePastTheEnd) {
+		BitsetIntVariable bitset("test", 5, 6);
+		auto iterator = bitset.iterator();
+
+		iterator->next();
+		iterator->next();
+
+		Assert::AreEqual(5, iterator->next());
+
+		delete iterator;
+	}
+
+	TEST_METHOD(IteratorShouldWrapWhenPreviousIteratePastTheBeginning) {
+		BitsetIntVariable bitset("test", 7, 8);
+		auto iterator = bitset.iterator();
+
+		iterator->previous();
+
+		Assert::AreEqual(8, iterator->previous());
+
+		delete iterator;
 	}
 	};
 }
