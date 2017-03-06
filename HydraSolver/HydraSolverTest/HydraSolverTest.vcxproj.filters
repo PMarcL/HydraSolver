@@ -27,6 +27,9 @@
     <ClInclude Include="VariableImpl.h">
       <Filter>Test Class Implementations</Filter>
     </ClInclude>
+    <ClInclude Include="ConstraintImpl.h">
+      <Filter>Test Class Implementations</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -52,6 +55,9 @@
     </ClCompile>
     <ClCompile Include="BitsetIntVariableTest.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ConstraintImpl.cpp">
+      <Filter>Test Class Implementations</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

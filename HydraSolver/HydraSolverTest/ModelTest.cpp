@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "CppUnitTest.h"
 #include "Model.h"
-#include "Constraint.h"
+#include "ConstraintImpl.h"
 #include "VariableImpl.h"
 
 using namespace hydra;
@@ -25,14 +25,14 @@ public:
 
 	TEST_METHOD(ShouldBeAbleToPostConstraint) {
 		Model m;
-		m.postConstraint(new Constraint);
+		m.postConstraint(new ConstraintImpl);
 		size_t expectedSize = 1;
 		Assert::AreEqual(expectedSize, m.getConstraints().size());
 	}
 
 	TEST_METHOD(ShouldBeAbleToPostMultipleConstraints) {
 		Model m;
-		m.postConstraints({ new Constraint, new Constraint, new Constraint });
+		m.postConstraints({ new ConstraintImpl, new ConstraintImpl, new ConstraintImpl });
 		size_t expectedSize = 3;
 		Assert::AreEqual(expectedSize, m.getConstraints().size());
 	}

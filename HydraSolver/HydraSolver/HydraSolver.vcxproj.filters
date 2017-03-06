@@ -25,7 +25,9 @@
     <ClCompile Include="IllegalVariableOperationException.cpp">
       <Filter>variables</Filter>
     </ClCompile>
-    <ClCompile Include="BitsetIntVariable.cpp" />
+    <ClCompile Include="BitsetIntVariable.cpp">
+      <Filter>variables</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="functions.cuh" />
@@ -50,7 +52,9 @@
     <ClInclude Include="IllegalVariableOperationException.h">
       <Filter>variables</Filter>
     </ClInclude>
-    <ClInclude Include="BitsetIntVariable.h" />
+    <ClInclude Include="BitsetIntVariable.h">
+      <Filter>variables</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="constraints">
