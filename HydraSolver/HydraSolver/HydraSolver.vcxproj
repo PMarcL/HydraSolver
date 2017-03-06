@@ -163,8 +163,10 @@ copy "$(CudaToolkitBinDir)\cudart*.dll" "$(OutDir)"</Command>
     <ClInclude Include="HydraException.h" />
     <ClInclude Include="IllegalVariableOperationException.h" />
     <ClInclude Include="IntVariable.h" />
+    <ClInclude Include="IntVariableIterator.h" />
     <ClInclude Include="Model.h" />
     <ClInclude Include="Solver.h" />
+    <ClInclude Include="SumConstraint.h" />
     <ClInclude Include="Variable.h" />
   </ItemGroup>
   <ItemGroup>
@@ -175,8 +177,10 @@ copy "$(CudaToolkitBinDir)\cudart*.dll" "$(OutDir)"</Command>
     <ClCompile Include="HydraException.cpp" />
     <ClCompile Include="IllegalVariableOperationException.cpp" />
     <ClCompile Include="IntVariable.cpp" />
+    <ClCompile Include="IntVariableIterator.cpp" />
     <ClCompile Include="Model.cpp" />
     <ClCompile Include="Solver.cpp" />
+    <ClCompile Include="SumConstraint.cpp" />
     <ClCompile Include="Variable.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Variable.h"
+#include "IntVariableIterator.h"
 
 namespace hydra {
 
@@ -15,6 +16,7 @@ namespace hydra {
 		virtual int getLowerBound() const = 0;
 		virtual int getUpperBound() const = 0;
 		virtual bool containsValue(int value) const = 0;
+		virtual IntVariableIterator* iterator() = 0;
 	};
 
 } // namespace hydra

@@ -252,5 +252,29 @@ public:
 		Assert::AreEqual(originalCardinality, bitset.cardinality());
 		Assert::IsTrue(bitset.containsValue(10));
 	}
+
+	TEST_METHOD(IteratorNextShouldGiveValuesOfSetBits) {
+		BitsetIntVariable bitset("test", 1, 5);
+		bitset.filterValue(2);
+		bitset.filterValue(4);
+
+		auto iterator = bitset.iterator();
+
+		Assert::AreEqual(1, iterator->next());
+		Assert::AreEqual(3, iterator->next());
+		Assert::AreEqual(5, iterator->next());
+	}
+
+	TEST_METHOD(IteratorPreviousShouldGiveValuesOfSetBits) {
+		BitsetIntVariable bitset("test", 1, 5);
+		bitset.filterValue(2);
+		bitset.filterValue(4);
+
+		auto iterator = bitset.iterator();
+
+		Assert::AreEqual(1, iterator->previous());
+		Assert::AreEqual(5, iterator->previous());
+		Assert::AreEqual(3, iterator->previous());
+	}
 	};
 }

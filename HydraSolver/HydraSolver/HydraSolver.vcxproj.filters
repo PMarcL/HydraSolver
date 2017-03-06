@@ -28,6 +28,12 @@
     <ClCompile Include="BitsetIntVariable.cpp">
       <Filter>variables</Filter>
     </ClCompile>
+    <ClCompile Include="SumConstraint.cpp">
+      <Filter>constraints</Filter>
+    </ClCompile>
+    <ClCompile Include="IntVariableIterator.cpp">
+      <Filter>variables</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="functions.cuh" />
@@ -53,6 +59,12 @@
       <Filter>variables</Filter>
     </ClInclude>
     <ClInclude Include="BitsetIntVariable.h">
+      <Filter>variables</Filter>
+    </ClInclude>
+    <ClInclude Include="SumConstraint.h">
+      <Filter>constraints</Filter>
+    </ClInclude>
+    <ClInclude Include="IntVariableIterator.h">
       <Filter>variables</Filter>
     </ClInclude>
   </ItemGroup>

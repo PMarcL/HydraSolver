@@ -59,5 +59,8 @@
     <ClCompile Include="ConstraintImpl.cpp">
       <Filter>Test Class Implementations</Filter>
     </ClCompile>
+    <ClCompile Include="SumConstraintTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

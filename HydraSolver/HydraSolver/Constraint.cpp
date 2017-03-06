@@ -2,11 +2,11 @@
 
 namespace hydra {
 
-Constraint::Constraint() {
-}
+	Constraint::Constraint() : useGPU(false) {
+	}
 
 
-Constraint::~Constraint() {
-}
+	Constraint::~Constraint() {
+	}
 
 } // namespace hydra

@@ -5,7 +5,6 @@
 #include "IntVariable.h"
 
 namespace hydra {
-
 	class BitsetIntVariable : public IntVariable {
 	public:
 		BitsetIntVariable(const std::string& name, int lowerBound, int upperBound);
@@ -20,8 +19,21 @@ namespace hydra {
 		int getLowerBound() const override;
 		int getUpperBound() const override;
 		bool containsValue(int value) const override;
+		IntVariableIterator* iterator() override;
 
 	private:
+		class BitsetIterator : public IntVariableIterator {
+		public:
+			BitsetIterator(std::vector<bool>* bitset, int originalLowerBound);
+			int next() override;
+			int previous() override;
+
+		private:
+			int offset;
+			int originalLowerBound;
+			std::vector<bool>* bitset;
+		};
+
 		enum FilterActions {
 			LOWER_BOUND_CHANGED,
 			UPPER_BOUND_CHANGED,
@@ -29,7 +41,9 @@ namespace hydra {
 		};
 
 		struct BitsetAction {
-			BitsetAction(int value, FilterActions action) : value(value), action(action) {}
+			BitsetAction(int value, FilterActions action) : value(value), action(action) {
+			}
+
 			int value;
 			FilterActions action;
 		};
@@ -43,5 +57,4 @@ namespace hydra {
 		int currentUpperBound;
 		int originalLowerBound; // needed to find index in the bitset after filtering the original lower bound
 	};
-
 } // namespace hydra

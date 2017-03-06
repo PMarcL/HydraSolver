@@ -61,5 +61,17 @@ public:
 		FixedIntVariable fixedInt("test", 42);
 		Assert::AreEqual(1, fixedInt.cardinality());
 	}
+
+	TEST_METHOD(IteratorShouldAlwaysReturnTheFixedValue) {
+		auto expectedValue = 42;
+		FixedIntVariable fixedInt("test", expectedValue);
+
+		auto iterator = fixedInt.iterator();
+
+		Assert::AreEqual(expectedValue, iterator->next());
+		Assert::AreEqual(expectedValue, iterator->previous());
+
+		delete iterator;
+	}
 	};
 }

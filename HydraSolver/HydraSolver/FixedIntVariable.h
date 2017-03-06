@@ -19,8 +19,25 @@ namespace hydra {
 		int getLowerBound() const override;
 		int getUpperBound() const override;
 		bool containsValue(int value) const override;
+		IntVariableIterator* iterator() override;
 
 	private:
+		class FixedIntIterator : public IntVariableIterator {
+		public:
+			explicit FixedIntIterator(int value) : value(value) {}
+
+			int next() override {
+				return value;
+			}
+
+			int previous() override {
+				return value;
+			}
+
+		private:
+			int value;
+		};
+
 		std::string getErrorDescriptionForMehtod(const std::string& methodName) const;
 
 		int value;

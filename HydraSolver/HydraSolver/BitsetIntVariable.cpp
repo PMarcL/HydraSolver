@@ -120,7 +120,40 @@ namespace hydra {
 
 	bool BitsetIntVariable::containsValue(int value) const {
 		return value >= currentLowerBound && value <= currentUpperBound && bitset[value - originalLowerBound];
-
 	}
 
+	IntVariableIterator* BitsetIntVariable::iterator() {
+		return new BitsetIterator(&bitset, originalLowerBound);
+	}
+
+	BitsetIntVariable::BitsetIterator::BitsetIterator(std::vector<bool>* bitset, int originalLowerBound) :
+		bitset(bitset), originalLowerBound(originalLowerBound), offset(0) {
+		while (!(*bitset)[offset]) {
+			offset++;
+		}
+	}
+
+	int BitsetIntVariable::BitsetIterator::next() {
+		auto value = originalLowerBound + offset;
+		offset = (offset + 1) % bitset->size();
+		while (!(*bitset)[offset]) {
+			offset = (offset + 1) % bitset->size();
+		}
+		return value;
+	}
+
+	int BitsetIntVariable::BitsetIterator::previous() {
+		auto value = originalLowerBound + offset;
+		offset--;
+		if (offset < 0) {
+			offset += bitset->size();
+		}
+		while (!(*bitset)[offset]) {
+			offset--;
+			if (offset < 0) {
+				offset += bitset->size();
+			}
+		}
+		return value;
+	}
 } // namespace hydra

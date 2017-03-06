@@ -56,6 +56,10 @@ namespace hydra {
 		return this->value == value;
 	}
 
+	IntVariableIterator* FixedIntVariable::iterator() {
+		return new FixedIntIterator(value);
+	}
+
 	string FixedIntVariable::getErrorDescriptionForMehtod(const std::string& methodName) const {
 		return methodName + " was called on a FixedIntVariable (" + name + ").";
 	}

@@ -6,7 +6,6 @@ public:
 	ConstraintImpl();
 	~ConstraintImpl();
 
-	std::vector<hydra::Variable*> getVariables() const override;
 	void filter() override;
 	void filterDomains() override;
 	void filterBounds() override;

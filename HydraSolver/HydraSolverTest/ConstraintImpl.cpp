@@ -11,10 +11,6 @@ ConstraintImpl::ConstraintImpl() {
 ConstraintImpl::~ConstraintImpl() {
 }
 
-vector<Variable*> ConstraintImpl::getVariables() const {
-	return vector<Variable*>();
-}
-
 void ConstraintImpl::filter() {
 }
 
