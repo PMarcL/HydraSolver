@@ -11,6 +11,7 @@ namespace hydra {
 
 		void pushCurrentState() override;
 		void popState() override;
+		int cardinality() const override;
 
 		void filterValue(int value) override;
 		void filterLowerBound(int newLowerBound) override;
@@ -20,7 +21,7 @@ namespace hydra {
 		bool containsValue(int value) const override;
 
 	private:
-		static std::string getErrorDescriptionForMehtod(const std::string& methodName);
+		std::string getErrorDescriptionForMehtod(const std::string& methodName) const;
 
 		int value;
 	};

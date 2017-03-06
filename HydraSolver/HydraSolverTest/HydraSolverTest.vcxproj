@@ -157,6 +157,7 @@
     <ClInclude Include="VariableImpl.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="BitsetIntVariableTest.cpp" />
     <ClCompile Include="ConstraintTest.cpp" />
     <ClCompile Include="FixedIntVariableTest.cpp" />
     <ClCompile Include="ModelTest.cpp" />

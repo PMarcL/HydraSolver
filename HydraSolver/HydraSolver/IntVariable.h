@@ -1,6 +1,5 @@
 #pragma once
 
-#include <string>
 #include "Variable.h"
 
 namespace hydra {

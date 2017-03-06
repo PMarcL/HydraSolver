@@ -57,5 +57,9 @@ public:
 		Assert::ExpectException<IllegalVariableOperationException, void>(func);
 	}
 
+	TEST_METHOD(ShouldHaveACardinalityOfOne) {
+		FixedIntVariable fixedInt("test", 42);
+		Assert::AreEqual(1, fixedInt.cardinality());
+	}
 	};
 }

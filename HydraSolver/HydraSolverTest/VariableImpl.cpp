@@ -17,3 +17,8 @@ void VariableImpl::popState() {
 	return;
 }
 
+int VariableImpl::cardinality() const {
+	return 0;
+}
+
+

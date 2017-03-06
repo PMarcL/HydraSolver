@@ -8,7 +8,6 @@ namespace hydra {
 	FixedIntVariable::FixedIntVariable(const string& name, int value) : IntVariable(name), value(value) {
 	}
 
-
 	FixedIntVariable::~FixedIntVariable() {
 	}
 
@@ -18,6 +17,10 @@ namespace hydra {
 
 	void FixedIntVariable::popState() {
 		// fixed values don't need to pop an earlier state
+	}
+
+	int FixedIntVariable::cardinality() const {
+		return 1;
 	}
 
 	void FixedIntVariable::filterValue(int) {
@@ -53,8 +56,8 @@ namespace hydra {
 		return this->value == value;
 	}
 
-	std::string FixedIntVariable::getErrorDescriptionForMehtod(const std::string& methodName) {
-		return methodName + " was called on a FixedIntVariable.";
+	string FixedIntVariable::getErrorDescriptionForMehtod(const std::string& methodName) const {
+		return methodName + " was called on a FixedIntVariable (" + name + ").";
 	}
 
 } // namespace hydra
