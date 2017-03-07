@@ -1,8 +1,10 @@
 #pragma once
 
-#include <string>
+#include <vector>
 
 namespace hydra {
+
+	class VariableObserver;
 
 	class Variable {
 	public:
@@ -10,6 +12,7 @@ namespace hydra {
 		virtual ~Variable();
 
 		std::string getName() const;
+		void notifyDomainChanged() const;
 
 		virtual void pushCurrentState() = 0;
 		virtual void popState() = 0;
@@ -18,6 +21,9 @@ namespace hydra {
 
 	protected:
 		std::string name;
+
+	private:
+		std::vector<VariableObserver*> observers;
 	};
 
 } // namespace hydra
