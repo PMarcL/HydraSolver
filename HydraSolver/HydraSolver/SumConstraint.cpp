@@ -14,17 +14,45 @@ namespace hydra {
 	}
 
 	void SumConstraint::filter() {
-		CPUdomainFilteringAlgorithm();
-	}
-
-	void SumConstraint::filterBounds() {
-
+		CPUDomainFilteringAlgorithm();
 	}
 
 	void SumConstraint::filterDomains() {
-		CPUdomainFilteringAlgorithm();
+		CPUDomainFilteringAlgorithm();
 	}
 
+	void SumConstraint::filterBounds() {
+		CPUBoundsFilteringAlgorithm();
+	}
+
+	void SumConstraint::CPUBoundsFilteringAlgorithm() {
+		for (auto i = 0; i < variables.size(); i++) {
+
+			auto iterator = variables[i]->iterator();
+			while (iterator->hasNextValue()) {
+				auto currentValue = iterator->next();
+				auto lowerBoundSum = currentValue;
+				auto upperBoundSum = currentValue;
+
+				for (auto j = 0; j < variables.size(); j++) {
+					if (j == i) {
+						continue;
+					}
+
+					lowerBoundSum += variables[j]->getLowerBound();
+					upperBoundSum += variables[j]->getUpperBound();
+				}
+
+				if (sum < lowerBoundSum || sum > upperBoundSum) {
+					variables[i]->filterValue(currentValue);
+				}
+			}
+			delete iterator;
+		}
+	}
+
+
+	// implementation of Trick algorithm
 	struct TrickNode;
 
 	struct TrickArc {
@@ -41,8 +69,7 @@ namespace hydra {
 		vector<TrickArc*> children;
 	};
 
-	// implementation of Trick algorithm
-	void SumConstraint::CPUdomainFilteringAlgorithm() {
+	void SumConstraint::CPUDomainFilteringAlgorithm() {
 		list<TrickNode*> nodeQueue;
 		auto initialNode = new TrickNode(0);
 		nodeQueue.push_back(initialNode);

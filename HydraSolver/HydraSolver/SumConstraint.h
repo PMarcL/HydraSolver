@@ -18,7 +18,8 @@ namespace hydra {
 		void filterBounds() override;
 
 	private:
-		void CPUdomainFilteringAlgorithm();
+		void CPUDomainFilteringAlgorithm();
+		void CPUBoundsFilteringAlgorithm();
 
 		std::vector<IntVariable*> variables;
 		int sum;
