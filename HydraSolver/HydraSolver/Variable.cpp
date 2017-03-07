@@ -15,6 +15,10 @@ namespace hydra {
 		return name;
 	}
 
+	void Variable::addObserver(VariableObserver* observer) {
+		observers.push_back(observer);
+	}
+
 	void Variable::notifyDomainChanged() const {
 		for (auto observer : observers) {
 			observer->domainChanged();

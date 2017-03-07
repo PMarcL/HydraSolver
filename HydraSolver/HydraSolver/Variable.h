@@ -12,7 +12,7 @@ namespace hydra {
 		virtual ~Variable();
 
 		std::string getName() const;
-		void notifyDomainChanged() const;
+		void addObserver(VariableObserver* observer);
 
 		virtual void pushCurrentState() = 0;
 		virtual void popState() = 0;
@@ -20,6 +20,7 @@ namespace hydra {
 		virtual void instantiate() = 0;
 
 	protected:
+		void notifyDomainChanged() const;
 		std::string name;
 
 	private:

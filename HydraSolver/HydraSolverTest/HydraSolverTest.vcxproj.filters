@@ -31,7 +31,7 @@
       <Filter>Test Class Implementations</Filter>
     </ClInclude>
     <ClInclude Include="VariableObserverImpl.h">
-      <Filter>Header Files</Filter>
+      <Filter>Test Class Implementations</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -75,7 +75,7 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="VariableObserverImpl.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Test Class Implementations</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

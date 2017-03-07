@@ -11,5 +11,7 @@ public:
 	void popState() override;
 	int cardinality() const override;
 	void instantiate() override;
+
+	void notifyObservers() const;
 };
 
