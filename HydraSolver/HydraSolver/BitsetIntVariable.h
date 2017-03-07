@@ -49,6 +49,8 @@ namespace hydra {
 		};
 
 		void reinsertValues();
+		void updateLowerBound();
+		void updateUpperBound();
 
 		std::stack<std::vector<BitsetAction>> statesStack;
 		std::vector<BitsetAction> currentRemovedValues;

@@ -26,6 +26,12 @@ namespace hydra {
 			switch (action.action) {
 			case VALUE_REMOVED:
 				bitset[action.value - originalLowerBound] = true;
+				if (action.value < currentLowerBound) {
+					updateLowerBound();
+				}
+				if (action.value > currentUpperBound) {
+					updateUpperBound();
+				}
 				break;
 			case LOWER_BOUND_CHANGED:
 				for (auto i = action.value - originalLowerBound; i < currentLowerBound - originalLowerBound; i++) {
@@ -46,14 +52,12 @@ namespace hydra {
 		currentRemovedValues = vector<BitsetAction>();
 	}
 
-
 	int BitsetIntVariable::cardinality() const {
 		return count(bitset.begin(), bitset.end(), true);
 	}
 
-
 	void BitsetIntVariable::filterValue(int value) {
-		auto index = value - currentLowerBound;
+		auto index = value - originalLowerBound;
 
 		if (index < 0) {
 			IllegalVariableOperationException e;
@@ -68,6 +72,36 @@ namespace hydra {
 
 		bitset[index] = false;
 		currentRemovedValues.push_back(BitsetAction(value, VALUE_REMOVED));
+
+		if (value == currentLowerBound) {
+			updateLowerBound();
+		}
+
+		if (value == currentUpperBound) {
+			updateUpperBound();
+		}
+	}
+
+	void BitsetIntVariable::updateLowerBound() {
+		auto index = 0;
+		while (!bitset[index] && index < bitset.size()) {
+			index++;
+		}
+
+		if (index < bitset.size()) {
+			currentLowerBound = originalLowerBound + index;
+		}
+	}
+
+	void BitsetIntVariable::updateUpperBound() {
+		auto index = bitset.size() - 1;
+		while (!bitset[index] && index > 0) {
+			index--;
+		}
+
+		if (index > 0) {
+			currentUpperBound = originalLowerBound + index;
+		}
 	}
 
 	void BitsetIntVariable::filterLowerBound(int newLowerBound) {

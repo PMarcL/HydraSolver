@@ -121,6 +121,44 @@ public:
 		Assert::IsFalse(bitset.containsValue(5));
 	}
 
+	TEST_METHOD(ShouldUpdateLowerBoundWhenFilteringItWithFilterValue) {
+		auto expectedLowerBound = 2;
+		BitsetIntVariable bitset("test", 1, 10);
+		bitset.filterValue(1);
+		Assert::AreEqual(expectedLowerBound, bitset.getLowerBound());
+	}
+
+	TEST_METHOD(ShouldUpdateLowerBoundWhenFilteringItWithFilterValueAndPushPop) {
+		auto expectedLowerBound = 1;
+		BitsetIntVariable bitset("test", expectedLowerBound, 10);
+		bitset.filterValue(expectedLowerBound);
+
+		bitset.pushCurrentState();
+		Assert::AreEqual(2, bitset.getLowerBound());
+
+		bitset.popState();
+		Assert::AreEqual(expectedLowerBound, bitset.getLowerBound());
+	}
+
+	TEST_METHOD(ShouldUpdateUpperBoundWhenFilteringItWithFilterValue) {
+		auto expectedUpperBound = 9;
+		BitsetIntVariable bitset("test", 1, 10);
+		bitset.filterValue(10);
+		Assert::AreEqual(expectedUpperBound, bitset.getUpperBound());
+	}
+
+	TEST_METHOD(ShouldUpdateUpperBoundWhenFilteringItWithFilterValueAndPushPop) {
+		auto expectedUpperBound = 10;
+		BitsetIntVariable bitset("test", 1, expectedUpperBound);
+		bitset.filterValue(expectedUpperBound);
+
+		bitset.pushCurrentState();
+		Assert::AreEqual(9, bitset.getUpperBound());
+
+		bitset.popState();
+		Assert::AreEqual(expectedUpperBound, bitset.getUpperBound());
+	}
+
 	TEST_METHOD(ShouldThrowIllegalOperationWhenTryingToFilterValueOutsideBound) {
 		auto filterValueGreaterThanUpperBound = [] {
 			BitsetIntVariable bitset("test", 1, 10);
