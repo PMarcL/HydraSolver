@@ -24,9 +24,10 @@ namespace hydra {
 	private:
 		class FixedIntIterator : public IntVariableIterator {
 		public:
-			explicit FixedIntIterator(int value) : value(value) {}
+			explicit FixedIntIterator(int value) : value(value), counter(0) {}
 
 			int next() override {
+				counter++;
 				return value;
 			}
 
@@ -34,8 +35,13 @@ namespace hydra {
 				return value;
 			}
 
+			bool hasNextValue() const override {
+				return counter > 0;
+			}
+
 		private:
 			int value;
+			int counter;
 		};
 
 		std::string getErrorDescriptionForMehtod(const std::string& methodName) const;

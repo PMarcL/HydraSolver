@@ -341,5 +341,21 @@ public:
 
 		delete iterator;
 	}
+
+	TEST_METHOD(IteratorShouldHaveValueAtCreationIfBitsetIsNotEmpty) {
+		BitsetIntVariable bitset("test", 7, 8);
+		auto iterator = bitset.iterator();
+		Assert::IsTrue(iterator->hasNextValue());
+	}
+
+	TEST_METHOD(IteratorShouldNotHaveValueAfterIteratingOverAllValues) {
+		BitsetIntVariable bitset("test", 7, 8);
+		auto iterator = bitset.iterator();
+
+		iterator->next();
+		iterator->next();
+
+		Assert::IsFalse(iterator->hasNextValue());
+	}
 	};
 }

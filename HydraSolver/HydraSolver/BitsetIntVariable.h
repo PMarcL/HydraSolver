@@ -24,12 +24,15 @@ namespace hydra {
 	private:
 		class BitsetIterator : public IntVariableIterator {
 		public:
-			BitsetIterator(std::vector<bool>* bitset, int originalLowerBound);
+			BitsetIterator(std::vector<bool>* bitset, int originalLowerBound, int originalCardinality);
 			int next() override;
 			int previous() override;
+			bool hasNextValue() const override;
 
 		private:
 			int offset;
+			int counter;
+			int cardinalityAtCreation;
 			int originalLowerBound;
 			std::vector<bool>* bitset;
 		};

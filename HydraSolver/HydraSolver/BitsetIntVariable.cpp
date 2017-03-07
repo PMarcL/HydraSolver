@@ -157,11 +157,11 @@ namespace hydra {
 	}
 
 	IntVariableIterator* BitsetIntVariable::iterator() {
-		return new BitsetIterator(&bitset, originalLowerBound);
+		return new BitsetIterator(&bitset, originalLowerBound, cardinality());
 	}
 
-	BitsetIntVariable::BitsetIterator::BitsetIterator(std::vector<bool>* bitset, int originalLowerBound) :
-		offset(0), originalLowerBound(originalLowerBound), bitset(bitset) {
+	BitsetIntVariable::BitsetIterator::BitsetIterator(std::vector<bool>* bitset, int originalLowerBound, int originalCardinality) :
+		offset(0), counter(0), cardinalityAtCreation(originalCardinality), originalLowerBound(originalLowerBound), bitset(bitset) {
 		while (!(*bitset)[offset]) {
 			offset++;
 		}
@@ -169,6 +169,7 @@ namespace hydra {
 
 	int BitsetIntVariable::BitsetIterator::next() {
 		auto value = originalLowerBound + offset;
+		counter++;
 		offset = (offset + 1) % bitset->size();
 		while (!(*bitset)[offset]) {
 			offset = (offset + 1) % bitset->size();
@@ -190,4 +191,9 @@ namespace hydra {
 		}
 		return value;
 	}
+
+	bool BitsetIntVariable::BitsetIterator::hasNextValue() const {
+		return counter < cardinalityAtCreation;
+	}
+
 } // namespace hydra

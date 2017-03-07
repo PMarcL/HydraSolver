@@ -9,6 +9,7 @@ namespace hydra {
 
 		virtual int next() = 0;
 		virtual int previous() = 0;
+		virtual bool hasNextValue() const = 0;
 	};
 
 } // namespace hydra
