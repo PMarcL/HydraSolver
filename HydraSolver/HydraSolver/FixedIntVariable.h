@@ -19,6 +19,7 @@ namespace hydra {
 		int getLowerBound() const override;
 		int getUpperBound() const override;
 		bool containsValue(int value) const override;
+		void instantiate() override;
 		IntVariableIterator* iterator() override;
 
 	private:

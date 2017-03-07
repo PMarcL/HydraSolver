@@ -15,11 +15,12 @@ namespace hydra {
 	public:
 		explicit VariableSelector(Heuristic heuristic = SMALLEST_DOMAIN, Heuristic tieBreaker = RANDOM);
 
-		void instantiateVariable(const std::vector<Variable*>) const;
+		void instantiateVariable(const std::vector<Variable*>& variables) const;
 
 	private:
-		void smallestDomain(const std::vector<Variable*>) const;
-		void randomSelection(const std::vector<Variable*>) const;
+		void useHeuristic(const std::vector<Variable*>& variables, Heuristic heuristic) const;
+		void smallestDomain(const std::vector<Variable*>& variables) const;
+		static void randomSelection(const std::vector<Variable*>& variables);
 
 		Heuristic heuristic;
 		Heuristic tieBreaker;

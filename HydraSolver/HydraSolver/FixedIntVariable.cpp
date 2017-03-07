@@ -56,6 +56,11 @@ namespace hydra {
 		return this->value == value;
 	}
 
+	void FixedIntVariable::instantiate() {
+		// fixed values don't need to be instantiated
+	}
+
+
 	IntVariableIterator* FixedIntVariable::iterator() {
 		return new FixedIntIterator(value);
 	}

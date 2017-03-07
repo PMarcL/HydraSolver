@@ -83,7 +83,7 @@ namespace hydra {
 	}
 
 	void BitsetIntVariable::updateLowerBound() {
-		auto index = 0;
+		size_t index = 0;
 		while (!bitset[index] && index < bitset.size()) {
 			index++;
 		}
@@ -154,6 +154,10 @@ namespace hydra {
 
 	bool BitsetIntVariable::containsValue(int value) const {
 		return value >= currentLowerBound && value <= currentUpperBound && bitset[value - originalLowerBound];
+	}
+
+	void BitsetIntVariable::instantiate() {
+		filterUpperBound(currentLowerBound);
 	}
 
 	IntVariableIterator* BitsetIntVariable::iterator() {

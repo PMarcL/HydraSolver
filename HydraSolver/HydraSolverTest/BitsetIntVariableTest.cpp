@@ -174,6 +174,12 @@ public:
 		Assert::ExpectException<IllegalVariableOperationException, void>(filterValueLowerThanLowerBound);
 	}
 
+	TEST_METHOD(ShouldHaveACardinalityOfOneWhenInstantiated) {
+		BitsetIntVariable bitset("test", 1, 10);
+		bitset.instantiate();
+		Assert::AreEqual(1, bitset.cardinality());
+	}
+
 	TEST_METHOD(ShouldReturnToOriginalStateAfterPushAndPop) {
 		BitsetIntVariable bitset("test", 1, 10);
 		auto originalCardinality = bitset.cardinality();

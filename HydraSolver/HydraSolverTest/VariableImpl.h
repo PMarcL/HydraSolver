@@ -10,5 +10,6 @@ public:
 	void pushCurrentState() override;
 	void popState() override;
 	int cardinality() const override;
+	void instantiate() override;
 };
 

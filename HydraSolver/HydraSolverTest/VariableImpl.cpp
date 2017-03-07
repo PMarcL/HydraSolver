@@ -10,15 +10,14 @@ VariableImpl::~VariableImpl() {
 }
 
 void VariableImpl::pushCurrentState() {
-	return;
 }
 
 void VariableImpl::popState() {
-	return;
 }
 
 int VariableImpl::cardinality() const {
 	return 0;
 }
 
-
+void VariableImpl::instantiate() {
+}
