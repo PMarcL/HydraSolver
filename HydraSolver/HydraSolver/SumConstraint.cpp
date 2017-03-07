@@ -1,6 +1,5 @@
 #include "SumConstraint.h"
 #include "IntVariable.h"
-#include <algorithm>
 #include <list>
 #include <queue>
 
@@ -10,7 +9,6 @@ namespace hydra {
 
 	SumConstraint::SumConstraint(const vector<IntVariable*>& variables, int sum) : variables(variables), sum(sum) {
 	}
-
 
 	SumConstraint::~SumConstraint() {
 	}

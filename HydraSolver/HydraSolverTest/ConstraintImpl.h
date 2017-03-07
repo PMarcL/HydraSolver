@@ -1,4 +1,5 @@
 #pragma once
+
 #include "Constraint.h"
 
 class ConstraintImpl : public hydra::Constraint {

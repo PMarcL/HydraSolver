@@ -5,4 +5,7 @@ namespace hydra {
 	IntVariableIterator::IntVariableIterator() {
 	}
 
+	IntVariableIterator::~IntVariableIterator() {
+	}
+
 } // namespace hydra

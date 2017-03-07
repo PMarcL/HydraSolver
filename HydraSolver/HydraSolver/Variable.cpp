@@ -7,7 +7,6 @@ namespace hydra {
 	Variable::Variable(const string& name) : name(name) {
 	}
 
-
 	Variable::~Variable() {
 	}
 

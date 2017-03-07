@@ -127,7 +127,7 @@ namespace hydra {
 	}
 
 	BitsetIntVariable::BitsetIterator::BitsetIterator(std::vector<bool>* bitset, int originalLowerBound) :
-		bitset(bitset), originalLowerBound(originalLowerBound), offset(0) {
+		offset(0), originalLowerBound(originalLowerBound), bitset(bitset) {
 		while (!(*bitset)[offset]) {
 			offset++;
 		}

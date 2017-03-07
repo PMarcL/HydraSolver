@@ -7,7 +7,7 @@ namespace hydra {
 	class Constraint {
 	public:
 		Constraint();
-		~Constraint();
+		virtual ~Constraint();
 
 		virtual void filter() = 0;
 		virtual void filterDomains() = 0;

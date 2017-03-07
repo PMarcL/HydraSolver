@@ -7,7 +7,6 @@ using namespace std;
 ConstraintImpl::ConstraintImpl() {
 }
 
-
 ConstraintImpl::~ConstraintImpl() {
 }
 
