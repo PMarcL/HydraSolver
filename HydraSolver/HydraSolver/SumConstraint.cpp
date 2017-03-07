@@ -38,7 +38,7 @@ namespace hydra {
 		explicit TrickNode(int value) : value(value), parent(nullptr) {}
 		int value;
 		TrickArc* parent;
-		vector<TrickArc*> childs;
+		vector<TrickArc*> children;
 	};
 
 	// implementation of Trick algorithm
@@ -60,7 +60,7 @@ namespace hydra {
 					auto child = new TrickNode(currentNode->value + currentValue);
 
 					auto arc = new TrickArc(currentValue, currentNode, child);
-					currentNode->childs.push_back(arc);
+					currentNode->children.push_back(arc);
 					child->parent = arc;
 
 					nodeQueue.push_back(child);
@@ -113,13 +113,12 @@ namespace hydra {
 			auto currentNode = nodeQueue.front();
 			nodeQueue.pop_front();
 
-			for (auto child : currentNode->childs) {
+			for (auto child : currentNode->children) {
 				nodeQueue.push_back(child->to);
 			}
 
 			delete currentNode;
 		}
 	}
-
 
 } // namespace hydra
