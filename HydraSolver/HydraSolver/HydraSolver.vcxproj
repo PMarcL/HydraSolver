@@ -155,6 +155,8 @@ copy "$(CudaToolkitBinDir)\cudart*.dll" "$(OutDir)"</Command>
     <CudaCompile Include="functions.cu" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AllDifferent.h" />
+    <ClInclude Include="AllDifferentUtils.h" />
     <ClInclude Include="BitsetIntVariable.h" />
     <ClInclude Include="Constraint.h" />
     <ClInclude Include="FixedIntVariable.h" />
@@ -170,6 +172,8 @@ copy "$(CudaToolkitBinDir)\cudart*.dll" "$(OutDir)"</Command>
     <ClInclude Include="Variable.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AllDifferent.cpp" />
+    <ClCompile Include="AllDifferentUtils.cpp" />
     <ClCompile Include="BitsetIntVariable.cpp" />
     <ClCompile Include="Constraint.cpp" />
     <ClCompile Include="FixedIntVariable.cpp" />

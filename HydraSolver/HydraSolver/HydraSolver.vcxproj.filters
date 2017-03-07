@@ -34,6 +34,12 @@
     <ClCompile Include="IntVariableIterator.cpp">
       <Filter>variables</Filter>
     </ClCompile>
+    <ClCompile Include="AllDifferent.cpp">
+      <Filter>constraints</Filter>
+    </ClCompile>
+    <ClCompile Include="AllDifferentUtils.cpp">
+      <Filter>constraints</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="functions.cuh" />
@@ -66,6 +72,12 @@
     </ClInclude>
     <ClInclude Include="IntVariableIterator.h">
       <Filter>variables</Filter>
+    </ClInclude>
+    <ClInclude Include="AllDifferent.h">
+      <Filter>constraints</Filter>
+    </ClInclude>
+    <ClInclude Include="AllDifferentUtils.h">
+      <Filter>constraints</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -51,7 +51,6 @@ namespace hydra {
 		}
 	}
 
-
 	// implementation of Trick algorithm
 	struct TrickNode;
 
