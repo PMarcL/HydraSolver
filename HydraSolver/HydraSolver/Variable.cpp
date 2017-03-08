@@ -1,5 +1,4 @@
 #include "Variable.h"
-#include "VariableObserver.h"
 
 using namespace std;
 
@@ -13,16 +12,6 @@ namespace hydra {
 
 	string Variable::getName() const {
 		return name;
-	}
-
-	void Variable::addObserver(VariableObserver* observer) {
-		observers.push_back(observer);
-	}
-
-	void Variable::notifyDomainChanged() const {
-		for (auto observer : observers) {
-			observer->domainChanged();
-		}
 	}
 
 } // namespace hydra

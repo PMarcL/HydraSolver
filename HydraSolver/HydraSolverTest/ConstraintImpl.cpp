@@ -15,11 +15,14 @@ bool ConstraintImpl::containsVariable(hydra::Variable*) const {
 }
 
 
-void ConstraintImpl::filter() {
+vector<hydra::Variable*> ConstraintImpl::filter() {
+	return vector<hydra::Variable*>();
 }
 
-void ConstraintImpl::filterBounds() {
+vector<hydra::Variable*> ConstraintImpl::filterBounds() {
+	return vector<hydra::Variable*>();
 }
 
-void ConstraintImpl::filterDomains() {
+vector<hydra::Variable*> ConstraintImpl::filterDomains() {
+	return vector<hydra::Variable*>();
 }

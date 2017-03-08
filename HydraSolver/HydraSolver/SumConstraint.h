@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Constraint.h"
-#include <vector>
 
 namespace hydra {
 
@@ -13,14 +12,14 @@ namespace hydra {
 		SumConstraint(const std::vector<IntVariable*>& var, int sum);
 		~SumConstraint();
 
-		bool containsVariable(Variable* variable) const;
-		void filter() override;
-		void filterDomains() override;
-		void filterBounds() override;
+		bool containsVariable(Variable* variable) const override;
+		std::vector<Variable*> filter() override;
+		std::vector<Variable*> filterDomains() override;
+		std::vector<Variable*> filterBounds() override;
 
 	private:
-		void CPUDomainFilteringAlgorithm();
-		void CPUBoundsFilteringAlgorithm();
+		std::vector<Variable*> CPUDomainFilteringAlgorithm();
+		std::vector<Variable*> CPUBoundsFilteringAlgorithm();
 
 		std::vector<IntVariable*> variables;
 		int sum;

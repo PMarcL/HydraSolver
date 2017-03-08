@@ -30,9 +30,6 @@
     <ClInclude Include="ConstraintImpl.h">
       <Filter>Test Class Implementations</Filter>
     </ClInclude>
-    <ClInclude Include="VariableObserverImpl.h">
-      <Filter>Test Class Implementations</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -74,8 +71,8 @@
     <ClCompile Include="VariableSelectorTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="VariableObserverImpl.cpp">
-      <Filter>Test Class Implementations</Filter>
+    <ClCompile Include="PropagatorTest.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

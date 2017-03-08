@@ -2,7 +2,6 @@
 #include "CppUnitTest.h"
 #include "BitsetIntVariable.h"
 #include "IllegalVariableOperationException.h"
-#include "VariableObserverImpl.h"
 
 using namespace hydra;
 using namespace std;
@@ -179,36 +178,6 @@ public:
 		BitsetIntVariable bitset("test", 1, 10);
 		bitset.instantiate();
 		Assert::AreEqual(1, bitset.cardinality());
-	}
-
-	TEST_METHOD(ShouldNotifyObserversWhenFilterValue) {
-		VariableObserverImpl observer;
-		BitsetIntVariable bitset("test", 2, 10);
-		bitset.addObserver(&observer);
-
-		bitset.filterValue(5);
-
-		Assert::IsTrue(observer.wasNotified());
-	}
-
-	TEST_METHOD(ShouldNotifyObserversWhenFilterLowerBound) {
-		VariableObserverImpl observer;
-		BitsetIntVariable bitset("test", 2, 10);
-		bitset.addObserver(&observer);
-
-		bitset.filterLowerBound(4);
-
-		Assert::IsTrue(observer.wasNotified());
-	}
-
-	TEST_METHOD(ShouldNotifyObserversWhenFilterUpperBound) {
-		VariableObserverImpl observer;
-		BitsetIntVariable bitset("test", 2, 10);
-		bitset.addObserver(&observer);
-
-		bitset.filterUpperBound(4);
-
-		Assert::IsTrue(observer.wasNotified());
 	}
 
 	TEST_METHOD(ShouldReturnToOriginalStateAfterPushAndPop) {

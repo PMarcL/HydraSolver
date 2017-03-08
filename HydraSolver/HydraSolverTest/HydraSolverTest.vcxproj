@@ -156,7 +156,6 @@
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="VariableImpl.h" />
-    <ClInclude Include="VariableObserverImpl.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AllDifferentTest.cpp" />
@@ -166,6 +165,7 @@
     <ClCompile Include="ConstraintTest.cpp" />
     <ClCompile Include="FixedIntVariableTest.cpp" />
     <ClCompile Include="ModelTest.cpp" />
+    <ClCompile Include="PropagatorTest.cpp" />
     <ClCompile Include="SolverTest.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -175,7 +175,6 @@
     </ClCompile>
     <ClCompile Include="SumConstraintTest.cpp" />
     <ClCompile Include="VariableImpl.cpp" />
-    <ClCompile Include="VariableObserverImpl.cpp" />
     <ClCompile Include="VariableSelectorTest.cpp" />
     <ClCompile Include="VariableTest.cpp" />
   </ItemGroup>

@@ -20,13 +20,16 @@ namespace hydra {
 		return false;
 	}
 
-	void AllDifferent::filter() {
+	vector<Variable*> AllDifferent::filter() {
+		return vector<Variable*>();
 	}
 
-	void AllDifferent::filterDomains() {
+	vector<Variable*> AllDifferent::filterDomains() {
+		return vector<Variable*>();
 	}
 
-	void AllDifferent::filterBounds() {
+	vector<Variable*> AllDifferent::filterBounds() {
+		return vector<Variable*>();
 	}
 
 } // namespace hydra

@@ -42,6 +42,19 @@ public:
 		Assert::AreEqual(2, var1.cardinality());
 	}
 
+	TEST_METHOD(ShouldReturnFilteredVariablesWhenFilteringDomain) {
+		BitsetIntVariable var1("var1", 1, 2);
+		BitsetIntVariable var2("var2", 1, 3);
+		auto sum = 4;
+
+		SumConstraint sumConstraint({ &var1, &var2 }, sum);
+
+		auto modifiedVariable = sumConstraint.filter();
+
+		Assert::IsTrue(find(modifiedVariable.begin(), modifiedVariable.end(), &var2) != modifiedVariable.end());
+		Assert::IsTrue(find(modifiedVariable.begin(), modifiedVariable.end(), &var1) == modifiedVariable.end());
+	}
+
 	TEST_METHOD(ShouldFilterDomainsWhenFilterDomainsIsCalled_simpleCase) {
 		BitsetIntVariable var1("var1", 0, 2);
 		BitsetIntVariable var2("var2", 0, 3);
@@ -81,6 +94,19 @@ public:
 		Assert::IsFalse(var2.containsValue(1));
 		Assert::AreEqual(2, var1.cardinality());
 		Assert::AreEqual(2, var2.cardinality());
+	}
+
+	TEST_METHOD(ShouldReturnModifiedVariablesWhenFilteringBounds) {
+		BitsetIntVariable var1("var1", 0, 2);
+		BitsetIntVariable var2("var2", 1, 3);
+		auto sum = 4;
+
+		SumConstraint sumConstraint({ &var1, &var2 }, sum);
+
+		auto modifiedVariables = sumConstraint.filterBounds();
+
+		Assert::IsTrue(find(modifiedVariables.begin(), modifiedVariables.end(), &var1) != modifiedVariables.end());
+		Assert::IsTrue(find(modifiedVariables.begin(), modifiedVariables.end(), &var2) != modifiedVariables.end());
 	}
 
 	TEST_METHOD(ShouldFilterValuesOnFilterBounds_simpleCase2) {

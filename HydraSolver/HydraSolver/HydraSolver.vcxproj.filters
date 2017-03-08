@@ -40,9 +40,7 @@
     <ClCompile Include="VariableSelector.cpp">
       <Filter>heuristics</Filter>
     </ClCompile>
-    <ClCompile Include="VariableObserver.cpp">
-      <Filter>variables</Filter>
-    </ClCompile>
+    <ClCompile Include="Propagator.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="functions.cuh" />
@@ -82,9 +80,7 @@
     <ClInclude Include="VariableSelector.h">
       <Filter>heuristics</Filter>
     </ClInclude>
-    <ClInclude Include="VariableObserver.h">
-      <Filter>variables</Filter>
-    </ClInclude>
+    <ClInclude Include="Propagator.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="constraints">

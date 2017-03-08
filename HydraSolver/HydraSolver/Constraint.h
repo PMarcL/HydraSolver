@@ -1,5 +1,7 @@
 #pragma once
 
+#include <vector>
+
 namespace hydra {
 
 	class Variable;
@@ -10,9 +12,9 @@ namespace hydra {
 		virtual ~Constraint();
 
 		virtual bool containsVariable(Variable*) const = 0;
-		virtual void filter() = 0;
-		virtual void filterDomains() = 0;
-		virtual void filterBounds() = 0;
+		virtual std::vector<Variable*> filter() = 0;
+		virtual std::vector<Variable*> filterDomains() = 0;
+		virtual std::vector<Variable*> filterBounds() = 0;
 
 	protected:
 		bool useGPU;

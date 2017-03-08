@@ -8,8 +8,8 @@ public:
 	~ConstraintImpl();
 
 	bool containsVariable(hydra::Variable* variable) const override;
-	void filter() override;
-	void filterDomains() override;
-	void filterBounds() override;
+	std::vector<hydra::Variable*> filter() override;
+	std::vector<hydra::Variable*> filterDomains() override;
+	std::vector<hydra::Variable*> filterBounds() override;
 };
 

@@ -21,7 +21,3 @@ int VariableImpl::cardinality() const {
 
 void VariableImpl::instantiate() {
 }
-
-void VariableImpl::notifyObservers() const {
-	notifyDomainChanged();
-}

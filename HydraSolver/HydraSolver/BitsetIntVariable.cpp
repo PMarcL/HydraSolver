@@ -80,8 +80,6 @@ namespace hydra {
 		if (value == currentUpperBound) {
 			updateUpperBound();
 		}
-
-		notifyDomainChanged();
 	}
 
 	void BitsetIntVariable::updateLowerBound() {
@@ -123,7 +121,6 @@ namespace hydra {
 			}
 
 			currentLowerBound = newLowerBound;
-			notifyDomainChanged();
 		}
 	}
 
@@ -144,7 +141,6 @@ namespace hydra {
 			}
 
 			currentUpperBound = newUpperBound;
-			notifyDomainChanged();
 		}
 	}
 

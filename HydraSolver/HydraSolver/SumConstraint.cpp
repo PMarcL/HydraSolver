@@ -23,19 +23,20 @@ namespace hydra {
 	}
 
 
-	void SumConstraint::filter() {
-		CPUDomainFilteringAlgorithm();
+	vector<Variable*> SumConstraint::filter() {
+		return CPUDomainFilteringAlgorithm();
 	}
 
-	void SumConstraint::filterDomains() {
-		CPUDomainFilteringAlgorithm();
+	vector<Variable*> SumConstraint::filterDomains() {
+		return CPUDomainFilteringAlgorithm();
 	}
 
-	void SumConstraint::filterBounds() {
-		CPUBoundsFilteringAlgorithm();
+	vector<Variable*> SumConstraint::filterBounds() {
+		return CPUBoundsFilteringAlgorithm();
 	}
 
-	void SumConstraint::CPUBoundsFilteringAlgorithm() {
+	vector<Variable*> SumConstraint::CPUBoundsFilteringAlgorithm() {
+		vector<Variable*> modifiedVariables;
 		for (auto i = 0; i < variables.size(); i++) {
 
 			auto iterator = variables[i]->iterator();
@@ -55,10 +56,14 @@ namespace hydra {
 
 				if (sum < lowerBoundSum || sum > upperBoundSum) {
 					variables[i]->filterValue(currentValue);
+					if (modifiedVariables.empty() || modifiedVariables[modifiedVariables.size() - 1] != variables[i]) {
+						modifiedVariables.push_back(variables[i]);
+					}
 				}
 			}
 			delete iterator;
 		}
+		return modifiedVariables;
 	}
 
 	// implementation of Trick algorithm
@@ -78,7 +83,7 @@ namespace hydra {
 		vector<TrickArc*> children;
 	};
 
-	void SumConstraint::CPUDomainFilteringAlgorithm() {
+	vector<Variable*> SumConstraint::CPUDomainFilteringAlgorithm() {
 		list<TrickNode*> nodeQueue;
 		auto initialNode = new TrickNode(0);
 		nodeQueue.push_back(initialNode);
@@ -118,6 +123,7 @@ namespace hydra {
 			}
 		}
 
+		vector<Variable*> filteredVariables;
 		// Traversing the graph backward level by level, filtering values along the way
 		for (auto variable = variables.rbegin(); variable != variables.rend(); ++variable) {
 			vector<int> valuesToKeep;
@@ -137,6 +143,10 @@ namespace hydra {
 				auto currentValue = iterator->next();
 				if (find(valuesToKeep.begin(), valuesToKeep.end(), currentValue) == valuesToKeep.end()) {
 					(*variable)->filterValue(currentValue);
+
+					if (filteredVariables.empty() || filteredVariables[filteredVariables.size() - 1] != *variable) {
+						filteredVariables.push_back(*variable);
+					}
 				}
 			}
 			delete iterator;
@@ -155,6 +165,8 @@ namespace hydra {
 
 			delete currentNode;
 		}
+
+		return filteredVariables;
 	}
 
 } // namespace hydra
