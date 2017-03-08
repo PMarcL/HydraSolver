@@ -13,12 +13,13 @@ namespace HydraSolverTest {
 	TEST_CLASS(SolverTest) {
 public:
 
-	TEST_METHOD(SolverTest_simpleCase) {
-		auto var1 = new FixedIntVariable("var1", 3);
-		auto var2 = new FixedIntVariable("var2", 4);
+	TEST_METHOD(SolverTest_solutionShouldAddUpTo9) {
+		auto expectedSum = 9;
+		auto var1 = new FixedIntVariable("var1", 4);
+		auto var2 = new FixedIntVariable("var2", 5);
 		Model model;
 		model.addVariableArray({ var1, var2 });
-		auto sumConstraint = new SumConstraint({ var1, var2 }, 7);
+		auto sumConstraint = new SumConstraint({ var1, var2 }, expectedSum);
 		model.postConstraint(sumConstraint);
 
 		Solver solver(&model);
@@ -26,16 +27,17 @@ public:
 
 		Assert::IsTrue(solution.isConsistent());
 
-		Logger::WriteMessage("SolverTest_simpleCase results :");
+		Logger::WriteMessage("SolverTest_solutionShouldAddUpTo9 results :");
 		Logger::WriteMessage(solution.getFormattedSolution().c_str());
 	}
 
-	TEST_METHOD(SolverTestWithFiltering_simpleCase) {
+	TEST_METHOD(SolverTestWithFiltering_solutionShouldAddUpTo7) {
+		auto expectedSum = 7;
 		auto var1 = new BitsetIntVariable("var1", 1, 4);
 		auto var2 = new BitsetIntVariable("var2", 3, 8);
 		Model model;
 		model.addVariableArray({ var1, var2 });
-		auto sumConstraint = new SumConstraint({ var1, var2 }, 7);
+		auto sumConstraint = new SumConstraint({ var1, var2 }, expectedSum);
 		model.postConstraint(sumConstraint);
 
 		Solver solver(&model);
@@ -43,18 +45,19 @@ public:
 
 		Assert::IsTrue(solution.isConsistent());
 
-		Logger::WriteMessage("SolverTestWithFiltering_simpleCase results :");
+		Logger::WriteMessage("SolverTestWithFiltering_solutionShouldAddUpTo7 results :");
 		Logger::WriteMessage(solution.getFormattedSolution().c_str());
 	}
 
-	TEST_METHOD(SolverTestWithFilteringAndRandomHeuristic_simpleCase) {
+	TEST_METHOD(SolverTestWithFilteringAndRandomHeuristic_solutionShouldAddUpTo21) {
+		auto expectedSum = 21;
 		auto var1 = new BitsetIntVariable("var1", 1, 4);
 		auto var2 = new BitsetIntVariable("var2", 3, 8);
 		auto var3 = new BitsetIntVariable("var2", 1, 2);
 		auto var4 = new BitsetIntVariable("var2", 10, 15);
 		Model model;
 		model.addVariableArray({ var1, var2, var3, var4 });
-		auto sumConstraint = new SumConstraint({ var1, var2, var3, var4 }, 21);
+		auto sumConstraint = new SumConstraint({ var1, var2, var3, var4 }, expectedSum);
 		model.postConstraint(sumConstraint);
 
 		Solver solver(&model, RANDOM);
@@ -62,11 +65,11 @@ public:
 
 		Assert::IsTrue(solution.isConsistent());
 
-		Logger::WriteMessage("SolverTestWithFilteringAndRandomHeuristic_simpleCase results :");
+		Logger::WriteMessage("SolverTestWithFilteringAndRandomHeuristic_solutionShouldAddUpTo21 results :");
 		Logger::WriteMessage(solution.getFormattedSolution().c_str());
 	}
 
-	TEST_METHOD(SolverTestWithFilteringNoSolution_simpleCase) {
+	TEST_METHOD(SolverTestWithFiltering_NoSolution) {
 		auto var1 = new BitsetIntVariable("var1", 1, 4);
 		auto var2 = new BitsetIntVariable("var2", 3, 8);
 		Model model;
@@ -79,7 +82,7 @@ public:
 
 		Assert::IsFalse(solution.isConsistent());
 
-		Logger::WriteMessage("SolverTestWithFilteringNoSolution_simpleCase results :");
+		Logger::WriteMessage("SolverTestWithFiltering_NoSolution results :");
 		Logger::WriteMessage(solution.getFormattedSolution().c_str());
 	}
 
