@@ -10,25 +10,24 @@ namespace hydra {
 	VariableSelector::VariableSelector(Heuristic heuristic, Heuristic tieBreaker) : heuristic(heuristic), tieBreaker(tieBreaker) {
 	}
 
-	void VariableSelector::instantiateVariable(const std::vector<Variable*>& variables) const {
-		useHeuristic(variables, heuristic);
+	Variable* VariableSelector::instantiateVariable(const std::vector<Variable*>& variables) const {
+		return useHeuristic(variables, heuristic);
 	}
 
-	void VariableSelector::useHeuristic(const std::vector<Variable*>& variables, Heuristic heuristic) const {
+	Variable* VariableSelector::useHeuristic(const std::vector<Variable*>& variables, Heuristic heuristic) const {
 		switch (heuristic) {
 		case SMALLEST_DOMAIN:
-			smallestDomain(variables);
+			return smallestDomain(variables);
 			break;
 		case RANDOM:
-			randomSelection(variables);
+			return randomSelection(variables);
 			break;
 		default:
-			randomSelection(variables);
+			return randomSelection(variables);
 		}
 	}
 
-
-	void VariableSelector::smallestDomain(const std::vector<Variable*>& variables) const {
+	Variable* VariableSelector::smallestDomain(const std::vector<Variable*>& variables) const {
 		list<Variable*> smallestVariables;
 		auto minCardinality = 0;
 
@@ -46,22 +45,24 @@ namespace hydra {
 		}
 
 		if (smallestVariables.size() > 1) {
-			useHeuristic(variables, tieBreaker);
+			return useHeuristic(variables, tieBreaker);
 		} else {
 			smallestVariables.front()->instantiate();
+			return smallestVariables.front();
 		}
 	}
 
-	void VariableSelector::randomSelection(const std::vector<Variable*>& variables) {
+	Variable* VariableSelector::randomSelection(const std::vector<Variable*>& variables) {
 		default_random_engine generator;
 		uniform_int_distribution<size_t> distribution(0, variables.size() - 1);
-		size_t index = distribution(generator);
+		auto index = distribution(generator);
 
 		while (variables[index]->cardinality() == 1) {
 			index = distribution(generator);
 		}
 
 		variables[index]->instantiate();
+		return variables[index];
 	}
 
 

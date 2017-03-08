@@ -180,6 +180,13 @@ public:
 		Assert::AreEqual(1, bitset.cardinality());
 	}
 
+	TEST_METHOD(AfterInstantiateShouldReturnLowerBound) {
+		auto expectedValue = 4;
+		BitsetIntVariable bitset("test", expectedValue, 10);
+		bitset.instantiate();
+		Assert::AreEqual(expectedValue, bitset.getInstantiatedValue());
+	}
+
 	TEST_METHOD(ShouldReturnToOriginalStateAfterPushAndPop) {
 		BitsetIntVariable bitset("test", 1, 10);
 		auto originalCardinality = bitset.cardinality();

@@ -1,12 +1,13 @@
 #include "SumConstraint.h"
-#include "IntVariable.h"
+#include "Variable.h"
+#include "IntVariableIterator.h"
 #include <list>
 
 using namespace std;
 
 namespace hydra {
 
-	SumConstraint::SumConstraint(const vector<IntVariable*>& variables, int sum) : variables(variables), sum(sum) {
+	SumConstraint::SumConstraint(const vector<Variable*>& variables, int sum) : variables(variables), sum(sum) {
 	}
 
 	SumConstraint::~SumConstraint() {

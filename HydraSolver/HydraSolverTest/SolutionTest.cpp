@@ -21,13 +21,13 @@ public:
 		Assert::IsFalse(solution.isConsistent());
 	}
 
-	TEST_METHOD(ShouldPrintAllVariableOnPrintSolution) {
+	TEST_METHOD(ShouldPrintAllVariableOnGetFormattedSolution) {
 		VariableImpl var1;
 		VariableImpl var2;
 		VariableImpl var3;
 		Solution solution({ &var1, &var2, &var3 }, true);
 
-		solution.printSolution();
+		solution.getFormattedSolution();
 
 		Assert::IsTrue(var1.formattedDomainWasCalled);
 		Assert::IsTrue(var2.formattedDomainWasCalled);

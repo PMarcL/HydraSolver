@@ -36,4 +36,14 @@ namespace hydra {
 		}
 	}
 
+	bool VariableEnvironment::allVariablesAreInstantiated() const {
+		for (auto variable : variables) {
+			if (variable->cardinality() != 1) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+
 } // namespace hydra

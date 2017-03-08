@@ -1,10 +1,10 @@
 #pragma once
 
-#include "IntVariable.h"
+#include "Variable.h"
 
 namespace hydra {
 
-	class FixedIntVariable : public IntVariable {
+	class FixedIntVariable : public Variable {
 	public:
 		FixedIntVariable(const std::string& name, int value);
 		~FixedIntVariable();
@@ -13,6 +13,8 @@ namespace hydra {
 		void pushCurrentState() override;
 		void popState() override;
 		int cardinality() const override;
+		void instantiate() override;
+		int getInstantiatedValue() const override;
 
 		void filterValue(int value) override;
 		void filterLowerBound(int newLowerBound) override;
@@ -20,7 +22,6 @@ namespace hydra {
 		int getLowerBound() const override;
 		int getUpperBound() const override;
 		bool containsValue(int value) const override;
-		void instantiate() override;
 		IntVariableIterator* iterator() override;
 
 	private:

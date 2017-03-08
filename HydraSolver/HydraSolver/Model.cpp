@@ -31,8 +31,12 @@ namespace hydra {
 		variableEnvironment.addVariable(variable);
 	}
 
-	vector<Variable*> Model::getVariables() const {
-		return variableEnvironment.getVariables();
+	void Model::addVariableArray(const std::vector<Variable*>& vars) {
+		variableEnvironment.addVariableArray(vars);
+	}
+
+	const VariableEnvironment& Model::getEnvironment() const {
+		return variableEnvironment;
 	}
 
 	string Model::getName() const {

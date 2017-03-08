@@ -13,7 +13,7 @@ namespace hydra {
 		return 0;
 	}
 
-	void ReginAlgorithm(const vector<IntVariable*>& vars) {
+	void ReginAlgorithm(const vector<Variable*>& vars) {
 		// TODO : implement and test this function
 	}
 }

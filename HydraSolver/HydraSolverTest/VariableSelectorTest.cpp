@@ -16,8 +16,10 @@ public:
 		BitsetIntVariable otherVar("test", 1, 10);
 		VariableSelector varSelector;
 
-		varSelector.instantiateVariable({ &smallestDomain, &otherVar });
+		auto instantiatedVar = varSelector.instantiateVariable({ &smallestDomain, &otherVar });
+		Variable *expectedVariable = &smallestDomain;
 
+		Assert::IsTrue(expectedVariable == instantiatedVar);
 		Assert::AreEqual(1, smallestDomain.cardinality());
 		Assert::AreEqual(10, otherVar.cardinality());
 	}

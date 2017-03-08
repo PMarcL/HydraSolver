@@ -5,11 +5,11 @@
 
 namespace hydra {
 
-	class IntVariable;
+	class Variable;
 
 	class AllDifferent : public Constraint {
 	public:
-		explicit AllDifferent(const std::vector<IntVariable*>& variables);
+		explicit AllDifferent(const std::vector<Variable*>& variables);
 		~AllDifferent();
 
 		bool containsVariable(Variable* variable) const override;
@@ -19,7 +19,7 @@ namespace hydra {
 		bool isSatisfied() const override;
 
 	private:
-		std::vector<IntVariable*> variables;
+		std::vector<Variable*> variables;
 	};
 
 } // namespace hydra

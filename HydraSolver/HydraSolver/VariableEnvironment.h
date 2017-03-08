@@ -16,6 +16,7 @@ namespace hydra {
 		const std::vector<Variable*>& getVariables() const;
 		void push() const;
 		void pop() const;
+		bool allVariablesAreInstantiated() const;
 
 	private:
 		std::vector<Variable*> variables;

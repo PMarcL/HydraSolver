@@ -12,9 +12,6 @@
     <ClCompile Include="Variable.cpp">
       <Filter>variables</Filter>
     </ClCompile>
-    <ClCompile Include="IntVariable.cpp">
-      <Filter>variables</Filter>
-    </ClCompile>
     <ClCompile Include="HydraException.cpp" />
     <ClCompile Include="FixedIntVariable.cpp">
       <Filter>variables</Filter>
@@ -54,9 +51,6 @@
     </ClInclude>
     <ClInclude Include="Solver.h" />
     <ClInclude Include="Variable.h">
-      <Filter>variables</Filter>
-    </ClInclude>
-    <ClInclude Include="IntVariable.h">
       <Filter>variables</Filter>
     </ClInclude>
     <ClInclude Include="HydraException.h" />

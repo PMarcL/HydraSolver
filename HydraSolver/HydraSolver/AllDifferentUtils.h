@@ -6,7 +6,7 @@
 
 namespace hydra {
 
-	class IntVariable;
+	class Variable;
 
 	enum AllDiffNodeType {
 		SOURCE,
@@ -27,12 +27,12 @@ namespace hydra {
 	struct AllDiffNode {
 		explicit AllDiffNode(AllDiffNodeType type) : type(type), var(nullptr), value(-1) {}
 		AllDiffNodeType type;
-		IntVariable* var;
+		Variable* var;
 		int value;
 		std::vector<AllDiffEdge*> adjencyList;
 	};
 
 	std::vector<std::vector<int>> FordFulkersonAlgorithm(const std::vector<AllDiffNode*>& nodes, AllDiffNode* source, AllDiffNode* target);
 	int calculateFlowValue(std::vector<std::vector<int>> flow, AllDiffNode* source, AllDiffNode* target);
-	void ReginAlgorithm(const std::vector<IntVariable*>& vars);
+	void ReginAlgorithm(const std::vector<Variable*>& vars);
 }

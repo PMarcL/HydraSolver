@@ -1,11 +1,11 @@
 #include "AllDifferent.h"
-#include "IntVariable.h"
+#include "Variable.h"
 
 using namespace std;
 
 namespace hydra {
 
-	AllDifferent::AllDifferent(const vector<IntVariable*>& variables) : variables(variables) {
+	AllDifferent::AllDifferent(const vector<Variable*>& variables) : variables(variables) {
 	}
 
 	AllDifferent::~AllDifferent() {

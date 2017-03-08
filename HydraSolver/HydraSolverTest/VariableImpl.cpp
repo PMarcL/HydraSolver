@@ -17,7 +17,6 @@ string VariableImpl::getFormattedDomain() const {
 	return "test";
 }
 
-
 void VariableImpl::pushCurrentState() {
 	pushWasCalled = true;
 }
@@ -32,3 +31,33 @@ int VariableImpl::cardinality() const {
 
 void VariableImpl::instantiate() {
 }
+
+int VariableImpl::getInstantiatedValue() const {
+	return 0;
+}
+
+void VariableImpl::filterValue(int value) {
+}
+
+void VariableImpl::filterLowerBound(int newLowerBound) {
+}
+
+void VariableImpl::filterUpperBound(int newUpperBound) {
+}
+
+int VariableImpl::getLowerBound() const {
+	return 0;
+}
+
+bool VariableImpl::containsValue(int value) const {
+	return false;
+}
+
+int VariableImpl::getUpperBound() const {
+	return 0;
+}
+
+hydra::IntVariableIterator* VariableImpl::iterator() {
+	return nullptr;
+}
+

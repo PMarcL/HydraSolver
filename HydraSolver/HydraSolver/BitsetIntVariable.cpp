@@ -7,7 +7,7 @@ using namespace std;
 namespace hydra {
 
 	BitsetIntVariable::BitsetIntVariable(const string& name, int lowerBound, int upperBound) :
-		IntVariable(name), statesStack(), currentRemovedValues(), bitset(upperBound - lowerBound + 1, true), currentLowerBound(lowerBound),
+		Variable(name), statesStack(), currentRemovedValues(), bitset(upperBound - lowerBound + 1, true), currentLowerBound(lowerBound),
 		currentUpperBound(upperBound), originalLowerBound(lowerBound) {
 	}
 
@@ -73,17 +73,25 @@ namespace hydra {
 		return count(bitset.begin(), bitset.end(), true);
 	}
 
+	void BitsetIntVariable::instantiate() {
+		filterUpperBound(currentLowerBound);
+	}
+
+	int BitsetIntVariable::getInstantiatedValue() const {
+		return currentLowerBound;
+	}
+
 	void BitsetIntVariable::filterValue(int value) {
 		auto index = value - originalLowerBound;
 
 		if (index < 0) {
 			IllegalVariableOperationException e;
-			e.setDescription("filterValue was called on a BitsetIntVariable (" + name + ") with a value lower than current lower bound.");
+			e.setDescription("filterValue was called on a BitsetVariable (" + name + ") with a value lower than current lower bound.");
 			throw e;
 		}
 		if (index >= bitset.size()) {
 			IllegalVariableOperationException e;
-			e.setDescription("filterValue was called on a BitsetIntVariable (" + name + ") with a value greater than current upper bound.");
+			e.setDescription("filterValue was called on a BitsetVariable (" + name + ") with a value greater than current upper bound.");
 			throw e;
 		}
 
@@ -124,7 +132,7 @@ namespace hydra {
 	void BitsetIntVariable::filterLowerBound(int newLowerBound) {
 		if (newLowerBound < currentLowerBound) {
 			IllegalVariableOperationException e;
-			e.setDescription("filterLowerBound was called on a BitsetIntVariable (" + name + ") with a value lower than current lower bound.");
+			e.setDescription("filterLowerBound was called on a BitsetVariable (" + name + ") with a value lower than current lower bound.");
 			throw e;
 		}
 
@@ -144,7 +152,7 @@ namespace hydra {
 	void BitsetIntVariable::filterUpperBound(int newUpperBound) {
 		if (newUpperBound > currentUpperBound) {
 			IllegalVariableOperationException e;
-			e.setDescription("filterUpperBound was called on a BitsetIntVariable with a value greater than current upper bound.");
+			e.setDescription("filterUpperBound was called on a BitsetVariable with a value greater than current upper bound.");
 			throw e;
 		}
 
@@ -171,10 +179,6 @@ namespace hydra {
 
 	bool BitsetIntVariable::containsValue(int value) const {
 		return value >= currentLowerBound && value <= currentUpperBound && bitset[value - originalLowerBound];
-	}
-
-	void BitsetIntVariable::instantiate() {
-		filterUpperBound(currentLowerBound);
 	}
 
 	IntVariableIterator* BitsetIntVariable::iterator() {

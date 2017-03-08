@@ -8,12 +8,15 @@ namespace hydra {
 
 	class Solution {
 	public:
+		Solution();
 		Solution(const std::vector<Variable*>& variables, bool isConsistent);
+		Solution(const Solution& solution);
 		~Solution();
 
 		bool isConsistent() const;
-		void printSolution() const;
+		std::string getFormattedSolution() const;
 
+		Solution& operator=(const Solution& solution);
 	private:
 		bool isAConsistentSolution;
 		std::vector<Variable*> variables;

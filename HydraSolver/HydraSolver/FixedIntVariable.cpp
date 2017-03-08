@@ -6,7 +6,7 @@ using namespace std;
 
 namespace hydra {
 
-	FixedIntVariable::FixedIntVariable(const string& name, int value) : IntVariable(name), value(value) {
+	FixedIntVariable::FixedIntVariable(const string& name, int value) : Variable(name), value(value) {
 	}
 
 	FixedIntVariable::~FixedIntVariable() {
@@ -15,7 +15,6 @@ namespace hydra {
 	string FixedIntVariable::getFormattedDomain() const {
 		return "{ " + to_string(value) + " }";
 	}
-
 
 	void FixedIntVariable::pushCurrentState() {
 		// fixed values don't need to push their state
@@ -27,6 +26,14 @@ namespace hydra {
 
 	int FixedIntVariable::cardinality() const {
 		return 1;
+	}
+
+	void FixedIntVariable::instantiate() {
+		// fixed values don't need to be instantiated
+	}
+
+	int FixedIntVariable::getInstantiatedValue() const {
+		return value;
 	}
 
 	void FixedIntVariable::filterValue(int) {
@@ -60,10 +67,6 @@ namespace hydra {
 
 	bool FixedIntVariable::containsValue(int value) const {
 		return this->value == value;
-	}
-
-	void FixedIntVariable::instantiate() {
-		// fixed values don't need to be instantiated
 	}
 
 	IntVariableIterator* FixedIntVariable::iterator() {

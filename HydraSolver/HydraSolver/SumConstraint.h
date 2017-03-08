@@ -4,12 +4,12 @@
 
 namespace hydra {
 
-	class IntVariable;
+	class Variable;
 
 	class SumConstraint :
 		public Constraint {
 	public:
-		SumConstraint(const std::vector<IntVariable*>& var, int sum);
+		SumConstraint(const std::vector<Variable*>& var, int sum);
 		~SumConstraint();
 
 		bool containsVariable(Variable* variable) const override;
@@ -22,7 +22,7 @@ namespace hydra {
 		std::vector<Variable*> CPUDomainFilteringAlgorithm();
 		std::vector<Variable*> CPUBoundsFilteringAlgorithm();
 
-		std::vector<IntVariable*> variables;
+		std::vector<Variable*> variables;
 		int sum;
 	};
 

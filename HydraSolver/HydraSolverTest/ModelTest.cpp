@@ -39,14 +39,21 @@ public:
 
 	TEST_METHOD(ShouldNotHaveVariableOnCreation) {
 		Model m;
-		Assert::IsTrue(m.getVariables().empty());
+		Assert::IsTrue(m.getEnvironment().getVariables().empty());
 	}
 
 	TEST_METHOD(ShouldBeAbleToAddVariable) {
 		Model m;
 		m.addVariable(new VariableImpl);
 		size_t expectedSize = 1;
-		Assert::AreEqual(expectedSize, m.getVariables().size());
+		Assert::AreEqual(expectedSize, m.getEnvironment().getVariables().size());
+	}
+
+	TEST_METHOD(ShouldBeAbleToAddVariableArray) {
+		Model m;
+		m.addVariableArray({ new VariableImpl, new VariableImpl, new VariableImpl });
+		size_t expectedSize = 3;
+		Assert::AreEqual(expectedSize, m.getEnvironment().getVariables().size());
 	}
 
 	};
