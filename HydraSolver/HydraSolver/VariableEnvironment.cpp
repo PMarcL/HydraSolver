@@ -7,6 +7,9 @@ namespace hydra {
 	}
 
 	VariableEnvironment::~VariableEnvironment() {
+		for (auto v : variables) {
+			delete v;
+		}
 	}
 
 	void VariableEnvironment::addVariable(Variable* var) {

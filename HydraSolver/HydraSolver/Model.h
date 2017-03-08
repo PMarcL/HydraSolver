@@ -1,5 +1,6 @@
 #pragma once
 
+#include "VariableEnvironment.h"
 #include <vector>
 
 namespace hydra {
@@ -25,7 +26,7 @@ namespace hydra {
 
 		std::string name;
 		std::vector<Constraint*> constraints;
-		std::vector<Variable*> variables;
+		VariableEnvironment variableEnvironment;
 	};
 
 } // namespace hydra

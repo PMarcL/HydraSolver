@@ -16,51 +16,51 @@ public:
 	}
 
 	TEST_METHOD(ShouldBeAbletoAddVariable) {
-		VariableImpl var;
+		auto var = new VariableImpl;
 		VariableEnvironment env;
-		env.addVariable(&var);
+		env.addVariable(var);
 		size_t expectedSize = 1;
 		Assert::AreEqual(expectedSize, env.getVariables().size());
 	}
 
 	TEST_METHOD(ShouldBeAbleToAddVariableArray) {
-		VariableImpl var1;
-		VariableImpl var2;
-		VariableImpl var3;
+		auto var1 = new VariableImpl;
+		auto var2 = new VariableImpl;
+		auto var3 = new VariableImpl;
 		VariableEnvironment env;
 
-		env.addVariableArray({ &var1, &var2, &var3 });
+		env.addVariableArray({ var1, var2, var3 });
 
 		size_t expectedSize = 3;
 		Assert::AreEqual(expectedSize, env.getVariables().size());
 	}
 
 	TEST_METHOD(OnPushEnvironmentShouldCallPushOnAllVariables) {
-		VariableImpl var1;
-		VariableImpl var2;
-		VariableImpl var3;
+		auto var1 = new VariableImpl;
+		auto var2 = new VariableImpl;
+		auto var3 = new VariableImpl;
 		VariableEnvironment env;
 
-		env.addVariableArray({ &var1, &var2, &var3 });
+		env.addVariableArray({ var1, var2, var3 });
 		env.push();
 
-		Assert::IsTrue(var1.pushWasCalled);
-		Assert::IsTrue(var2.pushWasCalled);
-		Assert::IsTrue(var3.pushWasCalled);
+		Assert::IsTrue(var1->pushWasCalled);
+		Assert::IsTrue(var2->pushWasCalled);
+		Assert::IsTrue(var3->pushWasCalled);
 	}
 
 	TEST_METHOD(OnPopEnvironmentShouldCallPopOnAllVariables) {
-		VariableImpl var1;
-		VariableImpl var2;
-		VariableImpl var3;
+		auto var1 = new VariableImpl;
+		auto var2 = new VariableImpl;
+		auto var3 = new VariableImpl;
 		VariableEnvironment env;
 
-		env.addVariableArray({ &var1, &var2, &var3 });
+		env.addVariableArray({ var1, var2, var3 });
 		env.pop();
 
-		Assert::IsTrue(var1.popWasCalled);
-		Assert::IsTrue(var2.popWasCalled);
-		Assert::IsTrue(var3.popWasCalled);
+		Assert::IsTrue(var1->popWasCalled);
+		Assert::IsTrue(var2->popWasCalled);
+		Assert::IsTrue(var3->popWasCalled);
 	}
 
 	};

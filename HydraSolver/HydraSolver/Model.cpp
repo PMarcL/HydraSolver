@@ -13,10 +13,6 @@ namespace hydra {
 		for (auto c : constraints) {
 			delete c;
 		}
-
-		for (auto v : variables) {
-			delete v;
-		}
 	}
 
 	void Model::postConstraint(Constraint* constraint) {
@@ -32,11 +28,11 @@ namespace hydra {
 	}
 
 	void Model::addVariable(Variable* variable) {
-		variables.push_back(variable);
+		variableEnvironment.addVariable(variable);
 	}
 
 	vector<Variable*> Model::getVariables() const {
-		return variables;
+		return variableEnvironment.getVariables();
 	}
 
 	string Model::getName() const {
