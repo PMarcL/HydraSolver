@@ -25,6 +25,10 @@ namespace hydra {
 	}
 
 	string Solution::getFormattedSolution() const {
+		if (!isConsistent()) {
+			return "No solution found";
+		}
+
 		ostringstream os;
 
 		os << "Solution :" << endl;

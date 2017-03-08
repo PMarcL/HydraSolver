@@ -2,6 +2,7 @@
 #include "Variable.h"
 #include <list>
 #include <random>
+#include <chrono>
 
 using namespace std;
 
@@ -53,7 +54,8 @@ namespace hydra {
 	}
 
 	Variable* VariableSelector::randomSelection(const std::vector<Variable*>& variables) {
-		default_random_engine generator;
+		auto seed = std::chrono::system_clock::now().time_since_epoch().count();
+		default_random_engine generator(seed);
 		uniform_int_distribution<size_t> distribution(0, variables.size() - 1);
 		auto index = distribution(generator);
 
