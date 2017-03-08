@@ -162,6 +162,7 @@ copy "$(CudaToolkitBinDir)\cudart*.dll" "$(OutDir)"</Command>
     <ClInclude Include="FixedIntVariable.h" />
     <ClInclude Include="functions.cuh" />
     <ClInclude Include="Propagator.h" />
+    <ClInclude Include="VariableEnvironment.h" />
     <ClInclude Include="VariableSelector.h" />
     <ClInclude Include="HydraException.h" />
     <ClInclude Include="IllegalVariableOperationException.h" />
@@ -179,6 +180,7 @@ copy "$(CudaToolkitBinDir)\cudart*.dll" "$(OutDir)"</Command>
     <ClCompile Include="Constraint.cpp" />
     <ClCompile Include="FixedIntVariable.cpp" />
     <ClCompile Include="Propagator.cpp" />
+    <ClCompile Include="VariableEnvironment.cpp" />
     <ClCompile Include="VariableSelector.cpp" />
     <ClCompile Include="HydraException.cpp" />
     <ClCompile Include="IllegalVariableOperationException.cpp" />

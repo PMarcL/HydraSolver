@@ -174,6 +174,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="SumConstraintTest.cpp" />
+    <ClCompile Include="VariableEnvironmentTest.cpp" />
     <ClCompile Include="VariableImpl.cpp" />
     <ClCompile Include="VariableSelectorTest.cpp" />
     <ClCompile Include="VariableTest.cpp" />

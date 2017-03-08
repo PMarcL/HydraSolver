@@ -1,7 +1,6 @@
 #include "SumConstraint.h"
 #include "IntVariable.h"
 #include <list>
-#include <queue>
 
 using namespace std;
 

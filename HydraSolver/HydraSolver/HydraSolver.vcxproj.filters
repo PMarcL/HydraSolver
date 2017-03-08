@@ -41,6 +41,9 @@
       <Filter>heuristics</Filter>
     </ClCompile>
     <ClCompile Include="Propagator.cpp" />
+    <ClCompile Include="VariableEnvironment.cpp">
+      <Filter>variables</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="functions.cuh" />
@@ -81,6 +84,9 @@
       <Filter>heuristics</Filter>
     </ClInclude>
     <ClInclude Include="Propagator.h" />
+    <ClInclude Include="VariableEnvironment.h">
+      <Filter>variables</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="constraints">

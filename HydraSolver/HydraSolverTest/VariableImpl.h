@@ -11,5 +11,8 @@ public:
 	void popState() override;
 	int cardinality() const override;
 	void instantiate() override;
+
+	bool pushWasCalled;
+	bool popWasCalled;
 };
 
