@@ -38,9 +38,6 @@
     <ClCompile Include="ModelTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ConstraintTest.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="SolverTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
