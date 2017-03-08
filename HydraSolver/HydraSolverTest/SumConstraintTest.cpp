@@ -42,7 +42,7 @@ public:
 		Assert::AreEqual(2, var1.cardinality());
 	}
 
-	TEST_METHOD(ShouldBeSatisfiedAfterFilteringConsistantVariables) {
+	TEST_METHOD(ShouldBeSatisfiedAfterFilteringConsistentVariables) {
 		BitsetIntVariable var1("var1", 1, 2);
 		BitsetIntVariable var2("var2", 1, 3);
 		auto sum = 4;
@@ -54,7 +54,7 @@ public:
 		Assert::IsTrue(sumConstraint.isSatisfied());
 	}
 
-	TEST_METHOD(ShouldBeSatisfiedAfterFilteringConsistantVariablesDomains) {
+	TEST_METHOD(ShouldBeSatisfiedAfterFilteringConsistentVariablesDomains) {
 		BitsetIntVariable var1("var1", 1, 2);
 		BitsetIntVariable var2("var2", 1, 2);
 		auto sum = 3;
@@ -66,7 +66,7 @@ public:
 		Assert::IsTrue(sumConstraint.isSatisfied());
 	}
 
-	TEST_METHOD(ShouldBeSatisfiedAfterFilteringConsistantVariablesBounds) {
+	TEST_METHOD(ShouldBeSatisfiedAfterFilteringConsistentVariablesBounds) {
 		BitsetIntVariable var1("var1", 1, 2);
 		BitsetIntVariable var2("var2", 1, 2);
 		auto sum = 3;
@@ -78,7 +78,7 @@ public:
 		Assert::IsTrue(sumConstraint.isSatisfied());
 	}
 
-	TEST_METHOD(ShouldNotBeSatisfiedAfterFilteringInconsistantVariables) {
+	TEST_METHOD(ShouldNotBeSatisfiedAfterFilteringInconsistentVariables) {
 		BitsetIntVariable var1("var1", 1, 2);
 		BitsetIntVariable var2("var2", 1, 3);
 		auto sum = 6;
@@ -90,7 +90,7 @@ public:
 		Assert::IsFalse(sumConstraint.isSatisfied());
 	}
 
-	TEST_METHOD(ShouldNotBeSatisfiedAfterFilteringInconsistantVariablesDomains) {
+	TEST_METHOD(ShouldNotBeSatisfiedAfterFilteringInconsistentVariablesDomains) {
 		BitsetIntVariable var1("var1", 2, 3);
 		BitsetIntVariable var2("var2", 1, 4);
 		auto sum = 8;
@@ -102,7 +102,7 @@ public:
 		Assert::IsFalse(sumConstraint.isSatisfied());
 	}
 
-	TEST_METHOD(ShouldNotBeSatisfiedAfterFilteringInconsistantVariablesBounds) {
+	TEST_METHOD(ShouldNotBeSatisfiedAfterFilteringInconsistentVariablesBounds) {
 		BitsetIntVariable var1("var1", 2, 5);
 		BitsetIntVariable var2("var2", 1, 4);
 		auto sum = 12;

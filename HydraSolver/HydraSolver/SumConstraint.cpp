@@ -22,7 +22,6 @@ namespace hydra {
 		return false;
 	}
 
-
 	vector<Variable*> SumConstraint::filter() {
 		return CPUDomainFilteringAlgorithm();
 	}

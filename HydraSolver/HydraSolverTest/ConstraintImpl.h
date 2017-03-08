@@ -12,5 +12,9 @@ public:
 	std::vector<hydra::Variable*> filterDomains() override;
 	std::vector<hydra::Variable*> filterBounds() override;
 	bool isSatisfied() const override;
+
+	bool filterWasCalled;
+	bool filterDomainWasCalled;
+	bool filterBoundsWasCalled;
 };
 
