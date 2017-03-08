@@ -7,6 +7,7 @@ public:
 	explicit VariableImpl(const std::string& name = "test");
 	~VariableImpl();
 
+	std::string getFormattedDomain() const override;
 	void pushCurrentState() override;
 	void popState() override;
 	int cardinality() const override;
@@ -14,5 +15,6 @@ public:
 
 	bool pushWasCalled;
 	bool popWasCalled;
+	bool formattedDomainWasCalled;
 };
 

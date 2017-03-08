@@ -11,6 +11,7 @@ namespace hydra {
 
 		std::string getName() const;
 
+		virtual std::string getFormattedDomain() const = 0;
 		virtual void pushCurrentState() = 0;
 		virtual void popState() = 0;
 		virtual int cardinality() const = 0;

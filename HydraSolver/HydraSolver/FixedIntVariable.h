@@ -9,6 +9,7 @@ namespace hydra {
 		FixedIntVariable(const std::string& name, int value);
 		~FixedIntVariable();
 
+		std::string getFormattedDomain() const override;
 		void pushCurrentState() override;
 		void popState() override;
 		int cardinality() const override;

@@ -44,6 +44,7 @@
     <ClCompile Include="VariableEnvironment.cpp">
       <Filter>variables</Filter>
     </ClCompile>
+    <ClCompile Include="Solution.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="functions.cuh" />
@@ -87,6 +88,7 @@
     <ClInclude Include="VariableEnvironment.h">
       <Filter>variables</Filter>
     </ClInclude>
+    <ClInclude Include="Solution.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="constraints">

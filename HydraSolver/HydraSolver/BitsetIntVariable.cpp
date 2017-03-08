@@ -1,5 +1,6 @@
 #include "BitsetIntVariable.h"
 #include "IllegalVariableOperationException.h"
+#include <string>
 
 using namespace std;
 
@@ -8,6 +9,22 @@ namespace hydra {
 	BitsetIntVariable::BitsetIntVariable(const string& name, int lowerBound, int upperBound) :
 		IntVariable(name), statesStack(), currentRemovedValues(), bitset(upperBound - lowerBound + 1, true), currentLowerBound(lowerBound),
 		currentUpperBound(upperBound), originalLowerBound(lowerBound) {
+	}
+
+	string BitsetIntVariable::getFormattedDomain() const {
+		vector<int> valuesToPrint;
+		for (auto i = 0; i < bitset.size(); i++) {
+			if (bitset[i]) {
+				valuesToPrint.push_back(originalLowerBound + i);
+			}
+		}
+
+		string formattedDomain = "{ ";
+		for (auto i = 0; i < valuesToPrint.size() - 1; i++) {
+			formattedDomain += to_string(valuesToPrint[i]) + ", ";
+		}
+		formattedDomain += to_string(valuesToPrint[valuesToPrint.size() - 1]) + " }";
+		return formattedDomain;
 	}
 
 	void BitsetIntVariable::pushCurrentState() {

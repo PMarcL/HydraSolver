@@ -166,6 +166,7 @@
     <ClCompile Include="FixedIntVariableTest.cpp" />
     <ClCompile Include="ModelTest.cpp" />
     <ClCompile Include="PropagatorTest.cpp" />
+    <ClCompile Include="SolutionTest.cpp" />
     <ClCompile Include="SolverTest.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

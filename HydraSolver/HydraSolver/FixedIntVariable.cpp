@@ -1,5 +1,6 @@
 #include "FixedIntVariable.h"
 #include "IllegalVariableOperationException.h"
+#include <string>
 
 using namespace std;
 
@@ -10,6 +11,11 @@ namespace hydra {
 
 	FixedIntVariable::~FixedIntVariable() {
 	}
+
+	string FixedIntVariable::getFormattedDomain() const {
+		return "{ " + to_string(value) + " }";
+	}
+
 
 	void FixedIntVariable::pushCurrentState() {
 		// fixed values don't need to push their state
@@ -59,7 +65,6 @@ namespace hydra {
 	void FixedIntVariable::instantiate() {
 		// fixed values don't need to be instantiated
 	}
-
 
 	IntVariableIterator* FixedIntVariable::iterator() {
 		return new FixedIntIterator(value);

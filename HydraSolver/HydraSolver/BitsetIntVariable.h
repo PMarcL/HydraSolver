@@ -9,6 +9,7 @@ namespace hydra {
 	public:
 		BitsetIntVariable(const std::string& name, int lowerBound, int upperBound);
 
+		std::string getFormattedDomain() const override;
 		void pushCurrentState() override;
 		void popState() override;
 		int cardinality() const override;
