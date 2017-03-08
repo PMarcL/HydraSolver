@@ -18,7 +18,10 @@ namespace hydra {
 		std::vector<Constraint*> getConstraints() const;
 		void addVariable(Variable*);
 		void addVariableArray(const std::vector<Variable*>& vars);
-		const VariableEnvironment& getEnvironment() const;
+		void pushEnvironment() const;
+		void popEnvironment() const;
+		bool allVariablesAreInstantiated() const;
+		std::vector<Variable*> getVariables() const;
 		std::string getName() const;
 
 		Model(const Model&) = delete;

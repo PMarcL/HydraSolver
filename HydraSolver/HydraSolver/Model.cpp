@@ -35,9 +35,22 @@ namespace hydra {
 		variableEnvironment.addVariableArray(vars);
 	}
 
-	const VariableEnvironment& Model::getEnvironment() const {
-		return variableEnvironment;
+	void Model::pushEnvironment() const {
+		variableEnvironment.push();
 	}
+
+	void Model::popEnvironment() const {
+		variableEnvironment.pop();
+	}
+
+	bool Model::allVariablesAreInstantiated() const {
+		return variableEnvironment.allVariablesAreInstantiated();
+	}
+
+	vector<Variable*> Model::getVariables() const {
+		return variableEnvironment.getVariables();
+	}
+
 
 	string Model::getName() const {
 		return name;

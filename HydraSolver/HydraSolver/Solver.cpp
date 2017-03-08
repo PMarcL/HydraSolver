@@ -12,24 +12,24 @@ namespace hydra {
 		Solution solution;
 		do {
 			auto result = propagator.propagate();
-			model->getEnvironment().push();
+			model->pushEnvironment();
 
 			if (result == INCONSISTENT_STATE) {
-				model->getEnvironment().pop();
+				model->popEnvironment();
 				return Solution({}, false);
 			}
 
-			if (model->getEnvironment().allVariablesAreInstantiated()) {
-				return Solution(model->getEnvironment().getVariables(), true);
+			if (model->allVariablesAreInstantiated()) {
+				return Solution(model->getVariables(), true);
 			}
 
-			auto instantiatedVariable = variableSelector.instantiateVariable(model->getEnvironment().getVariables());
+			auto instantiatedVariable = variableSelector.instantiateVariable(model->getVariables());
 			auto v = instantiatedVariable->getInstantiatedValue();
 			solution = findSolution();
 			if (!solution.isConsistent()) {
 				// if filtering v empties out the domain of the instantiated variable we return an empty solution
 				if (instantiatedVariable->cardinality() == 1) {
-					model->getEnvironment().pop();
+					model->popEnvironment();
 					return Solution({}, false);
 				}
 				instantiatedVariable->filterValue(v);
