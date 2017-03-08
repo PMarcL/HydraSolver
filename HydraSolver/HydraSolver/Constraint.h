@@ -15,9 +15,11 @@ namespace hydra {
 		virtual std::vector<Variable*> filter() = 0;
 		virtual std::vector<Variable*> filterDomains() = 0;
 		virtual std::vector<Variable*> filterBounds() = 0;
+		virtual bool isSatisfied() const = 0;
 
 	protected:
 		bool useGPU;
+		bool satisfied;
 	};
 
 } // namespace hydra

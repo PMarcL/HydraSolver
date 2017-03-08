@@ -2,7 +2,7 @@
 
 namespace hydra {
 
-	Constraint::Constraint() : useGPU(false) {
+	Constraint::Constraint() : useGPU(false), satisfied(false) {
 	}
 
 	Constraint::~Constraint() {

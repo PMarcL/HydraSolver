@@ -16,6 +16,7 @@ namespace hydra {
 		std::vector<Variable*> filter() override;
 		std::vector<Variable*> filterDomains() override;
 		std::vector<Variable*> filterBounds() override;
+		bool isSatisfied() const override;
 
 	private:
 		std::vector<Variable*> CPUDomainFilteringAlgorithm();

@@ -35,8 +35,13 @@ namespace hydra {
 		return CPUBoundsFilteringAlgorithm();
 	}
 
+	bool SumConstraint::isSatisfied() const {
+		return satisfied;
+	}
+
 	vector<Variable*> SumConstraint::CPUBoundsFilteringAlgorithm() {
 		vector<Variable*> modifiedVariables;
+		satisfied = true;
 		for (auto i = 0; i < variables.size(); i++) {
 
 			auto iterator = variables[i]->iterator();
@@ -61,6 +66,7 @@ namespace hydra {
 					}
 				}
 			}
+			satisfied = satisfied && variables[i]->cardinality() != 0;
 			delete iterator;
 		}
 		return modifiedVariables;
@@ -122,6 +128,9 @@ namespace hydra {
 				++it;
 			}
 		}
+
+		// if nodeQueue is empty here, the constraint is unsatisfiable, otherwise it is
+		satisfied = !nodeQueue.empty();
 
 		vector<Variable*> filteredVariables;
 		// Traversing the graph backward level by level, filtering values along the way

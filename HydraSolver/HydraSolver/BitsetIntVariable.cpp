@@ -84,7 +84,7 @@ namespace hydra {
 
 	void BitsetIntVariable::updateLowerBound() {
 		size_t index = 0;
-		while (!bitset[index] && index < bitset.size()) {
+		while (index < bitset.size() && !bitset[index]) {
 			index++;
 		}
 
@@ -95,7 +95,7 @@ namespace hydra {
 
 	void BitsetIntVariable::updateUpperBound() {
 		auto index = bitset.size() - 1;
-		while (!bitset[index] && index > 0) {
+		while (index > 0 && !bitset[index]) {
 			index--;
 		}
 

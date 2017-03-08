@@ -11,5 +11,6 @@ public:
 	std::vector<hydra::Variable*> filter() override;
 	std::vector<hydra::Variable*> filterDomains() override;
 	std::vector<hydra::Variable*> filterBounds() override;
+	bool isSatisfied() const override;
 };
 

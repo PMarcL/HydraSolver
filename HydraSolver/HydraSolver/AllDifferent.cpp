@@ -32,4 +32,8 @@ namespace hydra {
 		return vector<Variable*>();
 	}
 
+	bool AllDifferent::isSatisfied() const {
+		return false;
+	}
+
 } // namespace hydra

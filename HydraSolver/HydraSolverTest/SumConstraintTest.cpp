@@ -42,6 +42,78 @@ public:
 		Assert::AreEqual(2, var1.cardinality());
 	}
 
+	TEST_METHOD(ShouldBeSatisfiedAfterFilteringConsistantVariables) {
+		BitsetIntVariable var1("var1", 1, 2);
+		BitsetIntVariable var2("var2", 1, 3);
+		auto sum = 4;
+
+		SumConstraint sumConstraint({ &var1, &var2 }, sum);
+
+		sumConstraint.filter();
+
+		Assert::IsTrue(sumConstraint.isSatisfied());
+	}
+
+	TEST_METHOD(ShouldBeSatisfiedAfterFilteringConsistantVariablesDomains) {
+		BitsetIntVariable var1("var1", 1, 2);
+		BitsetIntVariable var2("var2", 1, 2);
+		auto sum = 3;
+
+		SumConstraint sumConstraint({ &var1, &var2 }, sum);
+
+		sumConstraint.filterDomains();
+
+		Assert::IsTrue(sumConstraint.isSatisfied());
+	}
+
+	TEST_METHOD(ShouldBeSatisfiedAfterFilteringConsistantVariablesBounds) {
+		BitsetIntVariable var1("var1", 1, 2);
+		BitsetIntVariable var2("var2", 1, 2);
+		auto sum = 3;
+
+		SumConstraint sumConstraint({ &var1, &var2 }, sum);
+
+		sumConstraint.filterBounds();
+
+		Assert::IsTrue(sumConstraint.isSatisfied());
+	}
+
+	TEST_METHOD(ShouldNotBeSatisfiedAfterFilteringInconsistantVariables) {
+		BitsetIntVariable var1("var1", 1, 2);
+		BitsetIntVariable var2("var2", 1, 3);
+		auto sum = 6;
+
+		SumConstraint sumConstraint({ &var1, &var2 }, sum);
+
+		sumConstraint.filter();
+
+		Assert::IsFalse(sumConstraint.isSatisfied());
+	}
+
+	TEST_METHOD(ShouldNotBeSatisfiedAfterFilteringInconsistantVariablesDomains) {
+		BitsetIntVariable var1("var1", 2, 3);
+		BitsetIntVariable var2("var2", 1, 4);
+		auto sum = 8;
+
+		SumConstraint sumConstraint({ &var1, &var2 }, sum);
+
+		sumConstraint.filterDomains();
+
+		Assert::IsFalse(sumConstraint.isSatisfied());
+	}
+
+	TEST_METHOD(ShouldNotBeSatisfiedAfterFilteringInconsistantVariablesBounds) {
+		BitsetIntVariable var1("var1", 2, 5);
+		BitsetIntVariable var2("var2", 1, 4);
+		auto sum = 12;
+
+		SumConstraint sumConstraint({ &var1, &var2 }, sum);
+
+		sumConstraint.filterBounds();
+
+		Assert::IsFalse(sumConstraint.isSatisfied());
+	}
+
 	TEST_METHOD(ShouldReturnFilteredVariablesWhenFilteringDomain) {
 		BitsetIntVariable var1("var1", 1, 2);
 		BitsetIntVariable var2("var2", 1, 3);
