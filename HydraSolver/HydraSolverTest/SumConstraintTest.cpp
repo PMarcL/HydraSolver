@@ -11,6 +11,23 @@ namespace HydraSolverTest {
 
 	TEST_CLASS(SumConstraintTest) {
 public:
+	TEST_METHOD(ShouldContainGivenVariables) {
+		BitsetIntVariable var1("var1", 1, 2);
+		BitsetIntVariable var2("var2", 1, 3);
+		SumConstraint sumConstraint({ &var1, &var2 }, 4);
+
+		Assert::IsTrue(sumConstraint.containsVariable(&var1));
+		Assert::IsTrue(sumConstraint.containsVariable(&var2));
+	}
+
+	TEST_METHOD(ShouldNotContainOtherVariables) {
+		BitsetIntVariable var1("var1", 1, 2);
+		BitsetIntVariable var2("var2", 1, 2);
+		SumConstraint sumConstraint({ &var1 }, 4);
+
+		Assert::IsFalse(sumConstraint.containsVariable(&var2));
+	}
+
 	TEST_METHOD(ShouldFilterDomainsWhenFilterIsCalled_simpleCase) {
 		BitsetIntVariable var1("var1", 1, 2);
 		BitsetIntVariable var2("var2", 1, 3);

@@ -7,6 +7,7 @@ public:
 	ConstraintImpl();
 	~ConstraintImpl();
 
+	bool containsVariable(hydra::Variable* variable) const override;
 	void filter() override;
 	void filterDomains() override;
 	void filterBounds() override;

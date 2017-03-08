@@ -13,6 +13,16 @@ namespace hydra {
 	SumConstraint::~SumConstraint() {
 	}
 
+	bool SumConstraint::containsVariable(Variable* variable) const {
+		for (auto var : variables) {
+			if (var == variable) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+
 	void SumConstraint::filter() {
 		CPUDomainFilteringAlgorithm();
 	}

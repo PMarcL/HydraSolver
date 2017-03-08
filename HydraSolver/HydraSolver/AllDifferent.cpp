@@ -11,6 +11,15 @@ namespace hydra {
 	AllDifferent::~AllDifferent() {
 	}
 
+	bool AllDifferent::containsVariable(Variable* variable) const {
+		for (auto var : variables) {
+			if (var == variable) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	void AllDifferent::filter() {
 	}
 

@@ -10,6 +10,11 @@ ConstraintImpl::ConstraintImpl() {
 ConstraintImpl::~ConstraintImpl() {
 }
 
+bool ConstraintImpl::containsVariable(hydra::Variable*) const {
+	return false;
+}
+
+
 void ConstraintImpl::filter() {
 }
 

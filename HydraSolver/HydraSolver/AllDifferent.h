@@ -12,6 +12,7 @@ namespace hydra {
 		explicit AllDifferent(const std::vector<IntVariable*>& variables);
 		~AllDifferent();
 
+		bool containsVariable(Variable* variable) const;
 		void filter() override;
 		void filterDomains() override;
 		void filterBounds() override;
