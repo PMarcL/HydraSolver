@@ -53,5 +53,4 @@ namespace hydra {
 		return solution;
 	}
 
-
 } // namespace hydra

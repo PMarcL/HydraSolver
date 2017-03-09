@@ -30,13 +30,26 @@ public:
 		Assert::AreEqual(expectedValue, fixedInt.getUpperBound());
 	}
 
-	TEST_METHOD(ShouldThrowIllegalOperationWhenTryingToFilterValue) {
+	TEST_METHOD(ShouldThrowIllegalOperationWhenTryingToFilterValueDifferentThanCurrentValue) {
 		auto func = [] {
 			FixedIntVariable fixedInt("test", 42);
 			fixedInt.filterValue(10);
 		};
 
 		Assert::ExpectException<IllegalVariableOperationException, void>(func);
+	}
+
+	TEST_METHOD(ShouldReturnACardinalityOfZeroIfValueIsFiltered) {
+		FixedIntVariable fixedInt("test", 32);
+		fixedInt.filterValue(32);
+		Assert::AreEqual(0, fixedInt.cardinality());
+	}
+
+	TEST_METHOD(ShouldHaveACardinalityOfOneAfterFilteringValueAndPopState) {
+		FixedIntVariable fixedInt("test", 32);
+		fixedInt.filterValue(32);
+		fixedInt.popState();
+		Assert::AreEqual(1, fixedInt.cardinality());
 	}
 
 	TEST_METHOD(ShouldThrowIllegalOperationWhenTryingToFilterLowerBound) {

@@ -6,7 +6,7 @@ using namespace std;
 
 namespace hydra {
 
-	FixedIntVariable::FixedIntVariable(const string& name, int value) : Variable(name), value(value) {
+	FixedIntVariable::FixedIntVariable(const string& name, int value) : Variable(name), value(value), valueFiltered(false) {
 	}
 
 	FixedIntVariable::~FixedIntVariable() {
@@ -21,11 +21,13 @@ namespace hydra {
 	}
 
 	void FixedIntVariable::popState() {
-		// fixed values don't need to pop an earlier state
+		if (valueFiltered) {
+			valueFiltered = false;
+		}
 	}
 
 	int FixedIntVariable::cardinality() const {
-		return 1;
+		return valueFiltered ? 0 : 1;
 	}
 
 	void FixedIntVariable::instantiate() {
@@ -36,11 +38,15 @@ namespace hydra {
 		return value;
 	}
 
-	void FixedIntVariable::filterValue(int) {
-		IllegalVariableOperationException e;
-		e.setDescription(getErrorDescriptionForMehtod("filterValue"));
+	void FixedIntVariable::filterValue(int valueToFilter) {
+		if (valueToFilter != value) {
+			IllegalVariableOperationException e;
+			e.setDescription(getErrorDescriptionForMehtod("filterValue") + "with value not equal to current value.");
 
-		throw e;
+			throw e;
+		}
+
+		valueFiltered = true;
 	}
 
 	void FixedIntVariable::filterLowerBound(int) {

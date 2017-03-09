@@ -50,6 +50,7 @@ namespace hydra {
 		std::string getErrorDescriptionForMehtod(const std::string& methodName) const;
 
 		int value;
+		bool valueFiltered;
 	};
 
 } // namespace hydra
