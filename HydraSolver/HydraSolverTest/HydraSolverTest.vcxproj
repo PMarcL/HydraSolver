@@ -162,6 +162,7 @@
     <ClCompile Include="AllDifferentUtilsTest.cpp" />
     <ClCompile Include="BitsetIntVariableTest.cpp" />
     <ClCompile Include="ConstraintImpl.cpp" />
+    <ClCompile Include="ConstraintUtilsTest.cpp" />
     <ClCompile Include="FixedIntVariableTest.cpp" />
     <ClCompile Include="ModelTest.cpp" />
     <ClCompile Include="PropagatorTest.cpp" />

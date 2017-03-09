@@ -3,7 +3,6 @@
 #include "VariableSelector.h"
 #include "Solution.h"
 #include "Propagator.h"
-#include "VariableEnvironment.h"
 
 namespace hydra {
 

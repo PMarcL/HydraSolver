@@ -3,7 +3,7 @@
 #include "Variable.h"
 
 using namespace std;
-using namespace std::chrono;
+using namespace chrono;
 
 namespace hydra {
 

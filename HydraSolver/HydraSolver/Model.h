@@ -17,6 +17,7 @@ namespace hydra {
 		void postConstraints(const std::vector<Constraint*>&);
 		std::vector<Constraint*> getConstraints() const;
 		size_t getNumberOfConstraints() const;
+
 		void addVariable(Variable*);
 		void addVariableArray(const std::vector<Variable*>& vars);
 		void pushEnvironment() const;

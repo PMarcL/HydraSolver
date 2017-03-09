@@ -44,7 +44,7 @@ namespace hydra {
 		os << "\tBacktracks : " << nbOfBacktracks << endl;
 
 		os << "Solution :" << endl;
-		for (auto i = 0; i < variables.size() - 1; i++) {
+		for (size_t i = 0; i < variables.size() - 1; i++) {
 			auto var = variables[i];
 			os << "\t" << var->getName() << " = " << var->getFormattedDomain() << ", ";
 		}

@@ -13,14 +13,14 @@ namespace hydra {
 
 	string BitsetIntVariable::getFormattedDomain() const {
 		vector<int> valuesToPrint;
-		for (auto i = 0; i < bitset.size(); i++) {
+		for (size_t i = 0; i < bitset.size(); i++) {
 			if (bitset[i]) {
 				valuesToPrint.push_back(originalLowerBound + i);
 			}
 		}
 
 		string formattedDomain = "{ ";
-		for (auto i = 0; i < valuesToPrint.size() - 1; i++) {
+		for (size_t i = 0; i < valuesToPrint.size() - 1; i++) {
 			formattedDomain += to_string(valuesToPrint[i]) + ", ";
 		}
 		formattedDomain += to_string(valuesToPrint[valuesToPrint.size() - 1]) + " }";
