@@ -1,6 +1,7 @@
 #include "Model.h"
 #include "Constraint.h"
 #include "Variable.h"
+#include "VariableUtils.h"
 
 using namespace std;
 
@@ -35,8 +36,34 @@ namespace hydra {
 		variableEnvironment.addVariable(variable);
 	}
 
-	void Model::addVariableArray(const std::vector<Variable*>& vars) {
+	void Model::addVariableArray(const vector<Variable*>& vars) {
 		variableEnvironment.addVariableArray(vars);
+	}
+
+	Variable* Model::createIntVar(const string& name, int value) {
+		auto var = CreateIntVar(name, value);
+		addVariable(var);
+		return var;
+	}
+
+	Variable* Model::createIntVar(const string& name, int lb, int ub) {
+		auto var = CreateIntVar(name, lb, ub);
+		addVariable(var);
+		return var;
+	}
+
+	vector<Variable*> Model::createIntVarArray(const string& name, size_t size, int lb, int ub) {
+		auto vars = CreateIntVarArray(name, size, lb, ub);
+		addVariableArray(vars);
+		return vars;
+	}
+
+	vector<vector<Variable*>> Model::createIntVarMatrix(const string& name, size_t row, size_t col, int lb, int ub) {
+		auto vars = CreateIntVarMatrix(name, row, col, lb, ub);
+		for (auto currentRow : vars) {
+			addVariableArray(currentRow);
+		}
+		return vars;
 	}
 
 	size_t Model::getNumberOfVariables() const {

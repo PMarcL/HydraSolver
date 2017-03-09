@@ -11,6 +11,13 @@ namespace HydraSolverTest {
 
 	TEST_CLASS(BitsetIntVariableTest) {
 public:
+	TEST_METHOD(ShouldThrowIllegalOperationOnCreationWithInconsistentBounds) {
+		auto func = [] {
+			BitsetIntVariable bitset("test", 10, 1);
+		};
+		Assert::ExpectException<IllegalVariableOperationException, void>(func);
+	}
+
 	TEST_METHOD(ShouldHaveGivenNameAndGivenBounds) {
 		string expectedName = "test";
 		auto lowerBound = 1;

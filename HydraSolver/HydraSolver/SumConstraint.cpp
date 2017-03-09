@@ -41,7 +41,7 @@ namespace hydra {
 	vector<Variable*> SumConstraint::CPUBoundsFilteringAlgorithm() {
 		vector<Variable*> modifiedVariables;
 		satisfied = true;
-		for (auto i = 0; i < variables.size(); i++) {
+		for (size_t i = 0; i < variables.size(); i++) {
 
 			auto iterator = variables[i]->iterator();
 			while (iterator->hasNextValue()) {
@@ -49,7 +49,7 @@ namespace hydra {
 				auto lowerBoundSum = currentValue;
 				auto upperBoundSum = currentValue;
 
-				for (auto j = 0; j < variables.size(); j++) {
+				for (size_t j = 0; j < variables.size(); j++) {
 					if (j == i) {
 						continue;
 					}

@@ -45,6 +45,9 @@
     <ClCompile Include="ConstraintUtils.cpp">
       <Filter>constraints</Filter>
     </ClCompile>
+    <ClCompile Include="VariableUtils.cpp">
+      <Filter>variables</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="functions.cuh" />
@@ -88,6 +91,9 @@
     <ClInclude Include="Solution.h" />
     <ClInclude Include="ConstraintUtils.h">
       <Filter>constraints</Filter>
+    </ClInclude>
+    <ClInclude Include="VariableUtils.h">
+      <Filter>variables</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

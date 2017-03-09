@@ -173,6 +173,7 @@ copy "$(CudaToolkitBinDir)\cudart*.dll" "$(OutDir)"</Command>
     <ClInclude Include="Solver.h" />
     <ClInclude Include="SumConstraint.h" />
     <ClInclude Include="Variable.h" />
+    <ClInclude Include="VariableUtils.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AllDifferent.cpp" />
@@ -192,6 +193,7 @@ copy "$(CudaToolkitBinDir)\cudart*.dll" "$(OutDir)"</Command>
     <ClCompile Include="Solver.cpp" />
     <ClCompile Include="SumConstraint.cpp" />
     <ClCompile Include="Variable.cpp" />
+    <ClCompile Include="VariableUtils.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

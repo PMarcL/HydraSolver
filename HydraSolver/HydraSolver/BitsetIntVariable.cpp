@@ -7,8 +7,14 @@ using namespace std;
 namespace hydra {
 
 	BitsetIntVariable::BitsetIntVariable(const string& name, int lowerBound, int upperBound) :
-		Variable(name), statesStack(), currentRemovedValues(), bitset(upperBound - lowerBound + 1, true), currentLowerBound(lowerBound),
+		Variable(name), statesStack(), currentRemovedValues(), currentLowerBound(lowerBound),
 		currentUpperBound(upperBound), originalLowerBound(lowerBound) {
+		if (lowerBound > upperBound) {
+			IllegalVariableOperationException e;
+			e.setDescription("Trying to create a BitsetVariable (" + name + ") with lowerbound greater than upper bound.");
+			throw e;
+		}
+		bitset = vector<bool>(upperBound - lowerBound + 1, true);
 	}
 
 	string BitsetIntVariable::getFormattedDomain() const {
