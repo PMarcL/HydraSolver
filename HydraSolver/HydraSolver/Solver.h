@@ -16,9 +16,12 @@ namespace hydra {
 		Solution findSolution();
 
 	private:
+		Solution solve();
+
 		Model* model;
 		VariableSelector variableSelector;
 		Propagator propagator;
+		int nbOfBacktracks;
 	};
 
 } // namespace hydra

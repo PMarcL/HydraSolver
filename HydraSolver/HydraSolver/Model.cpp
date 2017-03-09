@@ -27,12 +27,20 @@ namespace hydra {
 		return constraints;
 	}
 
+	size_t Model::getNumberOfConstraints() const {
+		return constraints.size();
+	}
+
 	void Model::addVariable(Variable* variable) {
 		variableEnvironment.addVariable(variable);
 	}
 
 	void Model::addVariableArray(const std::vector<Variable*>& vars) {
 		variableEnvironment.addVariableArray(vars);
+	}
+
+	size_t Model::getNumberOfVariables() const {
+		return variableEnvironment.getVariables().size();
 	}
 
 	void Model::pushEnvironment() const {
