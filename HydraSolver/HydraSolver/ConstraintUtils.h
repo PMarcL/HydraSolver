@@ -4,10 +4,9 @@
 
 namespace hydra {
 
-	class SumConstraint;
-	class AllDifferent;
+	class Constraint;
 	class Variable;
 
-	SumConstraint* CreateSumConstraint(const std::vector<Variable*>& variables, int sum);
-	AllDifferent* CreateAllDifferentConstraint(const std::vector<Variable*>& variables);
+	Constraint* CreateSumConstraint(const std::vector<Variable*>& variables, int sum);
+	Constraint* CreateAllDifferentConstraint(const std::vector<Variable*>& variables);
 }

@@ -6,11 +6,11 @@ using namespace std;
 
 namespace hydra {
 
-	SumConstraint* CreateSumConstraint(const vector<Variable*>& variables, int sum) {
+	Constraint* CreateSumConstraint(const vector<Variable*>& variables, int sum) {
 		return new SumConstraint(variables, sum);
 	}
 
-	AllDifferent* CreateAllDifferentConstraint(const vector<Variable*>& variables) {
+	Constraint* CreateAllDifferentConstraint(const vector<Variable*>& variables) {
 		return new AllDifferent(variables);
 	}
 
