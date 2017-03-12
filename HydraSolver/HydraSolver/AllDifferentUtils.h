@@ -1,8 +1,6 @@
 #pragma once
 
 #include <vector>
-#include <unordered_map>
-#include <utility>
 
 namespace hydra {
 
@@ -12,27 +10,32 @@ namespace hydra {
 		SOURCE,
 		VARIABLE,
 		VALUE,
-		TARGET
+		SINK
 	};
 
 	struct AllDiffNode;
 
 	struct AllDiffEdge {
-		AllDiffEdge(int capacity, AllDiffNode* from, AllDiffNode* to) : capacity(capacity), from(from), to(to) {}
-		int capacity;
+		AllDiffEdge(int capacity, AllDiffNode* from, AllDiffNode* to) : initialCapacity(capacity), residualCapacity(capacity), flow(0), from(from), to(to) {}
+
+		int initialCapacity;
+		int residualCapacity;
+		int flow;
 		AllDiffNode* from;
 		AllDiffNode* to;
 	};
 
 	struct AllDiffNode {
-		explicit AllDiffNode(AllDiffNodeType type) : type(type), var(nullptr), value(-1) {}
+		explicit AllDiffNode(AllDiffNodeType type) : type(type), var(nullptr), value(-1), visited(false), parent(nullptr) {}
+
 		AllDiffNodeType type;
 		Variable* var;
 		int value;
 		std::vector<AllDiffEdge*> adjencyList;
+		bool visited;
+		AllDiffEdge* parent;
 	};
 
-	std::vector<std::vector<int>> FordFulkersonAlgorithm(const std::vector<AllDiffNode*>& nodes, AllDiffNode* source, AllDiffNode* target);
-	int calculateFlowValue(std::vector<std::vector<int>> flow, AllDiffNode* source, AllDiffNode* target);
+	void FordFulkersonAlgorithm(const std::vector<AllDiffNode*>& nodes, AllDiffNode* source, AllDiffNode* target);
 	void ReginAlgorithm(const std::vector<Variable*>& vars);
 }
