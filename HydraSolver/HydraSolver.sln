@@ -11,6 +11,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "HydraSolverTest", "HydraSol
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "HydraSolverDemo", "HydraSolverDemo\HydraSolverDemo.vcxproj", "{ACDBAC14-CFCA-4BF5-B409-949D9168C425}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MagicSquare", "MagicSquare\MagicSquare.vcxproj", "{167A8C69-C08D-4465-8798-844752035076}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -51,6 +53,14 @@ Global
 		{ACDBAC14-CFCA-4BF5-B409-949D9168C425}.Release|x64.Build.0 = Release|x64
 		{ACDBAC14-CFCA-4BF5-B409-949D9168C425}.Release|x86.ActiveCfg = Release|Win32
 		{ACDBAC14-CFCA-4BF5-B409-949D9168C425}.Release|x86.Build.0 = Release|Win32
+		{167A8C69-C08D-4465-8798-844752035076}.Debug|x64.ActiveCfg = Debug|x64
+		{167A8C69-C08D-4465-8798-844752035076}.Debug|x64.Build.0 = Debug|x64
+		{167A8C69-C08D-4465-8798-844752035076}.Debug|x86.ActiveCfg = Debug|Win32
+		{167A8C69-C08D-4465-8798-844752035076}.Debug|x86.Build.0 = Debug|Win32
+		{167A8C69-C08D-4465-8798-844752035076}.Release|x64.ActiveCfg = Release|x64
+		{167A8C69-C08D-4465-8798-844752035076}.Release|x64.Build.0 = Release|x64
+		{167A8C69-C08D-4465-8798-844752035076}.Release|x86.ActiveCfg = Release|Win32
+		{167A8C69-C08D-4465-8798-844752035076}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

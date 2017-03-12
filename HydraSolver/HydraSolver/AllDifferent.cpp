@@ -1,4 +1,5 @@
 #include "AllDifferent.h"
+#include "AllDifferentUtils.h"
 #include "Variable.h"
 
 using namespace std;
@@ -21,19 +22,25 @@ namespace hydra {
 	}
 
 	vector<Variable*> AllDifferent::filter() {
-		return vector<Variable*>();
+		unordered_set<Variable*> filteredVariables;
+		satisfied = ReginAlgorithm(variables, filteredVariables);
+		return vector<Variable*>(filteredVariables.begin(), filteredVariables.end());
 	}
 
 	vector<Variable*> AllDifferent::filterDomains() {
-		return vector<Variable*>();
+		unordered_set<Variable*> filteredVariables;
+		satisfied = ReginAlgorithm(variables, filteredVariables);
+		return vector<Variable*>(filteredVariables.begin(), filteredVariables.end());
 	}
 
 	vector<Variable*> AllDifferent::filterBounds() {
-		return vector<Variable*>();
+		unordered_set<Variable*> filteredVariables;
+		satisfied = ReginAlgorithm(variables, filteredVariables);
+		return vector<Variable*>(filteredVariables.begin(), filteredVariables.end());
 	}
 
 	bool AllDifferent::isSatisfied() const {
-		return false;
+		return satisfied;
 	}
 
 } // namespace hydra

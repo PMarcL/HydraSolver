@@ -21,7 +21,7 @@ namespace hydra {
 	vector<Variable*> CreateIntVarArray(const string& name, size_t size, int lb, int ub) {
 		vector<Variable*> variables;
 		for (size_t i = 0; i < size; i++) {
-			auto currentName = name + to_string(i + 1);
+			auto currentName = name + to_string(i);
 			variables.push_back(new BitsetIntVariable(currentName, lb, ub));
 		}
 		return variables;
