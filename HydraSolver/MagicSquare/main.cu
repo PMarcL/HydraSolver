@@ -37,6 +37,7 @@ int main() {
 	model.postConstraint(CreateSumConstraint(diagonal2, SUM));
 
 	auto solver = hydra::Solver(&model);
+	solver.setLocalConsistencyConfig(hydra::BOUND_CONSISTENCY);
 
 	auto solution = solver.findSolution();
 	std::cout << solution.getFormattedSolution() << std::endl;
