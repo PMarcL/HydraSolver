@@ -4,6 +4,7 @@
 #include <string>
 #include <iostream>
 #include <sstream>
+#include <iomanip>
 
 using namespace std;
 
@@ -40,7 +41,7 @@ namespace hydra {
 		}
 
 		os << "solution found." << endl;
-		os << "\tResolution time : " << computingTime / 1000 << "." << computingTime % 1000 << "s" << endl;
+		os << "\tResolution time : " << computingTime / 1000 << "." << setfill('0') << setw(3) << computingTime % 1000 << "s" << endl;
 		os << "\tBacktracks : " << nbOfBacktracks << endl;
 
 		os << "Solution :" << endl;
