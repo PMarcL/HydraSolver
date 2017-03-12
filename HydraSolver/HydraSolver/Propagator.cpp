@@ -39,13 +39,17 @@ namespace hydra {
 		return LOCAL_CONSISTENCY;
 	}
 
+	void Propagator::setLocalConsistencyConfig(LocalConsistencyConfig config) {
+		consistencyConfig = config;
+	}
+
 	vector<Variable*> Propagator::filterConstraint(Constraint* constraint) const {
 		switch (consistencyConfig) {
 		case DEFAULT_FILTERING_ALGO:
 			return constraint->filter();
-		case DOMAIN_CONSISTENCY_ALGO:
+		case DOMAIN_CONSISTENCY:
 			return constraint->filterDomains();
-		case BOUND_CONSISTENCY_ALGO:
+		case BOUND_CONSISTENCY:
 			return constraint->filterBounds();
 		default:
 			return constraint->filter();

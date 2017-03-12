@@ -22,6 +22,10 @@ namespace hydra {
 		return solution;
 	}
 
+	void Solver::setLocalConsistencyConfig(LocalConsistencyConfig config) {
+		propagator.setLocalConsistencyConfig(config);
+	}
+
 	Solution Solver::solve() {
 		Solution solution;
 		do {

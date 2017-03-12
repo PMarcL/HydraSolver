@@ -13,6 +13,7 @@ namespace hydra {
 		explicit Solver(Model* model, Heuristic heuristic = SMALLEST_DOMAIN, Heuristic tieBreaker = RANDOM);
 
 		Solution findSolution();
+		void setLocalConsistencyConfig(LocalConsistencyConfig config);
 
 	private:
 		Solution solve();

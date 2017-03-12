@@ -26,7 +26,7 @@ public:
 
 	TEST_METHOD(ShouldOnlyCallFilterDomainOnPropagateWithDomainFilteringConfig) {
 		ConstraintImpl constraint;
-		Propagator propagator({ &constraint }, DOMAIN_CONSISTENCY_ALGO);
+		Propagator propagator({ &constraint }, DOMAIN_CONSISTENCY);
 
 		propagator.propagate();
 
@@ -37,7 +37,7 @@ public:
 
 	TEST_METHOD(ShouldOnlyCallFilterBoundsOnPropagateWithDomainFilteringConfig) {
 		ConstraintImpl constraint;
-		Propagator propagator({ &constraint }, BOUND_CONSISTENCY_ALGO);
+		Propagator propagator({ &constraint }, BOUND_CONSISTENCY);
 
 		propagator.propagate();
 
@@ -86,7 +86,7 @@ public:
 		BitsetIntVariable var2("var2", 1, 4);
 		SumConstraint sumConstraint({ &var1, &var2 }, 8);
 
-		Propagator propagator({ &sumConstraint }, DOMAIN_CONSISTENCY_ALGO);
+		Propagator propagator({ &sumConstraint }, DOMAIN_CONSISTENCY);
 		auto result = propagator.propagate();
 
 		Assert::IsTrue(result == LOCAL_CONSISTENCY);
@@ -97,7 +97,7 @@ public:
 		BitsetIntVariable var2("var2", 1, 3);
 		SumConstraint sumConstraint({ &var1, &var2 }, 2);
 
-		Propagator propagator({ &sumConstraint }, DOMAIN_CONSISTENCY_ALGO);
+		Propagator propagator({ &sumConstraint }, DOMAIN_CONSISTENCY);
 		auto result = propagator.propagate();
 
 		Assert::IsTrue(result == INCONSISTENT_STATE);
@@ -108,7 +108,7 @@ public:
 		BitsetIntVariable var2("var2", 1, 4);
 		SumConstraint sumConstraint({ &var1, &var2 }, 8);
 
-		Propagator propagator({ &sumConstraint }, BOUND_CONSISTENCY_ALGO);
+		Propagator propagator({ &sumConstraint }, BOUND_CONSISTENCY);
 		auto result = propagator.propagate();
 
 		Assert::IsTrue(result == LOCAL_CONSISTENCY);
@@ -119,7 +119,7 @@ public:
 		BitsetIntVariable var2("var2", 1, 3);
 		SumConstraint sumConstraint({ &var1, &var2 }, 2);
 
-		Propagator propagator({ &sumConstraint }, BOUND_CONSISTENCY_ALGO);
+		Propagator propagator({ &sumConstraint }, BOUND_CONSISTENCY);
 		auto result = propagator.propagate();
 
 		Assert::IsTrue(result == INCONSISTENT_STATE);

@@ -8,8 +8,8 @@ namespace hydra {
 
 	enum LocalConsistencyConfig {
 		DEFAULT_FILTERING_ALGO,
-		BOUND_CONSISTENCY_ALGO,
-		DOMAIN_CONSISTENCY_ALGO
+		BOUND_CONSISTENCY,
+		DOMAIN_CONSISTENCY
 	};
 
 	enum PropagationResult {
@@ -23,6 +23,7 @@ namespace hydra {
 		~Propagator();
 
 		PropagationResult propagate();
+		void setLocalConsistencyConfig(LocalConsistencyConfig config);
 
 	private:
 		std::vector<Variable*> filterConstraint(Constraint* constraint) const;
