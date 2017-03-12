@@ -1,6 +1,5 @@
 #include "VariableSelector.h"
 #include "Variable.h"
-#include <list>
 #include <random>
 #include <chrono>
 
@@ -20,17 +19,15 @@ namespace hydra {
 		switch (heuristic) {
 		case SMALLEST_DOMAIN:
 			return smallestDomain(variables);
-			break;
 		case RANDOM:
 			return randomSelection(variables);
-			break;
 		default:
 			return randomSelection(variables);
 		}
 	}
 
 	Variable* VariableSelector::smallestDomain(const std::vector<Variable*>& variables) const {
-		list<Variable*> smallestVariables;
+		vector<Variable*> smallestVariables;
 		auto minCardinality = 0;
 
 		for (auto variable : variables) {
@@ -47,11 +44,10 @@ namespace hydra {
 		}
 
 		if (smallestVariables.size() > 1) {
-			return useHeuristic(variables, tieBreaker);
-		} else {
-			smallestVariables.front()->instantiate();
-			return smallestVariables.front();
+			return useHeuristic(smallestVariables, tieBreaker);
 		}
+		smallestVariables.front()->instantiate();
+		return smallestVariables.front();
 	}
 
 	Variable* VariableSelector::randomSelection(const vector<Variable*>& variables) {
