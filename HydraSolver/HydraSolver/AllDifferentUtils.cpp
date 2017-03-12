@@ -1,4 +1,6 @@
 #include "AllDifferentUtils.h"
+#include "Variable.h"
+#include <unordered_map>
 
 using namespace std;
 
@@ -122,7 +124,7 @@ namespace hydra {
 	void visitNodeForwardDirection(AllDiffNode* node, list<AllDiffNode*>& visitedNodes) {
 		node->visited = true;
 		for (auto edge : node->adjencyList) {
-			if (!edge->to->visited) {
+			if (!edge->to->visited && edge->residualCapacity > 0) {
 				visitNodeForwardDirection(edge->to, visitedNodes);
 			}
 		}
@@ -158,15 +160,101 @@ namespace hydra {
 	void visitNodeBackwardDirection(AllDiffNode* node, unordered_set<AllDiffNode*>& connectedNodes) {
 		node->visited = true;
 		for (auto edge : node->adjencyList) {
-			if (!edge->to->visited) {
+			if (!edge->to->visited && edge->residualCapacity > 0) {
 				visitNodeBackwardDirection(edge->to, connectedNodes);
 			}
 		}
 		connectedNodes.insert(node);
 	}
 
-	void ReginAlgorithm(const vector<Variable*>& vars) {
-		// TODO : implement and test this function
+	bool ReginAlgorithm(const vector<Variable*>& vars, unordered_set<Variable*>& filteredVariable) {
+		auto source = new AllDiffNode(SOURCE);
+		auto sink = new AllDiffNode(SINK);
+		vector<AllDiffNode*> nodes;
+		unordered_map<int, AllDiffNode*> valueNodes;
+
+		// build the graph, instantiate a node for every variable and for every possible value
+		for (auto var : vars) {
+			auto varNode = new AllDiffNode(VARIABLE);
+			nodes.push_back(varNode);
+			varNode->var = var;
+
+			auto edgeSourceToVar = new AllDiffEdge(1, source, varNode);
+			source->adjencyList.push_back(edgeSourceToVar);
+
+			auto iterator = var->iterator();
+			for (auto i = 0; i < var->cardinality(); i++) {
+				auto currentValue = iterator->next();
+				auto valueNodeIt = valueNodes.find(currentValue);
+				AllDiffNode *valueNode;
+
+				if (valueNodeIt == valueNodes.end()) {
+					valueNode = new AllDiffNode(VALUE);
+					valueNode->value = currentValue;
+					valueNodes.emplace(currentValue, valueNode);
+
+					auto edgeValueToSink = new AllDiffEdge(1, valueNode, sink);
+					valueNode->adjencyList.push_back(edgeValueToSink);
+				} else {
+					valueNode = (*valueNodeIt).second;
+				}
+
+				auto edgeVarToValue = new AllDiffEdge(1, varNode, valueNode);
+				varNode->adjencyList.push_back(edgeVarToValue);
+			}
+			delete iterator;
+		}
+
+		for (auto value : valueNodes) {
+			nodes.push_back(value.second);
+		}
+		nodes.push_back(source);
+		nodes.push_back(sink);
+
+		// at this point, all variable nodes are in the first n entry of the nodes vector (n being the number of variables)
+		FordFulkersonAlgorithm(nodes, source, sink);
+
+		// if the maximum flow of the graph is not equal to the number of variable, the all different constraint is not satisfiable
+		size_t maxFlow = 0;
+		for (auto value : valueNodes) {
+			for (auto edge : value.second->adjencyList) {
+				if (edge->to->type == SINK) {
+					maxFlow += edge->flow;
+				}
+			}
+		}
+		if (maxFlow != vars.size()) {
+			deleteGraph(nodes);
+			return false;
+		}
+
+		auto connectedComponents = KosarajuAlgorithm(nodes);
+
+		for (size_t i = 0; i < vars.size(); i++) {
+			auto currentNode = nodes[i];
+			for (auto edge : currentNode->adjencyList) {
+				if (edge->flow == 0) {
+					unordered_set<AllDiffNode*> connectedNodes;
+					for (auto component : connectedComponents) {
+						if (component.find(currentNode) != component.end()) {
+							connectedNodes = component;
+							break;
+						}
+					}
+
+					// if the value node is not in the same strongly connected nodes set, filter the value from the variable
+					if (connectedNodes.find(edge->to) == connectedNodes.end()) {
+						currentNode->var->filterValue(edge->to->value);
+						if (filteredVariable.find(currentNode->var) == filteredVariable.end()) {
+							filteredVariable.insert(currentNode->var);
+						}
+					}
+				}
+			}
+		}
+
+		deleteGraph(nodes);
+		return true;
 	}
 
 	void deleteGraph(const vector<AllDiffNode*>& nodes) {

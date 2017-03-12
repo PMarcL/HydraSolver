@@ -51,7 +51,14 @@ namespace hydra {
 	 */
 	std::vector<std::unordered_set<AllDiffNode*> > KosarajuAlgorithm(const std::vector<AllDiffNode*>& nodes);
 
-	void ReginAlgorithm(const std::vector<Variable*>& vars);
+	/*
+	 * Verifies if the all different constraint can be satisfied with the given variable.
+	 * Adds every filtered variable to the filteredVariable vector and returns true if the constraint is satisfiable.
+	 */
+	bool ReginAlgorithm(const std::vector<Variable*>& vars, std::unordered_set<Variable*>& filteredVariable);
 
+	/*
+	 * Deletes all nodes and edges of the given graph.
+	 */
 	void deleteGraph(const std::vector<AllDiffNode*>& nodes);
 }

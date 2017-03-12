@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "CppUnitTest.h"
 #include "AllDifferentUtils.h"
+#include "BitsetIntVariable.h"
 
 using namespace hydra;
 using namespace std;
@@ -220,6 +221,41 @@ public:
 		}
 
 		deleteGraph(nodes);
+	}
+
+	TEST_METHOD(ReginAlgorithmShouldReturnTrueAndFilterVariableIfConstraintIsSatisfiable) {
+		BitsetIntVariable var1("var1", 11, 13);
+		var1.filterValue(12);
+		BitsetIntVariable var2("var2", 9, 13);
+		var2.filterValue(11);
+		var2.filterValue(12);
+		BitsetIntVariable var3("var3", 9, 13);
+		var3.filterValue(10);
+		var3.filterValue(12);
+		BitsetIntVariable var4("var4", 11, 13);
+		var4.filterValue(12);
+
+		unordered_set<Variable*> filteredVariables;
+		auto satisfiable = ReginAlgorithm({ &var1, &var2, &var3, &var4 }, filteredVariables);
+
+		Assert::IsTrue(satisfiable);
+		size_t expectedFilteredVariables = 2;
+		Assert::AreEqual(expectedFilteredVariables, filteredVariables.size());
+		Assert::IsFalse(var2.containsValue(9) && var2.containsValue(13));
+		Assert::IsFalse(var3.containsValue(11) && var2.containsValue(13));
+	}
+
+	TEST_METHOD(ReginAlgorithmShouldReturnFalseIfConstraintIsNotSatisfiable) {
+		BitsetIntVariable var1("var1", 1, 2);
+		BitsetIntVariable var2("var2", 1, 2);
+		BitsetIntVariable var3("var3", 1, 2);
+
+		unordered_set<Variable*> filteredVariables;
+		auto satisfiable = ReginAlgorithm({ &var1, &var2, &var3 }, filteredVariables);
+
+		Assert::IsFalse(satisfiable);
+		size_t expectedFilteredVariables = 0;
+		Assert::AreEqual(expectedFilteredVariables, filteredVariables.size());
 	}
 	};
 }
