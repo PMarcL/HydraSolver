@@ -4,7 +4,7 @@
 #include <iostream>
 #include <string>
 
-const int N = 3;
+const int N = 4;
 const int SUM = N * (N * N + 1) / 2;
 
 int main() {
@@ -36,7 +36,7 @@ int main() {
 	model.postConstraint(CreateSumConstraint(diagonal1, SUM));
 	model.postConstraint(CreateSumConstraint(diagonal2, SUM));
 
-	auto solver = hydra::Solver(&model);
+	auto solver = hydra::Solver(&model, hydra::RANDOM);
 	solver.setLocalConsistencyConfig(hydra::BOUND_CONSISTENCY);
 
 	auto solution = solver.findSolution();

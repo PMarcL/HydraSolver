@@ -28,12 +28,14 @@ namespace hydra {
 
 	Solution Solver::solve() {
 		Solution solution;
+		auto nbOfEnvPush = 0;
 		do {
 			auto result = propagator.propagate();
 			model->pushEnvironment();
+			nbOfEnvPush++;
 
 			if (result == INCONSISTENT_STATE) {
-				model->popEnvironment();
+				model->popEnvironmentNTimes(nbOfEnvPush);
 				return Solution({}, false, model);
 			}
 
@@ -48,7 +50,7 @@ namespace hydra {
 				nbOfBacktracks++;
 				// if filtering v empties out the domain of the instantiated variable we return an empty solution
 				if (instantiatedVariable->cardinality() == 1) {
-					model->popEnvironment();
+					model->popEnvironmentNTimes(nbOfEnvPush);
 					return Solution({}, false, model);
 				}
 				instantiatedVariable->filterValue(v);

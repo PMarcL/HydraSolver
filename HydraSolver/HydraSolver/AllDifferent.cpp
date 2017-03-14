@@ -13,12 +13,7 @@ namespace hydra {
 	}
 
 	bool AllDifferent::containsVariable(Variable* variable) const {
-		for (auto var : variables) {
-			if (var == variable) {
-				return true;
-			}
-		}
-		return false;
+		return find(variables.begin(), variables.end(), variable) != variables.end();
 	}
 
 	vector<Variable*> AllDifferent::filter() {

@@ -1,6 +1,7 @@
 #include "AllDifferentUtils.h"
 #include "Variable.h"
 #include <unordered_map>
+#include <algorithm>
 
 using namespace std;
 
@@ -8,15 +9,17 @@ namespace hydra {
 	vector<AllDiffEdge*> findPathFromSourceToSink(const vector<AllDiffNode*>& nodes, AllDiffNode* source, AllDiffNode* target);
 	AllDiffEdge* findOrCreateInvertedEdge(AllDiffEdge* edge);
 
+	bool edgeResidualCapacityCompare(AllDiffEdge *edge1, AllDiffEdge *edge2) {
+		return edge1->residualCapacity < edge2->residualCapacity;
+	}
+
 	void FordFulkersonAlgorithm(const vector<AllDiffNode*>& nodes, AllDiffNode* source, AllDiffNode* target) {
 		auto currentPath = findPathFromSourceToSink(nodes, source, target);
 		while (currentPath.size() > 0) {
-			auto minResidualCapacity = currentPath[0]->residualCapacity;
-			for (auto edge : currentPath) {
-				if (edge->residualCapacity < minResidualCapacity) {
-					minResidualCapacity = edge->residualCapacity;
-				}
-			}
+			auto minResidualCapacity = (*min_element(currentPath.begin(), currentPath.end(), [](AllDiffEdge *edge1, AllDiffEdge *edge2) {
+				return edge1->residualCapacity < edge2->residualCapacity;
+			}))->residualCapacity;
+
 			for (auto edge : currentPath) {
 				edge->flow += minResidualCapacity;
 				edge->residualCapacity = edge->initialCapacity - edge->flow;
@@ -25,6 +28,7 @@ namespace hydra {
 				invertedEdge->flow -= minResidualCapacity;
 				invertedEdge->residualCapacity = invertedEdge->initialCapacity - invertedEdge->flow;
 			}
+
 			currentPath = findPathFromSourceToSink(nodes, source, target);
 		}
 	}
