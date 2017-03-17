@@ -9,7 +9,8 @@ using namespace std;
 
 namespace hydra {
 
-	SumConstraint::SumConstraint(const vector<Variable*>& variables, int sum) : variables(variables), sum(sum) {
+	SumConstraint::SumConstraint(const vector<Variable*>& variables, int sum, bool pUseGPU) : variables(variables), sum(sum) {
+		useGPU = pUseGPU;
 	}
 
 	SumConstraint::~SumConstraint() {
@@ -28,7 +29,7 @@ namespace hydra {
 	}
 
 	vector<Variable*> SumConstraint::filterBounds() {
-		return CPUBoundsFilteringAlgorithm();
+		return useGPU ? GPUBoundsFilteringAlgorithm() : CPUBoundsFilteringAlgorithm();
 	}
 
 	bool SumConstraint::isSatisfied() const {
@@ -75,6 +76,11 @@ namespace hydra {
 		return modifiedVariables;
 	}
 
+	vector<Variable*> SumConstraint::GPUBoundsFilteringAlgorithm() {
+		vector<Variable*> modifiedVariables;
+		// TODO implementation
+		return modifiedVariables;
+	}
 	// implementation of Trick algorithm
 	struct TrickNode;
 
@@ -113,7 +119,8 @@ namespace hydra {
 
 					if (iteratorToNode == nodesAtThisLevel.end()) {
 						child = new TrickNode(currentNode->value + currentValue);
-					} else {
+					}
+					else {
 						child = (*iteratorToNode).second;
 					}
 
@@ -136,7 +143,8 @@ namespace hydra {
 				if (it == nodeQueue.end()) {
 					break;
 				}
-			} else {
+			}
+			else {
 				++it;
 			}
 		}

@@ -9,7 +9,7 @@ namespace hydra {
 	class SumConstraint :
 		public Constraint {
 	public:
-		SumConstraint(const std::vector<Variable*>& var, int sum);
+		SumConstraint(const std::vector<Variable*>& var, int sum, bool pUseGPU = false);
 		~SumConstraint();
 
 		bool containsVariable(Variable* variable) const override;
@@ -21,6 +21,7 @@ namespace hydra {
 	private:
 		std::vector<Variable*> CPUDomainFilteringAlgorithm();
 		std::vector<Variable*> CPUBoundsFilteringAlgorithm();
+		std::vector<Variable*> GPUBoundsFilteringAlgorithm();
 
 		std::vector<Variable*> variables;
 		int sum;
