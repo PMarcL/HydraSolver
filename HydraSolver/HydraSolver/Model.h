@@ -27,11 +27,12 @@ namespace hydra {
 		void pushEnvironment() const;
 		void popEnvironment() const;
 		size_t getNumberOfVariables() const;
+		VariableEnvironment getVariableEnvironnement() const;
 		bool allVariablesAreInstantiated() const;
 		std::vector<Variable*> getVariables() const;
 		std::string getName() const;
 
-		Model(const Model&) = delete;
+		Model(const Model&);
 		Model& operator=(const Model&) = delete;
 	private:
 

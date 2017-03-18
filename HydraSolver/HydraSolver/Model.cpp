@@ -86,9 +86,20 @@ namespace hydra {
 		return variableEnvironment.getVariables();
 	}
 
+	VariableEnvironment Model::getVariableEnvironnement() const
+	{
+		return variableEnvironment;
+	}
+
 
 	string Model::getName() const {
 		return name;
+	}
+
+	Model::Model(const Model& model) {
+		name = model.getName();
+		variableEnvironment = model.getVariableEnvironnement();
+		constraints = model.getConstraints();
 	}
 
 } // namespace hydra
