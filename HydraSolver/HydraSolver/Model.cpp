@@ -74,8 +74,10 @@ namespace hydra {
 		variableEnvironment.push();
 	}
 
-	void Model::popEnvironment() const {
-		variableEnvironment.pop();
+	void Model::popEnvironmentNTimes(unsigned int n) const {
+		for (auto i = 0; i < n; i++) {
+			variableEnvironment.pop();
+		}
 	}
 
 	bool Model::allVariablesAreInstantiated() const {

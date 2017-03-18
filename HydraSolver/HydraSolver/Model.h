@@ -25,7 +25,7 @@ namespace hydra {
 		std::vector<Variable*> createIntVarArray(const std::string& name, size_t size, int lb, int ub);
 		std::vector<std::vector<Variable*> > createIntVarMatrix(const std::string& name, size_t row, size_t col, int lb, int ub);
 		void pushEnvironment() const;
-		void popEnvironment() const;
+		void popEnvironmentNTimes(unsigned int n) const;
 		size_t getNumberOfVariables() const;
 		VariableEnvironment getVariableEnvironnement() const;
 		bool allVariablesAreInstantiated() const;
