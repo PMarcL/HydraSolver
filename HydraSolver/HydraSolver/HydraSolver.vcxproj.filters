@@ -48,6 +48,9 @@
     <ClCompile Include="VariableUtils.cpp">
       <Filter>variables</Filter>
     </ClCompile>
+    <ClCompile Include="AllDiffBoundsFilter.cpp">
+      <Filter>constraints</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="functions.cuh" />
@@ -94,6 +97,9 @@
     </ClInclude>
     <ClInclude Include="VariableUtils.h">
       <Filter>variables</Filter>
+    </ClInclude>
+    <ClInclude Include="AllDiffBoundsFilter.h">
+      <Filter>constraints</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

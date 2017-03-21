@@ -1,15 +1,17 @@
 #include "AllDifferent.h"
 #include "AllDifferentUtils.h"
+#include "AllDiffBoundsFilter.h"
 #include "Variable.h"
 
 using namespace std;
 
 namespace hydra {
 
-	AllDifferent::AllDifferent(const vector<Variable*>& variables) : variables(variables) {
+	AllDifferent::AllDifferent(const vector<Variable*>& variables) : variables(variables), boundsFilter(new AllDiffBoundsFilter(variables)) {
 	}
 
 	AllDifferent::~AllDifferent() {
+		delete boundsFilter;
 	}
 
 	bool AllDifferent::containsVariable(Variable* variable) const {
@@ -29,9 +31,9 @@ namespace hydra {
 	}
 
 	vector<Variable*> AllDifferent::filterBounds() {
-		unordered_set<Variable*> filteredVariables;
-		satisfied = ReginAlgorithm(variables, filteredVariables);
-		return vector<Variable*>(filteredVariables.begin(), filteredVariables.end());
+		vector<Variable*> filteredVariables;
+		satisfied = boundsFilter->filter(filteredVariables);
+		return filteredVariables;
 	}
 
 	bool AllDifferent::isSatisfied() const {

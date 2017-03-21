@@ -155,6 +155,7 @@ copy "$(CudaToolkitBinDir)\cudart*.dll" "$(OutDir)"</Command>
     <CudaCompile Include="functions.cu" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AllDiffBoundsFilter.h" />
     <ClInclude Include="AllDifferent.h" />
     <ClInclude Include="AllDifferentUtils.h" />
     <ClInclude Include="BitsetIntVariable.h" />
@@ -176,6 +177,7 @@ copy "$(CudaToolkitBinDir)\cudart*.dll" "$(OutDir)"</Command>
     <ClInclude Include="VariableUtils.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AllDiffBoundsFilter.cpp" />
     <ClCompile Include="AllDifferent.cpp" />
     <ClCompile Include="AllDifferentUtils.cpp" />
     <ClCompile Include="BitsetIntVariable.cpp" />
