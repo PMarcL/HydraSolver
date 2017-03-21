@@ -89,5 +89,4 @@ namespace hydra {
 		return copy;
 	}
 
-
 } // namespace hydra

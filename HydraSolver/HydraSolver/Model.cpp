@@ -2,7 +2,6 @@
 #include "Constraint.h"
 #include "Variable.h"
 #include "VariableUtils.h"
-#include <unordered_set>
 
 using namespace std;
 
@@ -88,11 +87,6 @@ namespace hydra {
 	vector<Variable*> Model::getVariables() const {
 		return variableEnvironment.getVariables();
 	}
-
-	VariableEnvironment Model::getVariableEnvironnement() const {
-		return variableEnvironment;
-	}
-
 
 	string Model::getName() const {
 		return name;

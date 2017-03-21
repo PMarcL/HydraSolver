@@ -93,5 +93,6 @@ public:
 
 		Assert::IsTrue(clone->containsValue(13));
 	}
+
 	};
 }

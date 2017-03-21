@@ -64,5 +64,3 @@ hydra::IntVariableIterator* VariableImpl::iterator() {
 hydra::Variable* VariableImpl::clone() const {
 	return new VariableImpl;
 }
-
-
