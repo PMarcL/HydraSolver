@@ -86,5 +86,12 @@ public:
 
 		delete iterator;
 	}
+
+	TEST_METHOD(CloneShouldReturnACopyWithExactSameDomain) {
+		FixedIntVariable fixedInt("test", 13);
+		auto clone = fixedInt.clone();
+
+		Assert::IsTrue(clone->containsValue(13));
+	}
 	};
 }

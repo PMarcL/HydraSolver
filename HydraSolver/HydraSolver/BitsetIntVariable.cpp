@@ -227,4 +227,15 @@ namespace hydra {
 		return counter < cardinalityAtCreation;
 	}
 
+	Variable* BitsetIntVariable::clone() const {
+		auto copy = new BitsetIntVariable(name, originalLowerBound, originalLowerBound + bitset.size());
+		copy->bitset = bitset;
+		copy->statesStack = statesStack;
+		copy->currentRemovedValues = currentRemovedValues;
+		copy->currentLowerBound = currentLowerBound;
+		copy->currentUpperBound = currentUpperBound;
+		return copy;
+	}
+
+
 } // namespace hydra

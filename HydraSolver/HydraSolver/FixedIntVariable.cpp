@@ -83,4 +83,11 @@ namespace hydra {
 		return methodName + " was called on a FixedIntVariable (" + name + ").";
 	}
 
+	Variable* FixedIntVariable::clone() const {
+		auto copy = new FixedIntVariable(name, value);
+		copy->valueFiltered = valueFiltered;
+		return copy;
+	}
+
+
 } // namespace hydra

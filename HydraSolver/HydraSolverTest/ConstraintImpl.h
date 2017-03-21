@@ -12,6 +12,8 @@ public:
 	std::vector<hydra::Variable*> filterDomains() override;
 	std::vector<hydra::Variable*> filterBounds() override;
 	bool isSatisfied() const override;
+	void replaceVariable(hydra::Variable* varToReplace, hydra::Variable* replacement) override;
+	Constraint* clone() const override;
 
 	bool filterWasCalled;
 	bool filterDomainWasCalled;

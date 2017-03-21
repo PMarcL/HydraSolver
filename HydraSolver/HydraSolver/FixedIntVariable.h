@@ -23,6 +23,7 @@ namespace hydra {
 		int getUpperBound() const override;
 		bool containsValue(int value) const override;
 		IntVariableIterator* iterator() override;
+		Variable* clone() const override;
 
 	private:
 		class FixedIntIterator : public IntVariableIterator {

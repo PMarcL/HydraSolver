@@ -102,28 +102,55 @@ public:
 		}
 	}
 
-	TEST_METHOD(ShouldCopieModelOnOperatorEqual) {
+	TEST_METHOD(ShouldCopyModelAttributesOnCopyOperator) {
 		string expectedName = "test";
 		Model m(expectedName);
 		Model newM(expectedName);
 		m.addVariableArray({ new VariableImpl, new VariableImpl, new VariableImpl });
 		size_t expectedSizeVars = 3;
+
 		m.postConstraints({ new ConstraintImpl, new ConstraintImpl });
 		size_t expectedSizeCons = 2;
+
 		newM = m;
+
 		Assert::AreEqual(expectedSizeVars, newM.getNumberOfVariables());
 		Assert::AreEqual(expectedSizeCons, newM.getNumberOfConstraints());
 		Assert::AreEqual(expectedName, m.getName());
 	}
 
-	TEST_METHOD(ShouldCopieModelCopyConstructor) {
+	TEST_METHOD(ShouldCopyModelAttributesWhenConstructingAModelWithCopyConstructor) {
 		string expectedName = "test";
 		Model m(expectedName);
+
 		m.addVariableArray({ new VariableImpl, new VariableImpl, new VariableImpl });
 		size_t expectedSizeVars = 3;
+
 		m.postConstraints({ new ConstraintImpl, new ConstraintImpl });
 		size_t expectedSizeCons = 2;
+
 		auto newM(m);
+
+		Assert::AreEqual(expectedSizeVars, newM.getNumberOfVariables());
+		Assert::AreEqual(expectedSizeCons, newM.getNumberOfConstraints());
+		Assert::AreEqual(expectedName, m.getName());
+	}
+
+	TEST_METHOD(ModelCopyShouldNotChangeWhenOriginalIsModified) {
+		string expectedName = "test";
+		Model m(expectedName);
+
+		m.addVariableArray({ new VariableImpl, new VariableImpl, new VariableImpl });
+		size_t expectedSizeVars = 3;
+
+		m.postConstraints({ new ConstraintImpl, new ConstraintImpl });
+		size_t expectedSizeCons = 2;
+
+		auto newM(m);
+
+		m.addVariable(new VariableImpl);
+		m.postConstraint(new ConstraintImpl);
+
 		Assert::AreEqual(expectedSizeVars, newM.getNumberOfVariables());
 		Assert::AreEqual(expectedSizeCons, newM.getNumberOfConstraints());
 		Assert::AreEqual(expectedName, m.getName());

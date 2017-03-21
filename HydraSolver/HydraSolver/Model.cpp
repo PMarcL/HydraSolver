@@ -2,6 +2,7 @@
 #include "Constraint.h"
 #include "Variable.h"
 #include "VariableUtils.h"
+#include <unordered_set>
 
 using namespace std;
 
@@ -88,8 +89,7 @@ namespace hydra {
 		return variableEnvironment.getVariables();
 	}
 
-	VariableEnvironment Model::getVariableEnvironnement() const
-	{
+	VariableEnvironment Model::getVariableEnvironnement() const {
 		return variableEnvironment;
 	}
 
@@ -99,17 +99,37 @@ namespace hydra {
 	}
 
 	Model::Model(const Model& model) {
-		name = model.getName();
-		VariableEnvironment *varEnv = new VariableEnvironment(model.getVariableEnvironnement());
-		variableEnvironment = *varEnv;
-		std::vector<Constraint*> *cons = new std::vector<Constraint*>(model.getConstraints());
-		constraints = *cons;
+		updateAttributesWithModel(model);
 	}
 
-	void Model::operator=(const Model& model) {
+	Model& Model::operator=(const Model& model) {
+		updateAttributesWithModel(model);
+		return *this;
+	}
+
+	void Model::updateAttributesWithModel(const Model& model) {
 		name = model.getName();
-		variableEnvironment = model.getVariableEnvironnement();
-		constraints = model.getConstraints();
+
+		auto originalModelVariables = model.getVariables();
+		vector<Variable*> variablesCopy;
+
+		for (auto var : originalModelVariables) {
+			variablesCopy.push_back(var->clone());
+		}
+
+		variableEnvironment.addVariableArray(variablesCopy);
+
+		for (auto constraint : model.getConstraints()) {
+			constraints.push_back(constraint->clone());
+		}
+
+		for (auto constraint : constraints) {
+			for (size_t i = 0; i < originalModelVariables.size(); i++) {
+				if (constraint->containsVariable(originalModelVariables[i])) {
+					constraint->replaceVariable(originalModelVariables[i], variablesCopy[i]);
+				}
+			}
+		}
 	}
 
 } // namespace hydra

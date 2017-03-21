@@ -35,6 +35,19 @@ namespace hydra {
 		return satisfied;
 	}
 
+	void SumConstraint::replaceVariable(Variable* varToReplace, Variable* replacement) {
+		for (size_t i = 0; i < variables.size(); i++) {
+			if (variables[i] == varToReplace) {
+				variables[i] = replacement;
+				break;
+			}
+		}
+	}
+
+	Constraint* SumConstraint::clone() const {
+		return new SumConstraint(variables, sum);
+	}
+
 	vector<Variable*> SumConstraint::CPUBoundsFilteringAlgorithm() {
 		vector<Variable*> modifiedVariables;
 		satisfied = true;

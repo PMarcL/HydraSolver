@@ -38,4 +38,17 @@ namespace hydra {
 		return satisfied;
 	}
 
+	void AllDifferent::replaceVariable(Variable* varToReplace, Variable* replacement) {
+		for (size_t i = 0; i < variables.size(); i++) {
+			if (variables[i] == varToReplace) {
+				variables[i] = replacement;
+				break;
+			}
+		}
+	}
+
+	Constraint* AllDifferent::clone() const {
+		return new AllDifferent(variables);
+	}
+
 } // namespace hydra

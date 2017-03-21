@@ -33,8 +33,9 @@ namespace hydra {
 		std::string getName() const;
 
 		Model(const Model&);
-		void operator=(const Model&);
+		Model& operator=(const Model&);
 	private:
+		void updateAttributesWithModel(const Model&);
 
 		std::string name;
 		std::vector<Constraint*> constraints;
