@@ -100,6 +100,14 @@ namespace hydra {
 
 	Model::Model(const Model& model) {
 		name = model.getName();
+		VariableEnvironment *varEnv = new VariableEnvironment(model.getVariableEnvironnement());
+		variableEnvironment = *varEnv;
+		std::vector<Constraint*> *cons = new std::vector<Constraint*>(model.getConstraints());
+		constraints = *cons;
+	}
+
+	void Model::operator=(const Model& model) {
+		name = model.getName();
 		variableEnvironment = model.getVariableEnvironnement();
 		constraints = model.getConstraints();
 	}

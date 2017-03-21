@@ -18,6 +18,9 @@ namespace hydra {
 		void pop() const;
 		bool allVariablesAreInstantiated() const;
 
+		VariableEnvironment(const VariableEnvironment&);
+		VariableEnvironment& operator=(const VariableEnvironment&);
+
 	private:
 		std::vector<Variable*> variables;
 	};

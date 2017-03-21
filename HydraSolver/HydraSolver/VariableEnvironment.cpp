@@ -45,5 +45,16 @@ namespace hydra {
 		return true;
 	}
 
+	VariableEnvironment::VariableEnvironment(const VariableEnvironment& variableEnvironment) {
+		std::vector<Variable*> *vars = new std::vector<Variable*>(variableEnvironment.getVariables());
+		variables = *vars;
+	}
+
+	VariableEnvironment& VariableEnvironment::operator=(const VariableEnvironment& varEnv)
+	{
+		variables = varEnv.getVariables();
+		return *this;
+	}
+
 
 } // namespace hydra

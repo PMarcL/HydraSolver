@@ -33,7 +33,7 @@ namespace hydra {
 		std::string getName() const;
 
 		Model(const Model&);
-		Model& operator=(const Model&) = delete;
+		void operator=(const Model&);
 	private:
 
 		std::string name;
