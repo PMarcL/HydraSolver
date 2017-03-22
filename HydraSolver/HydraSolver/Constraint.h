@@ -16,6 +16,8 @@ namespace hydra {
 		virtual std::vector<Variable*> filterDomains() = 0;
 		virtual std::vector<Variable*> filterBounds() = 0;
 		virtual bool isSatisfied() const = 0;
+		virtual void replaceVariable(Variable* varToReplace, Variable* replacement) = 0;
+		virtual Constraint* clone() const = 0;
 
 	protected:
 		bool useGPU;

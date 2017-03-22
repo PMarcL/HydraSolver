@@ -45,5 +45,4 @@ namespace hydra {
 		return true;
 	}
 
-
 } // namespace hydra

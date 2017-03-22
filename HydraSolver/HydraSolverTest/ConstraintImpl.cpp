@@ -33,3 +33,9 @@ bool ConstraintImpl::isSatisfied() const {
 	return true;
 }
 
+void ConstraintImpl::replaceVariable(hydra::Variable* varToReplace, hydra::Variable* replacement) {
+}
+
+Constraint* ConstraintImpl::clone() const {
+	return new ConstraintImpl;
+}
