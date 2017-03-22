@@ -158,6 +158,7 @@ copy "$(CudaToolkitBinDir)\cudart*.dll" "$(OutDir)"</Command>
     <ClInclude Include="AllDiffBoundsFilter.h" />
     <ClInclude Include="AllDifferent.h" />
     <ClInclude Include="AllDifferentUtils.h" />
+    <ClInclude Include="BinaryArithmeticConstraint.h" />
     <ClInclude Include="BitsetIntVariable.h" />
     <ClInclude Include="Constraint.h" />
     <ClInclude Include="ConstraintUtils.h" />
@@ -180,6 +181,7 @@ copy "$(CudaToolkitBinDir)\cudart*.dll" "$(OutDir)"</Command>
     <ClCompile Include="AllDiffBoundsFilter.cpp" />
     <ClCompile Include="AllDifferent.cpp" />
     <ClCompile Include="AllDifferentUtils.cpp" />
+    <ClCompile Include="BinaryArithmeticConstraint.cpp" />
     <ClCompile Include="BitsetIntVariable.cpp" />
     <ClCompile Include="Constraint.cpp" />
     <ClCompile Include="ConstraintUtils.cpp" />
