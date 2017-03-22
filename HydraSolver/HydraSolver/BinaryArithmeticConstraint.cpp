@@ -7,7 +7,7 @@ using namespace std;
 namespace hydra {
 
 	BinaryArithmeticConstraint::BinaryArithmeticConstraint(Variable* var1, Variable* var2, int result, Operator op, RelationalOperator relop) : var1(var1),
-		var2(var2), rhs(result), op(op), relop(relop) {
+		var2(var2), rhs(result), operation(getOperation(op, relop)) {
 	}
 
 	BinaryArithmeticConstraint::~BinaryArithmeticConstraint() {
@@ -40,8 +40,7 @@ namespace hydra {
 		return filteredVariables;
 	}
 
-	bool BinaryArithmeticConstraint::filterVariableBounds(Variable* varToFilter, Variable* otherVar) {
-		auto operation = getOperation();
+	bool BinaryArithmeticConstraint::filterVariableBounds(Variable* varToFilter, Variable* otherVar) const {
 		auto variableWasFiltered = false;
 
 		auto iterator = varToFilter->iterator();
@@ -54,7 +53,6 @@ namespace hydra {
 		}
 		return variableWasFiltered;
 	}
-
 
 	vector<Variable*> BinaryArithmeticConstraint::filterDomains() {
 		satisfied = true;
@@ -75,9 +73,8 @@ namespace hydra {
 		return filteredVariables;
 	}
 
-	bool BinaryArithmeticConstraint::filterVariableDomain(Variable* varToFilter, Variable* otherVar) {
+	bool BinaryArithmeticConstraint::filterVariableDomain(Variable* varToFilter, Variable* otherVar) const {
 		auto variableWasFiltered = false;
-		auto operation = getOperation();
 
 		auto iteratorV1 = varToFilter->iterator();
 		while (iteratorV1->hasNextValue()) {
@@ -103,8 +100,7 @@ namespace hydra {
 		return variableWasFiltered;
 	}
 
-
-	function<bool(int, int)> BinaryArithmeticConstraint::getOperation() {
+	function<bool(int, int)> BinaryArithmeticConstraint::getOperation(Operator op, RelationalOperator relop) {
 		function<int(int, int)> lhsResult;
 		switch (op) {
 		case PLUS:
@@ -146,7 +142,6 @@ namespace hydra {
 		return operation;
 	}
 
-
 	bool BinaryArithmeticConstraint::isSatisfied() const {
 		return satisfied;
 	}
@@ -160,8 +155,9 @@ namespace hydra {
 	}
 
 	Constraint* BinaryArithmeticConstraint::clone() const {
-		return new BinaryArithmeticConstraint(var1, var2, rhs, op, relop);
+		auto clone = new BinaryArithmeticConstraint(var1, var2, rhs, MINUS, EQ);
+		clone->operation = operation;
+		return clone;
 	}
-
 
 } // namespace hydra
