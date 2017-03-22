@@ -160,6 +160,7 @@
   <ItemGroup>
     <ClCompile Include="AllDifferentTest.cpp" />
     <ClCompile Include="AllDifferentUtilsTest.cpp" />
+    <ClCompile Include="BinaryArithmeticConstraintTest.cpp" />
     <ClCompile Include="BitsetIntVariableTest.cpp" />
     <ClCompile Include="ConstraintImpl.cpp" />
     <ClCompile Include="ConstraintUtilsTest.cpp" />

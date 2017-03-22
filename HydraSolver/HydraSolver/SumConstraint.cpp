@@ -79,12 +79,13 @@ namespace hydra {
 				lowerBoundSum -= currentValue;
 				upperBoundSum -= currentValue;
 			}
-			satisfied = satisfied && variables[i]->cardinality() != 0;
+			satisfied = satisfied && variables[i]->cardinality() > 0;
 			delete iterator;
 
 			lowerBoundSum += variables[i]->getLowerBound();
 			upperBoundSum += variables[i]->getUpperBound();
 		}
+
 		return modifiedVariables;
 	}
 

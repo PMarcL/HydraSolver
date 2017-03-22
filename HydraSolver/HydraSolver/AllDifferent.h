@@ -6,6 +6,7 @@
 namespace hydra {
 
 	class Variable;
+	class AllDiffBoundsFilter;
 
 	class AllDifferent : public Constraint {
 	public:
@@ -22,6 +23,7 @@ namespace hydra {
 
 	private:
 		std::vector<Variable*> variables;
+		AllDiffBoundsFilter* boundsFilter;
 	};
 
 } // namespace hydra

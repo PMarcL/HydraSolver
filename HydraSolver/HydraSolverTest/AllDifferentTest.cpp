@@ -69,6 +69,30 @@ public:
 		Assert::IsFalse(allDiff.isSatisfied());
 	}
 
+	TEST_METHOD(ShouldBeSatisfiedAfterFilteringBoundsWithInconsistentVariables) {
+		BitsetIntVariable var1("test", 2, 3);
+		BitsetIntVariable var2("test", 3, 4);
+		BitsetIntVariable var3("test", 3, 4);
+		AllDifferent allDiff({ &var1, &var2, &var3 });
+
+		allDiff.filterBounds();
+
+		Assert::IsTrue(allDiff.isSatisfied());
+	}
+
+	TEST_METHOD(ShouldNotBeSatisfiedAfterFilteringBoundsWithInconsistentVariables) {
+		BitsetIntVariable var01("test", 1, 2);
+		BitsetIntVariable var02("test", 1, 2);
+		BitsetIntVariable var1("test", 2, 3);
+		BitsetIntVariable var2("test", 3, 4);
+		BitsetIntVariable var3("test", 3, 4);
+		AllDifferent allDiff({ &var01, &var02, &var1, &var2, &var3 });
+
+		allDiff.filterBounds();
+
+		Assert::IsFalse(allDiff.isSatisfied());
+	}
+
 	TEST_METHOD(ShouldNotContainVariableAfterReplacementAndShouldContainReplacement) {
 		FixedIntVariable var1("test", 1);
 		FixedIntVariable var2("test", 2);
