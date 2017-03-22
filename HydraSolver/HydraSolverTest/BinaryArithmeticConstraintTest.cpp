@@ -11,7 +11,46 @@ namespace HydraSolverTest {
 
 	TEST_CLASS(BinaryArithmeticConstraintTest) {
 public:
+	TEST_METHOD(ShouldContainGivenVariables) {
+		BitsetIntVariable var1("var1", 0, 2);
+		BitsetIntVariable var2("var2", 0, 3);
+		BinaryArithmeticConstraint constraint(&var1, &var2, 5, PLUS, EQ);
 
+		Assert::IsTrue(constraint.containsVariable(&var1));
+		Assert::IsTrue(constraint.containsVariable(&var2));
+	}
+
+	TEST_METHOD(ShouldReplaceGivenVariableAndNotContainReplacedVariable) {
+		BitsetIntVariable var1("var1", 0, 2);
+		BitsetIntVariable var2("var2", 0, 3);
+		BitsetIntVariable var3("var3", 5, 6);
+		BinaryArithmeticConstraint constraint(&var1, &var2, 5, PLUS, EQ);
+
+		Assert::IsFalse(constraint.containsVariable(&var3));
+	}
+
+	TEST_METHOD(ShouldNotContainOtherVariable) {
+		BitsetIntVariable var1("var1", 0, 2);
+		BitsetIntVariable var2("var2", 0, 3);
+		BitsetIntVariable var3("var3", 5, 6);
+		BinaryArithmeticConstraint constraint(&var1, &var2, 5, PLUS, EQ);
+
+		constraint.replaceVariable(&var2, &var3);
+
+		Assert::IsTrue(constraint.containsVariable(&var3));
+		Assert::IsFalse(constraint.containsVariable(&var2));
+	}
+
+	TEST_METHOD(CloneShouldContainSameVariableAsOriginal) {
+		BitsetIntVariable var1("var1", 0, 2);
+		BitsetIntVariable var2("var2", 0, 3);
+		BinaryArithmeticConstraint constraint(&var1, &var2, 5, PLUS, EQ);
+
+		auto clone = constraint.clone();
+
+		Assert::IsTrue(clone->containsVariable(&var1));
+		Assert::IsTrue(clone->containsVariable(&var2));
+	}
 
 	TEST_METHOD(CloneShouldContainTheSameVariablesAsTheOriginal) {
 		BitsetIntVariable var1("var1", 0, 2);
