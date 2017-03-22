@@ -82,7 +82,6 @@ namespace hydra {
 			auto valueHasSupport = false;
 
 			auto iteratorV2 = otherVar->iterator();
-			auto v2Size = otherVar->cardinality();
 			while (iteratorV2->hasNextValue()) {
 				auto currentV2Value = iteratorV2->next();
 				if (operation(currentV1Value, currentV2Value)) {
