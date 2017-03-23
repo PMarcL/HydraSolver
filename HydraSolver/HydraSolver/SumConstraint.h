@@ -12,7 +12,6 @@ namespace hydra {
 		SumConstraint(const std::vector<Variable*>& var, int sum);
 		~SumConstraint();
 
-		bool containsVariable(Variable* variable) const override;
 		std::vector<Variable*> filter() override;
 		std::vector<Variable*> filterDomains() override;
 		std::vector<Variable*> filterBounds() override;

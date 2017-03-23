@@ -10,10 +10,6 @@ ConstraintImpl::ConstraintImpl() : filterWasCalled(false), filterDomainWasCalled
 ConstraintImpl::~ConstraintImpl() {
 }
 
-bool ConstraintImpl::containsVariable(hydra::Variable*) const {
-	return false;
-}
-
 vector<hydra::Variable*> ConstraintImpl::filter() {
 	filterWasCalled = true;
 	return vector<hydra::Variable*>();

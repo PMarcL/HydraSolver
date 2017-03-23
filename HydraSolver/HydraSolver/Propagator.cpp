@@ -3,7 +3,6 @@
 #include "Variable.h"
 #include <list>
 #include <algorithm>
-#include <unordered_set>
 
 using namespace std;
 

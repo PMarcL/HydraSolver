@@ -1,20 +1,15 @@
 #include "BinaryArithmeticConstraint.h"
 #include "Variable.h"
-#include <unordered_set>
 
 using namespace std;
 
 namespace hydra {
 
-	BinaryArithmeticConstraint::BinaryArithmeticConstraint(Variable* var1, Variable* var2, int result, Operator op, RelationalOperator relop) : var1(var1),
-		var2(var2), rhs(result), operation(getOperation(op, relop)) {
+	BinaryArithmeticConstraint::BinaryArithmeticConstraint(Variable* var1, Variable* var2, int result, Operator op, RelationalOperator relop) :
+		Constraint({ var1, var2 }), var1(var1), var2(var2), rhs(result), operation(getOperation(op, relop)) {
 	}
 
 	BinaryArithmeticConstraint::~BinaryArithmeticConstraint() {
-	}
-
-	bool BinaryArithmeticConstraint::containsVariable(Variable* var) const {
-		return var == var1 || var == var2;
 	}
 
 	vector<Variable*> BinaryArithmeticConstraint::filter() {
@@ -146,6 +141,7 @@ namespace hydra {
 	}
 
 	void BinaryArithmeticConstraint::replaceVariable(Variable* varToReplace, Variable* replacement) {
+		Constraint::replaceVariable(varToReplace, replacement);
 		if (var1 == varToReplace) {
 			var1 = replacement;
 		} else if (var2 == varToReplace) {

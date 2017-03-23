@@ -7,15 +7,12 @@ using namespace std;
 
 namespace hydra {
 
-	AllDifferent::AllDifferent(const vector<Variable*>& variables) : variables(variables), boundsFilter(new AllDiffBoundsFilter(variables)) {
+	AllDifferent::AllDifferent(const vector<Variable*>& variables) : Constraint(variables), variables(variables),
+		boundsFilter(new AllDiffBoundsFilter(variables)) {
 	}
 
 	AllDifferent::~AllDifferent() {
 		delete boundsFilter;
-	}
-
-	bool AllDifferent::containsVariable(Variable* variable) const {
-		return find(variables.begin(), variables.end(), variable) != variables.end();
 	}
 
 	vector<Variable*> AllDifferent::filter() {
@@ -41,6 +38,7 @@ namespace hydra {
 	}
 
 	void AllDifferent::replaceVariable(Variable* varToReplace, Variable* replacement) {
+		Constraint::replaceVariable(varToReplace, replacement);
 		for (size_t i = 0; i < variables.size(); i++) {
 			if (variables[i] == varToReplace) {
 				variables[i] = replacement;
