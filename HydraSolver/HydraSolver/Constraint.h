@@ -21,7 +21,7 @@ namespace hydra {
 		virtual Constraint* clone() const = 0;
 
 	protected:
-		Constraint(const std::vector<Variable*>& vars);
+		explicit Constraint(const std::vector<Variable*>& vars);
 
 		bool useGPU;
 		bool satisfied;

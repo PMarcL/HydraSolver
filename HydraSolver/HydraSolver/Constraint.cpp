@@ -24,5 +24,4 @@ namespace hydra {
 		variablesSet.insert(replacement);
 	}
 
-
 } // namespace hydra
