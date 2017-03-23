@@ -1,6 +1,9 @@
 #include "Solver.h"
 #include "Model.h"
 #include "Variable.h"
+#include <cmath>
+#include <iostream>
+#include <iomanip>
 
 using namespace std;
 using namespace chrono;
@@ -8,16 +11,24 @@ using namespace chrono;
 namespace hydra {
 
 	Solver::Solver(Model* model, Heuristic heuristic, Heuristic tieBreaker)
-		: model(model), variableSelector(heuristic, tieBreaker), propagator(model->getConstraints()), nbOfBacktracks(0) {
+		: model(model), variableSelector(heuristic, tieBreaker), propagator(model->getConstraints()), solution(Solution({}, false, model)),
+		nbOfBacktracks(0), nbOfRestarts(0), maxNbOfBacktracks(1) {
 	}
 
 	Solution Solver::findSolution() {
 		auto tic = high_resolution_clock::now();
-		auto solution = solve();
+		auto i = 0;
+		while (solve() == RESTART) {
+			nbOfBacktracks = 0;
+			maxNbOfBacktracks = pow(BASE_RESTART_CONST, i);
+			nbOfRestarts++;
+			i++;
+		}
 		auto toc = high_resolution_clock::now();
 
 		solution.setComputingtime(duration_cast<milliseconds>(toc - tic).count());
 		solution.setNumberOfBacktracks(nbOfBacktracks);
+		solution.setNumberOfRestarts(nbOfRestarts);
 
 		return solution;
 	}
@@ -26,8 +37,7 @@ namespace hydra {
 		propagator.setLocalConsistencyConfig(config);
 	}
 
-	Solution Solver::solve() {
-		Solution solution;
+	Solver::SolverState Solver::solve() {
 		auto nbOfEnvPush = 0;
 		do {
 			auto result = propagator.propagate();
@@ -36,27 +46,36 @@ namespace hydra {
 
 			if (result == INCONSISTENT_STATE) {
 				model->popEnvironmentNTimes(nbOfEnvPush);
-				return Solution({}, false, model);
+				return INCONSISTENT_SOLUTION;
 			}
 
 			if (model->allVariablesAreInstantiated()) {
-				return Solution(model->getVariables(), true, model);
+				solution = Solution(model->getVariables(), true, model);
+				return SOLUTION_FOUND;
 			}
 
 			auto instantiatedVariable = variableSelector.instantiateVariable(model->getVariables());
 			auto v = instantiatedVariable->getInstantiatedValue();
-			solution = solve();
-			if (!solution.isConsistent()) {
+			auto solveResult = solve();
+
+			if (solveResult == INCONSISTENT_SOLUTION) {
 				nbOfBacktracks++;
+				if (nbOfBacktracks >= maxNbOfBacktracks) {
+					model->popEnvironmentNTimes(nbOfEnvPush);
+					return RESTART;
+				}
 				// if filtering v empties out the domain of the instantiated variable we return an empty solution
 				if (instantiatedVariable->cardinality() == 1) {
 					model->popEnvironmentNTimes(nbOfEnvPush);
-					return Solution({}, false, model);
+					return INCONSISTENT_SOLUTION;
 				}
 				instantiatedVariable->filterValue(v);
+			} else if (solveResult == RESTART) {
+				model->popEnvironmentNTimes(nbOfEnvPush);
+				return solveResult;
 			}
 		} while (!solution.isConsistent());
-		return solution;
+		return SOLUTION_FOUND;
 	}
 
 } // namespace hydra

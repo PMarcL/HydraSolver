@@ -10,15 +10,15 @@ using namespace std;
 
 namespace hydra {
 
-	Solution::Solution() : isAConsistentSolution(false), computingTime(0), nbOfBacktracks(0), model(nullptr) {
+	Solution::Solution() : isAConsistentSolution(false), computingTime(0), nbOfBacktracks(0), nbOfRestarts(0), model(nullptr) {
 	}
 
 	Solution::Solution(const Solution& solution) : isAConsistentSolution(solution.isAConsistentSolution), variables(solution.variables),
-		computingTime(solution.computingTime), nbOfBacktracks(solution.nbOfBacktracks), model(solution.model) {
+		computingTime(solution.computingTime), nbOfBacktracks(solution.nbOfBacktracks), nbOfRestarts(solution.nbOfRestarts), model(solution.model) {
 	}
 
 	Solution::Solution(const vector<Variable*>& variables, bool isConsistent, Model* model) : isAConsistentSolution(isConsistent), variables(variables),
-		computingTime(0), nbOfBacktracks(0), model(model) {
+		computingTime(0), nbOfBacktracks(0), nbOfRestarts(0), model(model) {
 	}
 
 	Solution::~Solution() {
@@ -36,13 +36,18 @@ namespace hydra {
 
 		os << "- Complete search - ";
 		if (!isConsistent()) {
-			os << "no solution found.";
-			return os.str();
+			os << "no solution found." << endl;
+		} else {
+			os << "solution found." << endl;
 		}
 
-		os << "solution found." << endl;
 		os << "\tResolution time : " << computingTime / 1000 << "." << setfill('0') << setw(3) << computingTime % 1000 << "s" << endl;
 		os << "\tBacktracks : " << nbOfBacktracks << endl;
+		os << "\tRestarts : " << nbOfRestarts << endl;
+
+		if (!isConsistent()) {
+			return os.str();
+		}
 
 		os << "Solution :" << endl;
 		for (size_t i = 0; i < variables.size() - 1; i++) {
@@ -59,6 +64,10 @@ namespace hydra {
 
 	void Solution::setNumberOfBacktracks(int backtracks) {
 		nbOfBacktracks = backtracks;
+	}
+
+	void Solution::setNumberOfRestarts(int restarts) {
+		nbOfRestarts = restarts;
 	}
 
 	Solution& Solution::operator=(const Solution& solution) {
