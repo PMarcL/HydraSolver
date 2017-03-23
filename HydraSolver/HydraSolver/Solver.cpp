@@ -2,8 +2,6 @@
 #include "Model.h"
 #include "Variable.h"
 #include <cmath>
-#include <iostream>
-#include <iomanip>
 
 using namespace std;
 using namespace chrono;
