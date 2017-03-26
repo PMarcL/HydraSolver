@@ -30,8 +30,8 @@ namespace hydra {
 		for (size_t i = 0; i < bitset.size(); i++) {
 			if (bitset[i] && !bitsetToMerge[i]) {
 				modified = true;
+				filterValue(originalLowerBound + i);
 			}
-			bitset[i] = bitset[i] && bitsetToMerge[i];
 		}
 		return modified;
 	}
