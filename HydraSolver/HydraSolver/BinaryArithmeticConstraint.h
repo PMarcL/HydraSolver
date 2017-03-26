@@ -42,6 +42,8 @@ namespace hydra {
 		Variable* var1;
 		Variable* var2;
 		int rhs;
+		Operator op;
+		RelationalOperator relop;
 		std::function<bool(int, int)> operation;
 	};
 

@@ -2,6 +2,9 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <CudaCompile Include="functions.cu" />
+    <CudaCompile Include="BinaryArithmeticConstraintUtils.cu">
+      <Filter>constraints</Filter>
+    </CudaCompile>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Model.cpp" />
@@ -105,6 +108,9 @@
       <Filter>constraints</Filter>
     </ClInclude>
     <ClInclude Include="BinaryArithmeticConstraint.h">
+      <Filter>constraints</Filter>
+    </ClInclude>
+    <ClInclude Include="BinaryArithmeticConstraintUtils.cuh">
       <Filter>constraints</Filter>
     </ClInclude>
   </ItemGroup>

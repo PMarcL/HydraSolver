@@ -1,4 +1,6 @@
 #include "BinaryArithmeticConstraint.h"
+#include "BinaryArithmeticConstraintUtils.cuh"
+#include "BitsetIntVariable.h"
 #include "Variable.h"
 
 using namespace std;
@@ -6,7 +8,7 @@ using namespace std;
 namespace hydra {
 
 	BinaryArithmeticConstraint::BinaryArithmeticConstraint(Variable* var1, Variable* var2, int result, Operator op, RelationalOperator relop) :
-		Constraint({ var1, var2 }), var1(var1), var2(var2), rhs(result), operation(getOperation(op, relop)) {
+		Constraint({ var1, var2 }), var1(var1), var2(var2), rhs(result), op(op), relop(relop), operation(getOperation(op, relop)) {
 	}
 
 	BinaryArithmeticConstraint::~BinaryArithmeticConstraint() {
@@ -17,6 +19,9 @@ namespace hydra {
 	}
 
 	vector<Variable*> BinaryArithmeticConstraint::filterBounds() {
+		if (useGPU) {
+			return filterBoundsGPU(static_cast<BitsetIntVariable*>(var1), static_cast<BitsetIntVariable*>(var2), op, relop, rhs);
+		}
 		satisfied = true;
 		vector<Variable*> filteredVariables;
 
