@@ -15,6 +15,10 @@ namespace hydra {
 	Constraint::~Constraint() {
 	}
 
+	void Constraint::setGPUFilteringActive() {
+		useGPU = true;
+	}
+
 	bool Constraint::containsVariable(Variable* var) const {
 		return variablesSet.find(var) != variablesSet.end();
 	}

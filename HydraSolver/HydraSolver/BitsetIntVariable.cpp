@@ -17,6 +17,26 @@ namespace hydra {
 		bitset = vector<bool>(upperBound - lowerBound + 1, true);
 	}
 
+	int BitsetIntVariable::getOriginalLowerBound() const {
+		return originalLowerBound;
+	}
+
+	size_t BitsetIntVariable::getOriginalSize() const {
+		return bitset.size();
+	}
+
+	bool BitsetIntVariable::mergeBitset(uint8_t* bitsetToMerge) {
+		auto modified = false;
+		for (size_t i = 0; i < bitset.size(); i++) {
+			if (bitset[i] && !bitsetToMerge[i]) {
+				modified = true;
+			}
+			bitset[i] = bitset[i] && bitsetToMerge[i];
+		}
+		return modified;
+	}
+
+
 	string BitsetIntVariable::getFormattedDomain() const {
 		vector<int> valuesToPrint;
 		for (size_t i = 0; i < bitset.size(); i++) {
@@ -191,7 +211,7 @@ namespace hydra {
 		return new BitsetIterator(&bitset, originalLowerBound, cardinality());
 	}
 
-	BitsetIntVariable::BitsetIterator::BitsetIterator(std::vector<bool>* bitset, int originalLowerBound, int originalCardinality) :
+	BitsetIntVariable::BitsetIterator::BitsetIterator(vector<bool>* bitset, int originalLowerBound, int originalCardinality) :
 		offset(0), counter(0), cardinalityAtCreation(originalCardinality), originalLowerBound(originalLowerBound), bitset(bitset) {
 		while (!(*bitset)[offset]) {
 			offset++;

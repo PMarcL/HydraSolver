@@ -14,7 +14,9 @@ int main() {
 
 	for (auto i = 0; i < N - 1; i++) {
 		for (auto j = i + 1; j < N; j++) {
-			model.postConstraint(CreateBinaryArithmeticConstraint(queens[i], queens[j], (i + 1) - (j + 1), hydra::MINUS, hydra::NEQ));
+			auto constraint = CreateBinaryArithmeticConstraint(queens[i], queens[j], (i + 1) - (j + 1), hydra::MINUS, hydra::NEQ);
+			constraint->setGPUFilteringActive();
+			model.postConstraint(constraint);
 			model.postConstraint(CreateBinaryArithmeticConstraint(queens[i], queens[j], (j + 1) - (i + 1), hydra::MINUS, hydra::NEQ));
 		}
 	}

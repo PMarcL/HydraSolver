@@ -19,18 +19,19 @@ namespace hydra {
 	}
 
 	vector<Variable*> BinaryArithmeticConstraint::filterBounds() {
-		if (useGPU) {
-			return filterBoundsGPU(static_cast<BitsetIntVariable*>(var1), static_cast<BitsetIntVariable*>(var2), op, relop, rhs);
-		}
 		satisfied = true;
 		vector<Variable*> filteredVariables;
 
-		if (filterVariableBounds(var1, var2)) {
-			filteredVariables.push_back(var1);
-		}
+		if (useGPU) {
+			filteredVariables = filterBoundsGPU(static_cast<BitsetIntVariable*>(var1), static_cast<BitsetIntVariable*>(var2), op, relop, rhs);
+		} else {
+			if (filterVariableBounds(var1, var2)) {
+				filteredVariables.push_back(var1);
+			}
 
-		if (var1->cardinality() != 0 && filterVariableBounds(var2, var1)) {
-			filteredVariables.push_back(var2);
+			if (var1->cardinality() != 0 && filterVariableBounds(var2, var1)) {
+				filteredVariables.push_back(var2);
+			}
 		}
 
 		if (var1->cardinality() == 0 || var2->cardinality() == 0) {
