@@ -5,8 +5,6 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "HydraSolver", "HydraSolver\HydraSolver.vcxproj", "{C3332100-0DFD-4714-BE72-BE726A16D07B}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "HydraSolverMain", "HydraSolverMain\HydraSolverMain.vcxproj", "{9D6E00C0-991A-4059-A802-AEBF687D4433}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "HydraSolverTest", "HydraSolverTest\HydraSolverTest.vcxproj", "{322E2356-3C3F-4A29-899A-3D7ED99E8C48}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "HydraSolverDemo", "HydraSolverDemo\HydraSolverDemo.vcxproj", "{ACDBAC14-CFCA-4BF5-B409-949D9168C425}"
@@ -31,14 +29,6 @@ Global
 		{C3332100-0DFD-4714-BE72-BE726A16D07B}.Release|x64.Build.0 = Release|x64
 		{C3332100-0DFD-4714-BE72-BE726A16D07B}.Release|x86.ActiveCfg = Release|Win32
 		{C3332100-0DFD-4714-BE72-BE726A16D07B}.Release|x86.Build.0 = Release|Win32
-		{9D6E00C0-991A-4059-A802-AEBF687D4433}.Debug|x64.ActiveCfg = Debug|x64
-		{9D6E00C0-991A-4059-A802-AEBF687D4433}.Debug|x64.Build.0 = Debug|x64
-		{9D6E00C0-991A-4059-A802-AEBF687D4433}.Debug|x86.ActiveCfg = Debug|Win32
-		{9D6E00C0-991A-4059-A802-AEBF687D4433}.Debug|x86.Build.0 = Debug|Win32
-		{9D6E00C0-991A-4059-A802-AEBF687D4433}.Release|x64.ActiveCfg = Release|x64
-		{9D6E00C0-991A-4059-A802-AEBF687D4433}.Release|x64.Build.0 = Release|x64
-		{9D6E00C0-991A-4059-A802-AEBF687D4433}.Release|x86.ActiveCfg = Release|Win32
-		{9D6E00C0-991A-4059-A802-AEBF687D4433}.Release|x86.Build.0 = Release|Win32
 		{322E2356-3C3F-4A29-899A-3D7ED99E8C48}.Debug|x64.ActiveCfg = Debug|x64
 		{322E2356-3C3F-4A29-899A-3D7ED99E8C48}.Debug|x64.Build.0 = Debug|x64
 		{322E2356-3C3F-4A29-899A-3D7ED99E8C48}.Debug|x86.ActiveCfg = Debug|Win32
