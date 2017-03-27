@@ -19,6 +19,7 @@ namespace hydra {
 		std::string getFormattedSolution() const;
 		void setComputingtime(long long executionTime);
 		void setNumberOfBacktracks(int backtracks);
+		void setNumberOfRestarts(int restarts);
 
 		Solution& operator=(const Solution& solution);
 	private:
@@ -26,6 +27,7 @@ namespace hydra {
 		std::vector<Variable*> variables;
 		long long computingTime;
 		int nbOfBacktracks;
+		int nbOfRestarts;
 		Model* model;
 	};
 

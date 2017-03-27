@@ -27,7 +27,6 @@ namespace hydra {
 		BinaryArithmeticConstraint(Variable* var1, Variable* var2, int result, Operator op, RelationalOperator relop);
 		~BinaryArithmeticConstraint();
 
-		bool containsVariable(Variable*) const override;
 		std::vector<Variable*> filter() override;
 		std::vector<Variable*> filterDomains() override;
 		std::vector<Variable*> filterBounds() override;
