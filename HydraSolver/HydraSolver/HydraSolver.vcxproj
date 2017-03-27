@@ -165,6 +165,7 @@ copy "$(CudaToolkitBinDir)\cudart*.dll" "$(OutDir)"</Command>
     <ClInclude Include="AllDifferentUtils.h" />
     <ClInclude Include="BinaryArithmeticConstraint.h" />
     <ClInclude Include="BinaryArithmeticConstraintUtils.cuh" />
+    <ClInclude Include="BinaryArithmeticKernels.cuh" />
     <ClInclude Include="BitsetIntVariable.h" />
     <ClInclude Include="Constraint.h" />
     <ClInclude Include="ConstraintUtils.h" />

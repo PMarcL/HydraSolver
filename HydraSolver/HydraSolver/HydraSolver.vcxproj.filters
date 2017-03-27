@@ -113,6 +113,9 @@
     <ClInclude Include="BinaryArithmeticConstraintUtils.cuh">
       <Filter>constraints</Filter>
     </ClInclude>
+    <ClInclude Include="BinaryArithmeticKernels.cuh">
+      <Filter>constraints</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="constraints">

@@ -1,26 +1,10 @@
 #pragma once
+
 #include "Constraint.h"
+#include "BinaryArithmeticConstraintUtils.cuh"
 #include <functional>
 
 namespace hydra {
-
-	class Variable;
-
-	enum Operator {
-		MINUS,
-		PLUS,
-		MULTIPLIES,
-		DIVIDES
-	};
-
-	enum RelationalOperator {
-		EQ,
-		NEQ,
-		GT,
-		GEQ,
-		LT,
-		LEQ
-	};
 
 	class BinaryArithmeticConstraint : public Constraint {
 	public:
@@ -45,6 +29,7 @@ namespace hydra {
 		Operator op;
 		RelationalOperator relop;
 		std::function<bool(int, int)> operation;
+		BinaryArithmeticIncrementalGPUFilter *gpuFilter;
 	};
 
 } // namespace hydra
