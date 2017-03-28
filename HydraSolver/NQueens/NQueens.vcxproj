@@ -19,19 +19,18 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{C3332100-0DFD-4714-BE72-BE726A16D07B}</ProjectGuid>
-    <RootNamespace>HydraSolver</RootNamespace>
-    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+    <ProjectGuid>{D31CFF75-9D19-4FD2-8AA2-36A5BC3C4514}</ProjectGuid>
+    <RootNamespace>NQueens</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>MultiByte</CharacterSet>
     <PlatformToolset>v140</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>MultiByte</CharacterSet>
     <PlatformToolset>v140</PlatformToolset>
@@ -69,9 +68,11 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
+    <IncludePath>$(SolutionDir)\HydraSolver;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
+    <IncludePath>$(SolutionDir)\HydraSolver;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -152,54 +153,12 @@ copy "$(CudaToolkitBinDir)\cudart*.dll" "$(OutDir)"</Command>
     </CudaCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <CudaCompile Include="functions.cu" />
+    <CudaCompile Include="main.cu" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="AllDiffBoundsFilter.h" />
-    <ClInclude Include="AllDifferent.h" />
-    <ClInclude Include="AllDifferentUtils.h" />
-    <ClInclude Include="BinaryArithmeticConstraint.h" />
-    <ClInclude Include="BitsetIntVariable.h" />
-    <ClInclude Include="Constraint.h" />
-    <ClInclude Include="ConstraintUtils.h" />
-    <ClInclude Include="FixedIntVariable.h" />
-    <ClInclude Include="functions.cuh" />
-    <ClInclude Include="Propagator.h" />
-    <ClInclude Include="pSolver.h" />
-    <ClInclude Include="Solution.h" />
-    <ClInclude Include="VariableEnvironment.h" />
-    <ClInclude Include="VariableSelector.h" />
-    <ClInclude Include="HydraException.h" />
-    <ClInclude Include="IllegalVariableOperationException.h" />
-    <ClInclude Include="IntVariableIterator.h" />
-    <ClInclude Include="Model.h" />
-    <ClInclude Include="Solver.h" />
-    <ClInclude Include="SumConstraint.h" />
-    <ClInclude Include="Variable.h" />
-    <ClInclude Include="VariableUtils.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="AllDiffBoundsFilter.cpp" />
-    <ClCompile Include="AllDifferent.cpp" />
-    <ClCompile Include="AllDifferentUtils.cpp" />
-    <ClCompile Include="BinaryArithmeticConstraint.cpp" />
-    <ClCompile Include="BitsetIntVariable.cpp" />
-    <ClCompile Include="Constraint.cpp" />
-    <ClCompile Include="ConstraintUtils.cpp" />
-    <ClCompile Include="FixedIntVariable.cpp" />
-    <ClCompile Include="Propagator.cpp" />
-    <ClCompile Include="pSolver.cpp" />
-    <ClCompile Include="Solution.cpp" />
-    <ClCompile Include="VariableEnvironment.cpp" />
-    <ClCompile Include="VariableSelector.cpp" />
-    <ClCompile Include="HydraException.cpp" />
-    <ClCompile Include="IllegalVariableOperationException.cpp" />
-    <ClCompile Include="IntVariableIterator.cpp" />
-    <ClCompile Include="Model.cpp" />
-    <ClCompile Include="Solver.cpp" />
-    <ClCompile Include="SumConstraint.cpp" />
-    <ClCompile Include="Variable.cpp" />
-    <ClCompile Include="VariableUtils.cpp" />
+    <ProjectReference Include="..\HydraSolver\HydraSolver.vcxproj">
+      <Project>{c3332100-0dfd-4714-be72-be726a16d07b}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

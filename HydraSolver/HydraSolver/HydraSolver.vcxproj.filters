@@ -49,6 +49,12 @@
       <Filter>variables</Filter>
     </ClCompile>
     <ClCompile Include="pSolver.cpp" />
+    <ClCompile Include="AllDiffBoundsFilter.cpp">
+      <Filter>constraints</Filter>
+    </ClCompile>
+    <ClCompile Include="BinaryArithmeticConstraint.cpp">
+      <Filter>constraints</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="functions.cuh" />
@@ -97,6 +103,12 @@
       <Filter>variables</Filter>
     </ClInclude>
     <ClInclude Include="pSolver.h" />
+    <ClInclude Include="AllDiffBoundsFilter.h">
+      <Filter>constraints</Filter>
+    </ClInclude>
+    <ClInclude Include="BinaryArithmeticConstraint.h">
+      <Filter>constraints</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="constraints">

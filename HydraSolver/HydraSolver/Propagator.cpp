@@ -17,7 +17,9 @@ namespace hydra {
 
 	PropagationResult Propagator::propagate() {
 		list<Constraint*> constraintToFilter;
+		list<Constraint*> filteredConstraints;
 		constraintToFilter.insert(constraintToFilter.begin(), constraints.begin(), constraints.end());
+
 		while (!constraintToFilter.empty()) {
 			auto currentConstraint = constraintToFilter.front();
 			constraintToFilter.pop_front();
@@ -28,14 +30,17 @@ namespace hydra {
 				return INCONSISTENT_STATE;
 			}
 
-			for (auto constraint : constraints) {
-				if (constraint != currentConstraint && any_of(modifiedVariables.begin(), modifiedVariables.end(),
-					[constraint](auto var) { return constraint->containsVariable(var); })) {
-					constraintToFilter.push_back(constraint);
+			for (auto it = filteredConstraints.begin(); it != filteredConstraints.end(); ) {
+				if (any_of(modifiedVariables.begin(), modifiedVariables.end(), [it](auto var) { return (*it)->containsVariable(var); })) {
+					constraintToFilter.push_back(*it);
+					filteredConstraints.erase(it++);
+				} else {
+					++it;
 				}
 			}
-		}
 
+			filteredConstraints.push_back(currentConstraint);
+		}
 		return LOCAL_CONSISTENCY;
 	}
 

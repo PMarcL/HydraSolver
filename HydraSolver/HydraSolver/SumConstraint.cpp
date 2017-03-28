@@ -9,14 +9,10 @@ using namespace std;
 
 namespace hydra {
 
-	SumConstraint::SumConstraint(const vector<Variable*>& variables, int sum) : variables(variables), sum(sum) {
+	SumConstraint::SumConstraint(const vector<Variable*>& variables, int sum) : Constraint(variables), variables(variables), sum(sum) {
 	}
 
 	SumConstraint::~SumConstraint() {
-	}
-
-	bool SumConstraint::containsVariable(Variable* variable) const {
-		return find(variables.begin(), variables.end(), variable) != variables.end();
 	}
 
 	vector<Variable*> SumConstraint::filter() {
@@ -36,6 +32,7 @@ namespace hydra {
 	}
 
 	void SumConstraint::replaceVariable(Variable* varToReplace, Variable* replacement) {
+		Constraint::replaceVariable(varToReplace, replacement);
 		for (size_t i = 0; i < variables.size(); i++) {
 			if (variables[i] == varToReplace) {
 				variables[i] = replacement;
@@ -79,12 +76,13 @@ namespace hydra {
 				lowerBoundSum -= currentValue;
 				upperBoundSum -= currentValue;
 			}
-			satisfied = satisfied && variables[i]->cardinality() != 0;
+			satisfied = satisfied && variables[i]->cardinality() > 0;
 			delete iterator;
 
 			lowerBoundSum += variables[i]->getLowerBound();
 			upperBoundSum += variables[i]->getUpperBound();
 		}
+
 		return modifiedVariables;
 	}
 

@@ -17,12 +17,23 @@ namespace hydra {
 		void setLocalConsistencyConfig(LocalConsistencyConfig config);
 
 	private:
-		Solution solve();
+		enum SolverState {
+			SOLUTION_FOUND,
+			INCONSISTENT_SOLUTION,
+			RESTART
+		};
+
+		SolverState solve();
+
+		static const int BASE_RESTART_CONST = 2;
 
 		Model* model;
 		VariableSelector variableSelector;
 		Propagator propagator;
+		Solution solution;
 		int nbOfBacktracks;
+		int nbOfRestarts;
+		int maxNbOfBacktracks;
 	};
 
 } // namespace hydra

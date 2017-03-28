@@ -6,13 +6,13 @@
 namespace hydra {
 
 	class Variable;
+	class AllDiffBoundsFilter;
 
 	class AllDifferent : public Constraint {
 	public:
 		explicit AllDifferent(const std::vector<Variable*>& variables);
 		~AllDifferent();
 
-		bool containsVariable(Variable* variable) const override;
 		std::vector<Variable*> filter() override;
 		std::vector<Variable*> filterDomains() override;
 		std::vector<Variable*> filterBounds() override;
@@ -22,6 +22,7 @@ namespace hydra {
 
 	private:
 		std::vector<Variable*> variables;
+		AllDiffBoundsFilter* boundsFilter;
 	};
 
 } // namespace hydra
