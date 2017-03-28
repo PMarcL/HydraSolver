@@ -7,8 +7,14 @@ namespace hydra {
 
 
 
-	pSolver::pSolver(Model* model, Heuristic heuristic, Heuristic tieBreaker)
+	pSolver::pSolver(int numberOfSolvers, Model* model, Heuristic heuristic, Heuristic tieBreaker)
 		: model(model), variableSelector(heuristic, tieBreaker), propagator(model->getConstraints()), nbOfBacktracks(0) {
+		solvers = std::vector<Solver>();
+		for (int i = 0; i < numberOfSolvers; i++)
+		{
+			Solver solver(model, heuristic);
+			solvers.push_back(solver);
+		}
 	}
 
 
@@ -16,12 +22,13 @@ namespace hydra {
 	{
 	}
 
-	Solution pSolver::findnsolutions() {
+	Solution pSolver::findSolution() {
 		Solution sol;
 		//int position = 0;
 
-		Solver solver(model, hydra::RANDOM);
-		sol = solver.findSolution();
+
+		// Valeur temporaire à zéro, on teste pour 1 seul solver
+		sol = solvers[0].findSolution();
 		return sol;
 		std::vector<Solution> vsols;
 		/*
@@ -38,4 +45,11 @@ namespace hydra {
 		}
 		return vsols[0];*/
 	}
+
+	void pSolver::setLocalConsistencyConfig(LocalConsistencyConfig config) {
+		for (Solver solver : solvers) {
+			solver.setLocalConsistencyConfig(config);
+		}
+	}
+
 }

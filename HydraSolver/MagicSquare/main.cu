@@ -38,13 +38,15 @@ int main() {
 	model.postConstraint(CreateSumConstraint(diagonal1, SUM));
 	model.postConstraint(CreateSumConstraint(diagonal2, SUM));
 
+	/*
 	auto solver = hydra::Solver(&model, hydra::RANDOM);
-	auto psolver = hydra::pSolver(&model, hydra::RANDOM);
 	solver.setLocalConsistencyConfig(hydra::BOUND_CONSISTENCY);
+	auto solution = solver.findSolution();
+	*/
+	auto psolver = hydra::pSolver(1, &model, hydra::RANDOM);
+	psolver.setLocalConsistencyConfig(hydra::BOUND_CONSISTENCY);
+	auto solution = psolver.findSolution();
 
-
-	auto solution = psolver.findnsolutions();
-	//auto solution = solver.findSolution();
 	std::cout << solution.getFormattedSolution() << std::endl;
 
 	return 0;
