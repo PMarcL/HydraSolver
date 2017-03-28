@@ -34,7 +34,7 @@ namespace hydra {
 
 		Model(const Model&);
 		Model& operator=(const Model&);
-		Solution parallelize();
+		//Solution parallelize();
 	private:
 		void updateAttributesWithModel(const Model&);
 

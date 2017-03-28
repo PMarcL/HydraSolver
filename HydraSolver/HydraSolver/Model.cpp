@@ -127,7 +127,7 @@ namespace hydra {
 			}
 		}
 	}
-	Solution Model::parallelize() {
+	/*Solution Model::parallelize() {
 		Solution sol;
 		std::vector<Solution> vsols;
 		//bool fini = false;
@@ -135,7 +135,7 @@ namespace hydra {
 		Solver solver(&modeln);
 		sol = solver.findSolution();
 		int position = 0;
-		/*
+
 #pragma omp parallel shared(fini)
 		{
 			int tid = omp_get_thread_num();
@@ -152,10 +152,10 @@ namespace hydra {
 
 
 		}
-		*/
+
 		return sol;
 
 
-	}
+	}*/
 
 } // namespace hydra
