@@ -12,7 +12,8 @@ namespace hydra {
 		solvers = std::vector<Solver>();
 		for (int i = 0; i < numberOfSolvers; i++)
 		{
-			Solver solver(model, heuristic);
+			Model *newModel = model;
+			Solver solver(newModel, hydra::RANDOM);
 			solvers.push_back(solver);
 		}
 	}
@@ -28,6 +29,7 @@ namespace hydra {
 
 
 		// Valeur temporaire à zéro, on teste pour 1 seul solver
+		// Il va faire un findSolution sur chaque solver du vector dans différent thread
 		sol = solvers[0].findSolution();
 		return sol;
 		std::vector<Solution> vsols;
@@ -47,7 +49,7 @@ namespace hydra {
 	}
 
 	void pSolver::setLocalConsistencyConfig(LocalConsistencyConfig config) {
-		for (Solver solver : solvers) {
+		for (Solver& solver : solvers) {
 			solver.setLocalConsistencyConfig(config);
 		}
 	}
