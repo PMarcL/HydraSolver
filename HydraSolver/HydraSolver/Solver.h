@@ -10,6 +10,7 @@ namespace hydra {
 
 	class Solver {
 	public:
+		//Solution parallelize();
 		explicit Solver(Model* model, Heuristic heuristic = SMALLEST_DOMAIN, Heuristic tieBreaker = RANDOM);
 
 		Solution findSolution();

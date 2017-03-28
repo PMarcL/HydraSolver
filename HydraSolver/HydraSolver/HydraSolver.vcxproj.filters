@@ -48,6 +48,7 @@
     <ClCompile Include="VariableUtils.cpp">
       <Filter>variables</Filter>
     </ClCompile>
+    <ClCompile Include="pSolver.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="functions.cuh" />
@@ -95,6 +96,7 @@
     <ClInclude Include="VariableUtils.h">
       <Filter>variables</Filter>
     </ClInclude>
+    <ClInclude Include="pSolver.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="constraints">

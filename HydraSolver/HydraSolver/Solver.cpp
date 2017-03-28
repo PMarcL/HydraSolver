@@ -58,5 +58,11 @@ namespace hydra {
 		} while (!solution.isConsistent());
 		return solution;
 	}
+	/*
+	Solution Solver::parallelize() {
+		Model modeln(*model);
+
+	}
+	*/
 
 } // namespace hydra
