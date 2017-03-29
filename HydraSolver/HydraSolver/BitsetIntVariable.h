@@ -32,7 +32,7 @@ namespace hydra {
 	private:
 		class BitsetIterator : public IntVariableIterator {
 		public:
-			BitsetIterator(std::vector<bool>* bitset, int originalLowerBound, int originalCardinality);
+			BitsetIterator(std::vector<uint8_t>* bitset, int originalLowerBound, int originalCardinality);
 			int next() override;
 			int previous() override;
 			bool hasNextValue() const override;
@@ -42,7 +42,7 @@ namespace hydra {
 			int counter;
 			int cardinalityAtCreation;
 			int originalLowerBound;
-			std::vector<bool>* bitset;
+			std::vector<uint8_t>* bitset;
 		};
 
 		enum FilterActions {
@@ -65,7 +65,7 @@ namespace hydra {
 
 		std::stack<std::vector<BitsetAction>> statesStack;
 		std::vector<BitsetAction> currentRemovedValues;
-		std::vector<bool> bitset;
+		std::vector<uint8_t> bitset;
 		int currentLowerBound;
 		int currentUpperBound;
 		int originalLowerBound; // needed to find index in the bitset after filtering the original lower bound

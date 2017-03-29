@@ -14,7 +14,7 @@ namespace hydra {
 			e.setDescription("Trying to create a BitsetVariable (" + name + ") with lowerbound greater than upper bound.");
 			throw e;
 		}
-		bitset = vector<bool>(upperBound - lowerBound + 1, true);
+		bitset = vector<uint8_t>(upperBound - lowerBound + 1, true);
 	}
 
 	int BitsetIntVariable::getOriginalLowerBound() const {
@@ -211,7 +211,7 @@ namespace hydra {
 		return new BitsetIterator(&bitset, originalLowerBound, cardinality());
 	}
 
-	BitsetIntVariable::BitsetIterator::BitsetIterator(vector<bool>* bitset, int originalLowerBound, int originalCardinality) :
+	BitsetIntVariable::BitsetIterator::BitsetIterator(vector<uint8_t>* bitset, int originalLowerBound, int originalCardinality) :
 		offset(0), counter(0), cardinalityAtCreation(originalCardinality), originalLowerBound(originalLowerBound), bitset(bitset) {
 		while (!(*bitset)[offset]) {
 			offset++;
