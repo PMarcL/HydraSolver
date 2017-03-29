@@ -56,6 +56,7 @@
     <ClCompile Include="BinaryArithmeticConstraint.cpp">
       <Filter>constraints</Filter>
     </ClCompile>
+    <ClCompile Include="TimeLogger.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Model.h" />
@@ -114,6 +115,7 @@
     <ClInclude Include="BinaryArithmeticKernels.cuh">
       <Filter>constraints</Filter>
     </ClInclude>
+    <ClInclude Include="TimeLogger.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="constraints">
