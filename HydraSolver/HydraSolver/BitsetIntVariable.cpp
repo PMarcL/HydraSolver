@@ -113,6 +113,14 @@ namespace hydra {
 		}
 	}
 
+	const std::vector<bool>* BitsetIntVariable::getBitSet() const {
+		return &bitset;
+	}
+
+	int BitsetIntVariable::getOriginalLowerBound() const {
+		return originalLowerBound;
+	}
+
 	void BitsetIntVariable::updateLowerBound() {
 		size_t index = 0;
 		while (index < bitset.size() && !bitset[index]) {
@@ -144,7 +152,8 @@ namespace hydra {
 
 		if (newLowerBound > currentUpperBound) {
 			bitset.assign(bitset.size(), false);
-		} else {
+		}
+		else {
 			currentRemovedValues.push_back(BitsetAction(currentLowerBound, LOWER_BOUND_CHANGED));
 
 			for (auto i = 0; i < newLowerBound - originalLowerBound; i++) {
@@ -164,7 +173,8 @@ namespace hydra {
 
 		if (newUpperBound < currentLowerBound) {
 			bitset.assign(bitset.size(), false);
-		} else {
+		}
+		else {
 			currentRemovedValues.push_back(BitsetAction(currentUpperBound, UPPER_BOUND_CHANGED));
 
 			for (auto i = newUpperBound - originalLowerBound + 1; i <= currentUpperBound - originalLowerBound; i++) {

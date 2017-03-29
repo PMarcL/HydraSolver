@@ -2,6 +2,9 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <CudaCompile Include="functions.cu" />
+    <CudaCompile Include="GPUFilterBoundsSumConstraint.cu">
+      <Filter>constraints</Filter>
+    </CudaCompile>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Model.cpp" />
@@ -18,12 +21,6 @@
     </ClCompile>
     <ClCompile Include="IllegalVariableOperationException.cpp">
       <Filter>variables</Filter>
-    </ClCompile>
-    <ClCompile Include="BitsetIntVariable.cpp">
-      <Filter>variables</Filter>
-    </ClCompile>
-    <ClCompile Include="SumConstraint.cpp">
-      <Filter>constraints</Filter>
     </ClCompile>
     <ClCompile Include="IntVariableIterator.cpp">
       <Filter>variables</Filter>
@@ -48,6 +45,12 @@
     <ClCompile Include="VariableUtils.cpp">
       <Filter>variables</Filter>
     </ClCompile>
+    <ClCompile Include="SumConstraint.cpp">
+      <Filter>constraints</Filter>
+    </ClCompile>
+    <ClCompile Include="BitsetIntVariable.cpp">
+      <Filter>variables</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="functions.cuh" />
@@ -65,12 +68,6 @@
     </ClInclude>
     <ClInclude Include="IllegalVariableOperationException.h">
       <Filter>variables</Filter>
-    </ClInclude>
-    <ClInclude Include="BitsetIntVariable.h">
-      <Filter>variables</Filter>
-    </ClInclude>
-    <ClInclude Include="SumConstraint.h">
-      <Filter>constraints</Filter>
     </ClInclude>
     <ClInclude Include="IntVariableIterator.h">
       <Filter>variables</Filter>
@@ -93,6 +90,15 @@
       <Filter>constraints</Filter>
     </ClInclude>
     <ClInclude Include="VariableUtils.h">
+      <Filter>variables</Filter>
+    </ClInclude>
+    <ClInclude Include="GPUFilterBoundsSumConstraint.cuh">
+      <Filter>constraints</Filter>
+    </ClInclude>
+    <ClInclude Include="SumConstraint.h">
+      <Filter>constraints</Filter>
+    </ClInclude>
+    <ClInclude Include="BitsetIntVariable.h">
       <Filter>variables</Filter>
     </ClInclude>
   </ItemGroup>

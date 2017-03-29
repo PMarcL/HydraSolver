@@ -21,6 +21,8 @@ namespace hydra {
 		void filterUpperBound(int newUpperBound) override;
 		int getLowerBound() const override;
 		int getUpperBound() const override;
+		const std::vector<bool>* getBitSet() const;
+		int getOriginalLowerBound() const;
 		bool containsValue(int value) const override;
 		IntVariableIterator* iterator() override;
 

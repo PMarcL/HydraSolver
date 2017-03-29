@@ -1,6 +1,8 @@
 #include "SumConstraint.h"
 #include "Variable.h"
 #include "IntVariableIterator.h"
+#include "GPUFilterBoundsSumConstraint.cuh"
+#include "cuda_runtime.h"
 #include <list>
 #include <unordered_set>
 #include <unordered_map>
@@ -29,7 +31,15 @@ namespace hydra {
 	}
 
 	vector<Variable*> SumConstraint::filterBounds() {
-		return useGPU ? GPUBoundsFilteringAlgorithm() : CPUBoundsFilteringAlgorithm();
+		/* if (useGPU) {
+			// TODO Assert variables are bitsets
+			vector<BitsetIntVariable*> result = GPUBoundsFilteringAlgorithm();
+			// cast back to Variable pointers
+			return vector<Variable*>(result.begin(), result.end());
+		}
+		else { */
+		return CPUBoundsFilteringAlgorithm();
+		//}
 	}
 
 	bool SumConstraint::isSatisfied() const {
@@ -76,11 +86,43 @@ namespace hydra {
 		return modifiedVariables;
 	}
 
-	vector<Variable*> SumConstraint::GPUBoundsFilteringAlgorithm() {
-		vector<Variable*> modifiedVariables;
-		// TODO implementation
+	/*
+	vector<BitsetIntVariable*> SumConstraint::GPUBoundsFilteringAlgorithm() {
+		vector<BitsetIntVariable*> modifiedVariables;
+		satisfied = true;
+		vector<BitsetIntVariable*> bitsetVariables(variables.begin(), variables.end());
+		auto lowerBoundSum = 0;
+		auto upperBoundSum = 0;
+
+		for (size_t i = 0; i < bitsetVariables.size(); i++) {
+			lowerBoundSum += bitsetVariables[i]->getLowerBound();
+			upperBoundSum += bitsetVariables[i]->getUpperBound();
+		}
+
+		for (size_t i = 0; i < bitsetVariables.size(); i++) {
+			lowerBoundSum -= bitsetVariables[i]->getLowerBound();
+			upperBoundSum -= bitsetVariables[i]->getUpperBound();
+
+			auto nKernel = bitsetVariables[i]->getUpperBound() - bitsetVariables[i]->getLowerBound();
+			bool* deviceBitSetPtr;
+			auto bitSetPtr = bitsetVariables[i]->getBitSet();
+			cudaMalloc((void**)deviceBitSetPtr, bitSetPtr->size() * sizeof(bool));
+
+			filterVariableKernel < << 1, nKernel >> > (
+				sum,
+				lowerBoundSum,
+				upperBoundSum,
+				variables[i]->getOriginalLowerBound(),
+				pBitSet
+				);
+
+			lowerBoundSum += variables[i]->getLowerBound();
+			upperBoundSum += variables[i]->getUpperBound();
+		}
 		return modifiedVariables;
 	}
+	*/
+
 	// implementation of Trick algorithm
 	struct TrickNode;
 
