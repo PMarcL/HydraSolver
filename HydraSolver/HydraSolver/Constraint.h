@@ -13,6 +13,8 @@ namespace hydra {
 		virtual ~Constraint();
 
 		bool containsVariable(Variable*) const;
+		void setGPUFilteringActive();
+
 		virtual std::vector<Variable*> filter() = 0;
 		virtual std::vector<Variable*> filterDomains() = 0;
 		virtual std::vector<Variable*> filterBounds() = 0;

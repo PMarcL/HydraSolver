@@ -88,6 +88,9 @@
       <Command>echo copy "$(CudaToolkitBinDir)\cudart*.dll" "$(OutDir)"
 copy "$(CudaToolkitBinDir)\cudart*.dll" "$(OutDir)"</Command>
     </PostBuildEvent>
+    <CudaCompile>
+      <AdditionalOptions>--expt-extended-lambda %(AdditionalOptions)</AdditionalOptions>
+    </CudaCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -106,6 +109,7 @@ copy "$(CudaToolkitBinDir)\cudart*.dll" "$(OutDir)"</Command>
     </PostBuildEvent>
     <CudaCompile>
       <TargetMachinePlatform>64</TargetMachinePlatform>
+      <AdditionalOptions>--expt-extended-lambda %(AdditionalOptions)</AdditionalOptions>
     </CudaCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -152,20 +156,22 @@ copy "$(CudaToolkitBinDir)\cudart*.dll" "$(OutDir)"</Command>
     </CudaCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <CudaCompile Include="functions.cu" />
+    <CudaCompile Include="BinaryArithmeticConstraintUtils.cu" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AllDiffBoundsFilter.h" />
     <ClInclude Include="AllDifferent.h" />
     <ClInclude Include="AllDifferentUtils.h" />
     <ClInclude Include="BinaryArithmeticConstraint.h" />
+    <ClInclude Include="BinaryArithmeticConstraintUtils.cuh" />
+    <ClInclude Include="BinaryArithmeticKernels.cuh" />
     <ClInclude Include="BitsetIntVariable.h" />
     <ClInclude Include="Constraint.h" />
     <ClInclude Include="ConstraintUtils.h" />
     <ClInclude Include="FixedIntVariable.h" />
-    <ClInclude Include="functions.cuh" />
     <ClInclude Include="Propagator.h" />
     <ClInclude Include="Solution.h" />
+    <ClInclude Include="TimeLogger.h" />
     <ClInclude Include="VariableEnvironment.h" />
     <ClInclude Include="VariableSelector.h" />
     <ClInclude Include="HydraException.h" />
@@ -188,6 +194,7 @@ copy "$(CudaToolkitBinDir)\cudart*.dll" "$(OutDir)"</Command>
     <ClCompile Include="FixedIntVariable.cpp" />
     <ClCompile Include="Propagator.cpp" />
     <ClCompile Include="Solution.cpp" />
+    <ClCompile Include="TimeLogger.cpp" />
     <ClCompile Include="VariableEnvironment.cpp" />
     <ClCompile Include="VariableSelector.cpp" />
     <ClCompile Include="HydraException.cpp" />

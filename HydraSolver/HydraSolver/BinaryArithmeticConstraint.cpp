@@ -1,4 +1,5 @@
 #include "BinaryArithmeticConstraint.h"
+#include "BitsetIntVariable.h"
 #include "Variable.h"
 
 using namespace std;
@@ -6,10 +7,13 @@ using namespace std;
 namespace hydra {
 
 	BinaryArithmeticConstraint::BinaryArithmeticConstraint(Variable* var1, Variable* var2, int result, Operator op, RelationalOperator relop) :
-		Constraint({ var1, var2 }), var1(var1), var2(var2), rhs(result), operation(getOperation(op, relop)) {
+		Constraint({ var1, var2 }), var1(var1), var2(var2), rhs(result), op(op), relop(relop), operation(getOperation(op, relop)), gpuFilter(nullptr),
+		timelogger("BinaryArithmeticConstraint") {
+		gpuFilter = new BinaryArithmeticIncrementalGPUFilter(static_cast<BitsetIntVariable*>(var1), static_cast<BitsetIntVariable*>(var2), op, relop, rhs);
 	}
 
 	BinaryArithmeticConstraint::~BinaryArithmeticConstraint() {
+		delete gpuFilter;
 	}
 
 	vector<Variable*> BinaryArithmeticConstraint::filter() {
@@ -19,19 +23,23 @@ namespace hydra {
 	vector<Variable*> BinaryArithmeticConstraint::filterBounds() {
 		satisfied = true;
 		vector<Variable*> filteredVariables;
+		timelogger.tic();
+		if (useGPU) {
+			filteredVariables = gpuFilter->filterBoundsGPU();
+		} else {
+			if (filterVariableBounds(var1, var2)) {
+				filteredVariables.push_back(var1);
+			}
 
-		if (filterVariableBounds(var1, var2)) {
-			filteredVariables.push_back(var1);
-		}
-
-		if (var1->cardinality() != 0 && filterVariableBounds(var2, var1)) {
-			filteredVariables.push_back(var2);
+			if (var1->cardinality() != 0 && filterVariableBounds(var2, var1)) {
+				filteredVariables.push_back(var2);
+			}
 		}
 
 		if (var1->cardinality() == 0 || var2->cardinality() == 0) {
 			satisfied = false;
 		}
-
+		timelogger.toc();
 		return filteredVariables;
 	}
 

@@ -105,6 +105,21 @@ public:
 		Assert::AreEqual(5, var2.getLowerBound());
 	}
 
+	TEST_METHOD(ShouldFilterBoundsAndBeSatisfiedForConsistentVariables_UsingGPU) {
+		BitsetIntVariable var1("var1", 3, 6);
+		BitsetIntVariable var2("var2", 2, 7);
+		BinaryArithmeticConstraint constraint(&var1, &var2, 30, MULTIPLIES, GEQ);
+		constraint.setGPUFilteringActive();
+
+		auto filteredVariables = constraint.filterBounds();
+		size_t expectedSize = 2;
+
+		Assert::AreEqual(expectedSize, filteredVariables.size());
+		Assert::IsTrue(constraint.isSatisfied());
+		Assert::AreEqual(5, var1.getLowerBound());
+		Assert::AreEqual(5, var2.getLowerBound());
+	}
+
 	TEST_METHOD(ShouldFilterBoundsAndNotBeSatisfiedForInconsistentVariables) {
 		BitsetIntVariable var1("var1", 3, 6);
 		BitsetIntVariable var2("var2", 2, 7);
