@@ -1,4 +1,4 @@
-﻿#include "GPUFilterBoundsSumConstraint.cuh"
+﻿#include "SumConstraintKernels.cuh"
 #include "cuda_runtime.h"
 #include "device_launch_parameters.h"
 #include <stdio.h>

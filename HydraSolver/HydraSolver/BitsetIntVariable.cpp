@@ -133,7 +133,7 @@ namespace hydra {
 		}
 	}
 
-	const std::vector<bool>* BitsetIntVariable::getBitSet() const {
+	std::vector<bool>* BitsetIntVariable::getBitSet() {
 		return &bitset;
 	}
 

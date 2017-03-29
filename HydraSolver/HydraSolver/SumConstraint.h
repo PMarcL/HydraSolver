@@ -23,7 +23,7 @@ namespace hydra {
 	private:
 		std::vector<Variable*> CPUDomainFilteringAlgorithm();
 		std::vector<Variable*> CPUBoundsFilteringAlgorithm();
-		//std::vector<BitsetIntVariable*> GPUBoundsFilteringAlgorithm();
+		std::vector<BitsetIntVariable*> GPUBoundsFilteringAlgorithm();
 
 		std::vector<Variable*> variables;
 		int sum;
