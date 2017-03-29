@@ -17,6 +17,26 @@ namespace hydra {
 		bitset = vector<bool>(upperBound - lowerBound + 1, true);
 	}
 
+	int BitsetIntVariable::getOriginalLowerBound() const {
+		return originalLowerBound;
+	}
+
+	size_t BitsetIntVariable::getOriginalSize() const {
+		return bitset.size();
+	}
+
+	bool BitsetIntVariable::mergeBitset(uint8_t* bitsetToMerge) {
+		auto modified = false;
+		for (size_t i = 0; i < bitset.size(); i++) {
+			if (bitset[i] && !bitsetToMerge[i]) {
+				modified = true;
+				filterValue(originalLowerBound + i);
+			}
+		}
+		return modified;
+	}
+
+
 	string BitsetIntVariable::getFormattedDomain() const {
 		vector<int> valuesToPrint;
 		for (size_t i = 0; i < bitset.size(); i++) {
@@ -117,10 +137,6 @@ namespace hydra {
 		return &bitset;
 	}
 
-	int BitsetIntVariable::getOriginalLowerBound() const {
-		return originalLowerBound;
-	}
-
 	void BitsetIntVariable::updateLowerBound() {
 		size_t index = 0;
 		while (index < bitset.size() && !bitset[index]) {
@@ -201,7 +217,7 @@ namespace hydra {
 		return new BitsetIterator(&bitset, originalLowerBound, cardinality());
 	}
 
-	BitsetIntVariable::BitsetIterator::BitsetIterator(std::vector<bool>* bitset, int originalLowerBound, int originalCardinality) :
+	BitsetIntVariable::BitsetIterator::BitsetIterator(vector<bool>* bitset, int originalLowerBound, int originalCardinality) :
 		offset(0), counter(0), cardinalityAtCreation(originalCardinality), originalLowerBound(originalLowerBound), bitset(bitset) {
 		while (!(*bitset)[offset]) {
 			offset++;
@@ -235,6 +251,16 @@ namespace hydra {
 
 	bool BitsetIntVariable::BitsetIterator::hasNextValue() const {
 		return counter < cardinalityAtCreation;
+	}
+
+	Variable* BitsetIntVariable::clone() const {
+		auto copy = new BitsetIntVariable(name, originalLowerBound, originalLowerBound + bitset.size());
+		copy->bitset = bitset;
+		copy->statesStack = statesStack;
+		copy->currentRemovedValues = currentRemovedValues;
+		copy->currentLowerBound = currentLowerBound;
+		copy->currentUpperBound = currentUpperBound;
+		return copy;
 	}
 
 } // namespace hydra

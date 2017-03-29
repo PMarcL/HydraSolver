@@ -88,6 +88,9 @@
       <Command>echo copy "$(CudaToolkitBinDir)\cudart*.dll" "$(OutDir)"
 copy "$(CudaToolkitBinDir)\cudart*.dll" "$(OutDir)"</Command>
     </PostBuildEvent>
+    <CudaCompile>
+      <AdditionalOptions>--expt-extended-lambda %(AdditionalOptions)</AdditionalOptions>
+    </CudaCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -106,6 +109,7 @@ copy "$(CudaToolkitBinDir)\cudart*.dll" "$(OutDir)"</Command>
     </PostBuildEvent>
     <CudaCompile>
       <TargetMachinePlatform>64</TargetMachinePlatform>
+      <AdditionalOptions>--expt-extended-lambda %(AdditionalOptions)</AdditionalOptions>
     </CudaCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -152,17 +156,20 @@ copy "$(CudaToolkitBinDir)\cudart*.dll" "$(OutDir)"</Command>
     </CudaCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <CudaCompile Include="functions.cu" />
     <CudaCompile Include="GPUFilterBoundsSumConstraint.cu" />
+    <CudaCompile Include="BinaryArithmeticConstraintUtils.cu" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AllDiffBoundsFilter.h" />
     <ClInclude Include="AllDifferent.h" />
     <ClInclude Include="AllDifferentUtils.h" />
+    <ClInclude Include="BinaryArithmeticConstraint.h" />
+    <ClInclude Include="BinaryArithmeticConstraintUtils.cuh" />
+    <ClInclude Include="BinaryArithmeticKernels.cuh" />
     <ClInclude Include="BitsetIntVariable.h" />
     <ClInclude Include="Constraint.h" />
     <ClInclude Include="ConstraintUtils.h" />
     <ClInclude Include="FixedIntVariable.h" />
-    <ClInclude Include="functions.cuh" />
     <ClInclude Include="GPUFilterBoundsSumConstraint.cuh" />
     <ClInclude Include="Propagator.h" />
     <ClInclude Include="Solution.h" />
@@ -178,8 +185,10 @@ copy "$(CudaToolkitBinDir)\cudart*.dll" "$(OutDir)"</Command>
     <ClInclude Include="VariableUtils.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AllDiffBoundsFilter.cpp" />
     <ClCompile Include="AllDifferent.cpp" />
     <ClCompile Include="AllDifferentUtils.cpp" />
+    <ClCompile Include="BinaryArithmeticConstraint.cpp" />
     <ClCompile Include="BitsetIntVariable.cpp" />
     <ClCompile Include="Constraint.cpp" />
     <ClCompile Include="ConstraintUtils.cpp" />

@@ -88,9 +88,42 @@ namespace hydra {
 		return variableEnvironment.getVariables();
 	}
 
-
 	string Model::getName() const {
 		return name;
+	}
+
+	Model::Model(const Model& model) {
+		updateAttributesWithModel(model);
+	}
+
+	Model& Model::operator=(const Model& model) {
+		updateAttributesWithModel(model);
+		return *this;
+	}
+
+	void Model::updateAttributesWithModel(const Model& model) {
+		name = model.getName();
+
+		auto originalModelVariables = model.getVariables();
+		vector<Variable*> variablesCopy;
+
+		for (auto var : originalModelVariables) {
+			variablesCopy.push_back(var->clone());
+		}
+
+		variableEnvironment.addVariableArray(variablesCopy);
+
+		for (auto constraint : model.getConstraints()) {
+			constraints.push_back(constraint->clone());
+		}
+
+		for (auto constraint : constraints) {
+			for (size_t i = 0; i < originalModelVariables.size(); i++) {
+				if (constraint->containsVariable(originalModelVariables[i])) {
+					constraint->replaceVariable(originalModelVariables[i], variablesCopy[i]);
+				}
+			}
+		}
 	}
 
 } // namespace hydra

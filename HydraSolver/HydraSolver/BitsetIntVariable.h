@@ -9,6 +9,10 @@ namespace hydra {
 	public:
 		BitsetIntVariable(const std::string& name, int lowerBound, int upperBound);
 
+		int getOriginalLowerBound() const;
+		size_t getOriginalSize() const;
+		bool mergeBitset(uint8_t *bitset);
+
 		std::string getFormattedDomain() const override;
 		void pushCurrentState() override;
 		void popState() override;
@@ -22,9 +26,9 @@ namespace hydra {
 		int getLowerBound() const override;
 		int getUpperBound() const override;
 		const std::vector<bool>* getBitSet() const;
-		int getOriginalLowerBound() const;
 		bool containsValue(int value) const override;
 		IntVariableIterator* iterator() override;
+		Variable* clone() const override;
 
 	private:
 		class BitsetIterator : public IntVariableIterator {

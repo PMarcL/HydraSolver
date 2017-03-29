@@ -4,7 +4,7 @@
 #include <iostream>
 #include <string>
 
-const int N = 4;
+const int N = 8;
 const int SUM = N * (N * N + 1) / 2;
 
 int main() {

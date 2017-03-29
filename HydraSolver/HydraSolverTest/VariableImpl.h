@@ -20,6 +20,7 @@ public:
 	int getUpperBound() const override;
 	bool containsValue(int value) const override;
 	hydra::IntVariableIterator* iterator() override;
+	Variable* clone() const override;
 
 	bool pushWasCalled;
 	bool popWasCalled;

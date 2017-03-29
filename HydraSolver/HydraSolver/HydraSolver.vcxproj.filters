@@ -1,8 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <CudaCompile Include="functions.cu" />
     <CudaCompile Include="GPUFilterBoundsSumConstraint.cu">
+      <Filter>constraints</Filter>
+    </CudaCompile>
+    <CudaCompile Include="BinaryArithmeticConstraintUtils.cu">
       <Filter>constraints</Filter>
     </CudaCompile>
   </ItemGroup>
@@ -51,9 +53,14 @@
     <ClCompile Include="BitsetIntVariable.cpp">
       <Filter>variables</Filter>
     </ClCompile>
+    <ClCompile Include="AllDiffBoundsFilter.cpp">
+      <Filter>constraints</Filter>
+    </ClCompile>
+    <ClCompile Include="BinaryArithmeticConstraint.cpp">
+      <Filter>constraints</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="functions.cuh" />
     <ClInclude Include="Model.h" />
     <ClInclude Include="Constraint.h">
       <Filter>constraints</Filter>
@@ -100,6 +107,18 @@
     </ClInclude>
     <ClInclude Include="BitsetIntVariable.h">
       <Filter>variables</Filter>
+    </ClInclude>
+    <ClInclude Include="AllDiffBoundsFilter.h">
+      <Filter>constraints</Filter>
+    </ClInclude>
+    <ClInclude Include="BinaryArithmeticConstraint.h">
+      <Filter>constraints</Filter>
+    </ClInclude>
+    <ClInclude Include="BinaryArithmeticConstraintUtils.cuh">
+      <Filter>constraints</Filter>
+    </ClInclude>
+    <ClInclude Include="BinaryArithmeticKernels.cuh">
+      <Filter>constraints</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

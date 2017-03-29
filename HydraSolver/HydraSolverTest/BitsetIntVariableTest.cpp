@@ -377,5 +377,23 @@ public:
 
 		Assert::IsFalse(iterator->hasNextValue());
 	}
+
+	TEST_METHOD(CloneShouldReturnACopyWithExactSameDomain) {
+		BitsetIntVariable bitset("test", 5, 10);
+		bitset.filterValue(8);
+		bitset.pushCurrentState();
+		auto clone = bitset.clone();
+
+		Assert::AreEqual(bitset.cardinality(), clone->cardinality());
+		Assert::AreEqual(bitset.getLowerBound(), clone->getLowerBound());
+		Assert::AreEqual(bitset.getUpperBound(), clone->getUpperBound());
+		Assert::IsFalse(clone->containsValue(8));
+
+		clone->popState();
+
+		Assert::IsTrue(clone->containsValue(8));
+
+		delete clone;
+	}
 	};
 }

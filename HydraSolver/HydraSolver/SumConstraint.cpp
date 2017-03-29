@@ -11,15 +11,11 @@ using namespace std;
 
 namespace hydra {
 
-	SumConstraint::SumConstraint(const vector<Variable*>& variables, int sum, bool pUseGPU) : variables(variables), sum(sum) {
+	SumConstraint::SumConstraint(const vector<Variable*>& variables, int sum, bool pUseGPU) : Constraint(variables), variables(variables), sum(sum) {
 		useGPU = pUseGPU;
 	}
 
 	SumConstraint::~SumConstraint() {
-	}
-
-	bool SumConstraint::containsVariable(Variable* variable) const {
-		return find(variables.begin(), variables.end(), variable) != variables.end();
 	}
 
 	vector<Variable*> SumConstraint::filter() {
@@ -44,6 +40,20 @@ namespace hydra {
 
 	bool SumConstraint::isSatisfied() const {
 		return satisfied;
+	}
+
+	void SumConstraint::replaceVariable(Variable* varToReplace, Variable* replacement) {
+		Constraint::replaceVariable(varToReplace, replacement);
+		for (size_t i = 0; i < variables.size(); i++) {
+			if (variables[i] == varToReplace) {
+				variables[i] = replacement;
+				break;
+			}
+		}
+	}
+
+	Constraint* SumConstraint::clone() const {
+		return new SumConstraint(variables, sum);
 	}
 
 	vector<Variable*> SumConstraint::CPUBoundsFilteringAlgorithm() {

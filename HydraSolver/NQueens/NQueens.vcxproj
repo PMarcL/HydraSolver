@@ -19,9 +19,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{9D6E00C0-991A-4059-A802-AEBF687D4433}</ProjectGuid>
-    <RootNamespace>HydraSolverMain</RootNamespace>
-    <ProjectName>HydraSolverMain</ProjectName>
+    <ProjectGuid>{D31CFF75-9D19-4FD2-8AA2-36A5BC3C4514}</ProjectGuid>
+    <RootNamespace>NQueens</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -154,7 +153,7 @@ copy "$(CudaToolkitBinDir)\cudart*.dll" "$(OutDir)"</Command>
     </CudaCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <CudaCompile Include="kernel.cu" />
+    <CudaCompile Include="main.cu" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\HydraSolver\HydraSolver.vcxproj">

@@ -25,6 +25,7 @@ namespace hydra {
 		virtual int getUpperBound() const = 0;
 		virtual bool containsValue(int value) const = 0;
 		virtual IntVariableIterator* iterator() = 0;
+		virtual Variable* clone() const = 0;
 
 	protected:
 		std::string name;

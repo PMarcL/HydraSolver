@@ -206,5 +206,31 @@ public:
 		Assert::IsTrue(var4.containsValue(5));
 	}
 
+	TEST_METHOD(ShouldNotContainVariableAfterReplacementAndShouldContainReplacement) {
+		BitsetIntVariable var1("var1", 0, 2);
+		BitsetIntVariable var2("var2", 0, 3);
+		BitsetIntVariable var3("var2", 0, 4);
+
+		SumConstraint sumConstraint({ &var1, &var2 }, 4);
+
+		sumConstraint.replaceVariable(&var1, &var3);
+
+		Assert::IsTrue(sumConstraint.containsVariable(&var3));
+		Assert::IsFalse(sumConstraint.containsVariable(&var1));
+	}
+
+	TEST_METHOD(CloneShouldContainTheSameVariablesAsTheOriginal) {
+		BitsetIntVariable var1("var1", 0, 2);
+		BitsetIntVariable var2("var2", 0, 3);
+		SumConstraint sumConstraint({ &var1, &var2 }, 4);
+
+		auto clone = sumConstraint.clone();
+
+		Assert::IsTrue(clone->containsVariable(&var1));
+		Assert::IsTrue(clone->containsVariable(&var2));
+
+		delete clone;
+	}
+
 	};
 }
