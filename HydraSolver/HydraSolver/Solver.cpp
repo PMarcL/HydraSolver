@@ -35,16 +35,14 @@ namespace hydra {
 		propagator.setLocalConsistencyConfig(config);
 	}
 
-	void Solver::setOtherSolverHasFinished(bool boolean)
-	{
+	void Solver::setOtherSolverHasFinished(bool boolean) {
 		otherSolverHasFinished = boolean;
 	}
 
 	Solver::SolverState Solver::solve() {
 		auto nbOfEnvPush = 0;
 		do {
-			if (otherSolverHasFinished)
-			{
+			if (otherSolverHasFinished) {
 				return SOLUTION_FOUND;
 			}
 			auto result = propagator.propagate();
@@ -77,8 +75,7 @@ namespace hydra {
 					return INCONSISTENT_SOLUTION;
 				}
 				instantiatedVariable->filterValue(v);
-			}
-			else if (solveResult == RESTART) {
+			} else if (solveResult == RESTART) {
 				model->popEnvironmentNTimes(nbOfEnvPush);
 				return solveResult;
 			}

@@ -3,9 +3,11 @@
 #include "VariableSelector.h"
 #include "Solution.h"
 #include "Propagator.h"
-#include "Solver.h"
+
 
 namespace hydra {
+
+	class Solver;
 
 	class MultiAgentSolver {
 	public:
@@ -16,11 +18,6 @@ namespace hydra {
 		void setLocalConsistencyConfig(LocalConsistencyConfig config);
 
 	private:
-		std::vector<Solver> solvers;
-		Model* model;
-		VariableSelector variableSelector;
-		Propagator propagator;
-		int nbOfBacktracks;
-		std::vector<Model*> models;
+		std::vector<Solver*> solvers;
 	};
 }

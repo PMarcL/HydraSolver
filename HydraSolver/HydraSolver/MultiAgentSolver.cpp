@@ -8,13 +8,10 @@ using namespace std;
 
 namespace hydra {
 
-	MultiAgentSolver::MultiAgentSolver(int numberOfSolvers, Model* model, Heuristic heuristic, Heuristic tieBreaker)
-		: model(model), variableSelector(heuristic, tieBreaker), propagator(model->getConstraints()), nbOfBacktracks(0) {
-		solvers = vector<Solver>();
+	MultiAgentSolver::MultiAgentSolver(int numberOfSolvers, Model* model, Heuristic heuristic, Heuristic tieBreaker) : solvers(vector<Solver*>()) {
 		for (auto i = 0; i < numberOfSolvers; i++) {
-			auto *newModel = new Model(*model);
-			Solver solver(newModel, RANDOM);
-			solvers.push_back(solver);
+			auto newModel = new Model(*model);
+			solvers.push_back(new Solver(newModel, RANDOM));
 		}
 	}
 
@@ -23,7 +20,7 @@ namespace hydra {
 
 	Solution MultiAgentSolver::findSolution() {
 		//Pour tester la solution
-		return solvers[0].findSolution();
+		return solvers[0]->findSolution();
 
 
 		//		Solution sol;
@@ -57,7 +54,7 @@ namespace hydra {
 
 	void MultiAgentSolver::setLocalConsistencyConfig(LocalConsistencyConfig config) {
 		for (auto solver : solvers) {
-			solver.setLocalConsistencyConfig(config);
+			solver->setLocalConsistencyConfig(config);
 		}
 	}
 
