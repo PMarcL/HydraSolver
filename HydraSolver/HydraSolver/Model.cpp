@@ -2,6 +2,8 @@
 #include "Constraint.h"
 #include "Variable.h"
 #include "VariableUtils.h"
+#include "Solver.h"
+#include "omp.h"
 
 using namespace std;
 
@@ -125,5 +127,4 @@ namespace hydra {
 			}
 		}
 	}
-
 } // namespace hydra

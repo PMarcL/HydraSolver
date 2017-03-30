@@ -7,6 +7,7 @@ namespace hydra {
 
 	class Constraint;
 	class Variable;
+	class Solution;
 
 	class Model {
 	public:
@@ -33,6 +34,7 @@ namespace hydra {
 
 		Model(const Model&);
 		Model& operator=(const Model&);
+		//Solution parallelize();
 	private:
 		void updateAttributesWithModel(const Model&);
 

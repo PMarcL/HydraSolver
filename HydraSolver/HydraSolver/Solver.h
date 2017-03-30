@@ -10,10 +10,12 @@ namespace hydra {
 
 	class Solver {
 	public:
+		//Solution parallelize();
 		explicit Solver(Model* model, Heuristic heuristic = SMALLEST_DOMAIN, Heuristic tieBreaker = RANDOM);
 
 		Solution findSolution();
 		void setLocalConsistencyConfig(LocalConsistencyConfig config);
+		void setOtherSolverHasFinished(bool boolean);
 
 	private:
 		enum SolverState {
@@ -33,6 +35,7 @@ namespace hydra {
 		int nbOfBacktracks;
 		int nbOfRestarts;
 		int maxNbOfBacktracks;
+		bool otherSolverHasFinished = false;
 	};
 
 } // namespace hydra

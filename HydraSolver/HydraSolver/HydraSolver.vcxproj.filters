@@ -50,6 +50,7 @@
     <ClCompile Include="VariableUtils.cpp">
       <Filter>variables</Filter>
     </ClCompile>
+    <ClCompile Include="pSolver.cpp" />
     <ClCompile Include="AllDiffBoundsFilter.cpp">
       <Filter>constraints</Filter>
     </ClCompile>
@@ -103,6 +104,7 @@
     <ClInclude Include="VariableUtils.h">
       <Filter>variables</Filter>
     </ClInclude>
+    <ClInclude Include="pSolver.h" />
     <ClInclude Include="AllDiffBoundsFilter.h">
       <Filter>constraints</Filter>
     </ClInclude>
