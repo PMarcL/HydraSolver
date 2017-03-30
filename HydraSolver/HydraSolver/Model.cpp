@@ -127,35 +127,4 @@ namespace hydra {
 			}
 		}
 	}
-	/*Solution Model::parallelize() {
-		Solution sol;
-		std::vector<Solution> vsols;
-		//bool fini = false;
-		Model modeln(*this);
-		Solver solver(&modeln);
-		sol = solver.findSolution();
-		int position = 0;
-
-#pragma omp parallel shared(fini)
-		{
-			int tid = omp_get_thread_num();
-			printf("%d   ", tid);
-			Model modeln(*this);
-			Solver solver(&modeln);
-			sol = solver.findSolution();
-#pragma omp critical
-			{
-				vsols[position] = sol;
-				position += 1;
-			}
-
-
-
-		}
-
-		return sol;
-
-
-	}*/
-
 } // namespace hydra

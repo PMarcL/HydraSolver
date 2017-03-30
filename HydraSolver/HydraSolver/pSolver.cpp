@@ -1,6 +1,5 @@
 #include "pSolver.h"
 #include "Model.h"
-#include "Variable.h"
 #include "Solver.h"
 #include <iostream>
 #include <string>
@@ -14,9 +13,7 @@ namespace hydra {
 		solvers = std::vector<Solver>();
 		for (int i = 0; i < numberOfSolvers; i++)
 		{
-			Model *newModel = new Model();
-			*newModel = *model;
-			models.push_back(newModel);
+			Model *newModel = new Model(*model);
 			Solver solver(newModel, hydra::RANDOM);
 			solvers.push_back(solver);
 		}
@@ -25,39 +22,41 @@ namespace hydra {
 
 	pSolver::~pSolver()
 	{
-		//		for (Model* mod : models) {
-		//			delete[]  mod;
-		//		}
 	}
 
 	Solution pSolver::findSolution() {
-		Solution sol;
-		int position = 0;
+
+		//Pour tester la solution
+		return solvers[0].findSolution();
 
 
-		// Valeur temporaire à zéro, on teste pour 1 seul solver
-		// Il va faire un findSolution sur chaque solver du vector dans différent thread
-		//sol = solvers[0].findSolution();
-		//return sol;
-		size_t sizevsols = solvers.size();
-		std::vector<Solution> vsols(sizevsols);
-		std::vector<Solution> vsolsf(sizevsols);
+		//		Solution sol;
+		//		int position = 0;
 
-#pragma omp parallel for
-		for (int i = 0; i < solvers.size(); i++)
-		{
+		//		size_t sizevsols = solvers.size();
+		//		std::vector<Solution> vsols(sizevsols);
+		//		std::vector<Solution> vsolsf(sizevsols);
 
-			vsols[i] = solvers[i].findSolution();
-#pragma omp critical
-			{
-				vsolsf[position] = vsols[i];
-				position += 1;
-			}
+		//#pragma omp parallel for
+		//		for (int i = 0; i < solvers.size(); i++)
+		//		{
+		//
+		//			vsols[i] = solvers[i].findSolution();
+		//#pragma omp critical
+		//			{
+		//				vsolsf[position] = vsols[i];
+		//				position += 1;
+		//				for (Solver& solver : solvers) {
+		//					solver.setOtherSolverHasFinished(true);
+		//				}
+		//			}
 
-		}
-		std::cout << vsolsf[0].getFormattedSolution() << std::endl;
-		std::cout << vsolsf[1].getFormattedSolution() << std::endl;
-		return vsolsf[2];
+		//		}
+		//		std::cout << vsolsf[0].getFormattedSolution() << std::endl;
+		//		std::cout << vsolsf[1].getFormattedSolution() << std::endl;
+		//		std::cout << vsolsf[2].getFormattedSolution() << std::endl;
+		//		std::cout << vsolsf[3].getFormattedSolution() << std::endl;
+		//		return vsolsf[4];
 	}
 
 	void pSolver::setLocalConsistencyConfig(LocalConsistencyConfig config) {
