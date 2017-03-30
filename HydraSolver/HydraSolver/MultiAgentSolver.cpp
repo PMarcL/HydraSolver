@@ -1,31 +1,27 @@
-#include "pSolver.h"
+#include "MultiAgentSolver.h"
 #include "Model.h"
 #include "Solver.h"
 #include <iostream>
 #include <string>
 
+using namespace std;
+
 namespace hydra {
 
-
-
-	pSolver::pSolver(int numberOfSolvers, Model* model, Heuristic heuristic, Heuristic tieBreaker)
+	MultiAgentSolver::MultiAgentSolver(int numberOfSolvers, Model* model, Heuristic heuristic, Heuristic tieBreaker)
 		: model(model), variableSelector(heuristic, tieBreaker), propagator(model->getConstraints()), nbOfBacktracks(0) {
-		solvers = std::vector<Solver>();
-		for (int i = 0; i < numberOfSolvers; i++)
-		{
-			Model *newModel = new Model(*model);
-			Solver solver(newModel, hydra::RANDOM);
+		solvers = vector<Solver>();
+		for (auto i = 0; i < numberOfSolvers; i++) {
+			auto *newModel = new Model(*model);
+			Solver solver(newModel, RANDOM);
 			solvers.push_back(solver);
 		}
 	}
 
-
-	pSolver::~pSolver()
-	{
+	MultiAgentSolver::~MultiAgentSolver() {
 	}
 
-	Solution pSolver::findSolution() {
-
+	Solution MultiAgentSolver::findSolution() {
 		//Pour tester la solution
 		return solvers[0].findSolution();
 
@@ -59,8 +55,8 @@ namespace hydra {
 		//		return vsolsf[4];
 	}
 
-	void pSolver::setLocalConsistencyConfig(LocalConsistencyConfig config) {
-		for (Solver& solver : solvers) {
+	void MultiAgentSolver::setLocalConsistencyConfig(LocalConsistencyConfig config) {
+		for (auto solver : solvers) {
 			solver.setLocalConsistencyConfig(config);
 		}
 	}

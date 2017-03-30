@@ -50,7 +50,6 @@
     <ClCompile Include="VariableUtils.cpp">
       <Filter>variables</Filter>
     </ClCompile>
-    <ClCompile Include="pSolver.cpp" />
     <ClCompile Include="AllDiffBoundsFilter.cpp">
       <Filter>constraints</Filter>
     </ClCompile>
@@ -58,6 +57,7 @@
       <Filter>constraints</Filter>
     </ClCompile>
     <ClCompile Include="TimeLogger.cpp" />
+    <ClCompile Include="MultiAgentSolver.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Model.h" />
@@ -104,7 +104,6 @@
     <ClInclude Include="VariableUtils.h">
       <Filter>variables</Filter>
     </ClInclude>
-    <ClInclude Include="pSolver.h" />
     <ClInclude Include="AllDiffBoundsFilter.h">
       <Filter>constraints</Filter>
     </ClInclude>
@@ -118,6 +117,7 @@
       <Filter>constraints</Filter>
     </ClInclude>
     <ClInclude Include="TimeLogger.h" />
+    <ClInclude Include="MultiAgentSolver.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="constraints">
