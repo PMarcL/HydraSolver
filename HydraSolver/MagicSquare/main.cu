@@ -5,7 +5,7 @@
 #include <iostream>
 #include <string>
 
-const int N = 4;
+const int N = 6;
 const int SUM = N * (N * N + 1) / 2;
 
 int main() {
@@ -44,7 +44,7 @@ int main() {
 	//auto solution = solver.findSolution();
 
 
-	auto psolver = hydra::pSolver(1, &model, hydra::RANDOM);
+	auto psolver = hydra::pSolver(3, &model, hydra::RANDOM);
 	psolver.setLocalConsistencyConfig(hydra::BOUND_CONSISTENCY);
 	auto solution = psolver.findSolution();
 

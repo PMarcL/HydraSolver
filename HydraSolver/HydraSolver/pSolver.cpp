@@ -2,6 +2,8 @@
 #include "Model.h"
 #include "Variable.h"
 #include "Solver.h"
+#include <iostream>
+#include <string>
 
 namespace hydra {
 
@@ -12,7 +14,9 @@ namespace hydra {
 		solvers = std::vector<Solver>();
 		for (int i = 0; i < numberOfSolvers; i++)
 		{
-			Model *newModel = model;
+			Model *newModel = new Model();
+			*newModel = *model;
+			models.push_back(newModel);
 			Solver solver(newModel, hydra::RANDOM);
 			solvers.push_back(solver);
 		}
@@ -21,31 +25,39 @@ namespace hydra {
 
 	pSolver::~pSolver()
 	{
+		//		for (Model* mod : models) {
+		//			delete[]  mod;
+		//		}
 	}
 
 	Solution pSolver::findSolution() {
 		Solution sol;
-		//int position = 0;
+		int position = 0;
 
 
 		// Valeur temporaire à zéro, on teste pour 1 seul solver
 		// Il va faire un findSolution sur chaque solver du vector dans différent thread
-		sol = solvers[0].findSolution();
-		return sol;
-		std::vector<Solution> vsols;
-		/*
-#pragma omp parallel
+		//sol = solvers[0].findSolution();
+		//return sol;
+		size_t sizevsols = solvers.size();
+		std::vector<Solution> vsols(sizevsols);
+		std::vector<Solution> vsolsf(sizevsols);
+
+#pragma omp parallel for
+		for (int i = 0; i < solvers.size(); i++)
 		{
-			Model modeln(*model);
-			Solver solver(&modeln);
-			sol = solver.findSolution();
+
+			vsols[i] = solvers[i].findSolution();
 #pragma omp critical
 			{
-				vsols[position] = sol;
+				vsolsf[position] = vsols[i];
 				position += 1;
 			}
+
 		}
-		return vsols[0];*/
+		std::cout << vsolsf[0].getFormattedSolution() << std::endl;
+		std::cout << vsolsf[1].getFormattedSolution() << std::endl;
+		return vsolsf[2];
 	}
 
 	void pSolver::setLocalConsistencyConfig(LocalConsistencyConfig config) {

@@ -23,6 +23,6 @@ namespace hydra {
 		VariableSelector variableSelector;
 		Propagator propagator;
 		int nbOfBacktracks;
-
+		std::vector<Model*> models;
 	};
 }
