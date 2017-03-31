@@ -7,7 +7,8 @@ using namespace std;
 namespace hydra {
 
 	BinaryArithmeticConstraint::BinaryArithmeticConstraint(Variable* var1, Variable* var2, int result, Operator op, RelationalOperator relop) :
-		Constraint({ var1, var2 }), var1(var1), var2(var2), rhs(result), op(op), relop(relop), operation(getOperation(op, relop)), gpuFilter(nullptr) {
+		Constraint({ var1, var2 }), var1(var1), var2(var2), rhs(result), op(op), relop(relop), operation(getOperation(op, relop)), gpuFilter(nullptr),
+		timelogger("BinaryArithmeticConstraint") {
 		gpuFilter = new BinaryArithmeticIncrementalGPUFilter(static_cast<BitsetIntVariable*>(var1), static_cast<BitsetIntVariable*>(var2), op, relop, rhs);
 	}
 
@@ -22,7 +23,7 @@ namespace hydra {
 	vector<Variable*> BinaryArithmeticConstraint::filterBounds() {
 		satisfied = true;
 		vector<Variable*> filteredVariables;
-
+		timelogger.tic();
 		if (useGPU) {
 			filteredVariables = gpuFilter->filterBoundsGPU();
 		} else {
@@ -38,7 +39,7 @@ namespace hydra {
 		if (var1->cardinality() == 0 || var2->cardinality() == 0) {
 			satisfied = false;
 		}
-
+		timelogger.toc();
 		return filteredVariables;
 	}
 

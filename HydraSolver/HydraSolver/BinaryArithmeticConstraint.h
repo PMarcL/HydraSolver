@@ -3,6 +3,7 @@
 #include "Constraint.h"
 #include "BinaryArithmeticConstraintUtils.cuh"
 #include <functional>
+#include "TimeLogger.h"
 
 namespace hydra {
 
@@ -30,6 +31,7 @@ namespace hydra {
 		RelationalOperator relop;
 		std::function<bool(int, int)> operation;
 		BinaryArithmeticIncrementalGPUFilter *gpuFilter;
+		TimeLogger timelogger;
 	};
 
 } // namespace hydra

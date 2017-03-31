@@ -8,4 +8,4 @@ void launchFilteringKernels(
 	int lowerBoundSum,
 	int upperBoundSum,
 	int originalLowerBound,
-	std::vector<bool>* bitSetPtr);
+	std::vector<uint8_t>* bitSetPtr);
