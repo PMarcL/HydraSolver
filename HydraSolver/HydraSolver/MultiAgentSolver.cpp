@@ -1,7 +1,6 @@
 #include "MultiAgentSolver.h"
 #include "Model.h"
 #include "Solver.h"
-#include <iostream>
 #include <string>
 
 using namespace std;

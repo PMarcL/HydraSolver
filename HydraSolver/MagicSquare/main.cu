@@ -1,7 +1,6 @@
 #include "Model.h"
 #include "MultiAgentSolver.h"
 #include "ConstraintUtils.h"
-#include "Solver.h"
 #include <iostream>
 #include <string>
 
@@ -37,10 +36,6 @@ int main() {
 	}
 	model.postConstraint(CreateSumConstraint(diagonal1, SUM));
 	model.postConstraint(CreateSumConstraint(diagonal2, SUM));
-
-//	auto solver = hydra::Solver(&model, hydra::RANDOM);
-//	solver.setLocalConsistencyConfig(hydra::BOUND_CONSISTENCY);
-//	auto solution = solver.findSolution();
 
 	auto psolver = hydra::MultiAgentSolver(5, &model, hydra::RANDOM);
 	psolver.setLocalConsistencyConfig(hydra::BOUND_CONSISTENCY);
