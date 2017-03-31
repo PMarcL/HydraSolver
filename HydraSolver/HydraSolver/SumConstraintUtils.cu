@@ -3,6 +3,7 @@
 #include "SumConstraint.h"
 #include "cuda_runtime.h"
 #include "device_launch_parameters.h"
+#include <iostream>
 
 void launchFilteringKernels(
 	int nKernel,
@@ -12,10 +13,11 @@ void launchFilteringKernels(
 	int originalLowerBound,
 	std::vector<bool>* bitSetPtr) {
 
-	bool* deviceBitSetPtr;
-	cudaMalloc((void**)&deviceBitSetPtr, bitSetPtr->size() * sizeof(bool));
-	cudaMemcpy(deviceBitSetPtr, bitSetPtr, bitSetPtr->size() * sizeof(bool), cudaMemcpyHostToDevice);
+	uint8_t* deviceBitSetPtr;
+	cudaMalloc((void**)&deviceBitSetPtr, bitSetPtr->size());
+	cudaMemcpy(deviceBitSetPtr, bitSetPtr, bitSetPtr->size(), cudaMemcpyHostToDevice);
 
+	std::cout << "sum: " << sum << " lowerBoundSum: " << lowerBoundSum << " upperBoundSum: " << upperBoundSum << std::endl;
 	filterVariableKernel << < 1, nKernel >> > (
 		sum,
 		lowerBoundSum,
@@ -24,6 +26,6 @@ void launchFilteringKernels(
 		deviceBitSetPtr
 		);
 
-	cudaMemcpy(deviceBitSetPtr, bitSetPtr, bitSetPtr->size() * sizeof(bool), cudaMemcpyDeviceToHost);
+	cudaMemcpy(bitSetPtr, deviceBitSetPtr, bitSetPtr->size(), cudaMemcpyDeviceToHost);
 
 }

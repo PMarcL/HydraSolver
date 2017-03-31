@@ -6,6 +6,7 @@
 #include <list>
 #include <unordered_set>
 #include <unordered_map>
+#include <iostream>
 
 using namespace std;
 
@@ -27,15 +28,13 @@ namespace hydra {
 	}
 
 	vector<Variable*> SumConstraint::filterBounds() {
-		/* if (useGPU) {
+		if (useGPU) {
 			// TODO Assert variables are bitsets
-			vector<BitsetIntVariable*> result = GPUBoundsFilteringAlgorithm();
-			// cast back to Variable pointers
-			return vector<Variable*>(result.begin(), result.end());
+			return GPUBoundsFilteringAlgorithm();
 		}
-		else { */
-		return CPUBoundsFilteringAlgorithm();
-		//}
+		else {
+			return CPUBoundsFilteringAlgorithm();
+		}
 	}
 
 	bool SumConstraint::isSatisfied() const {
@@ -96,8 +95,8 @@ namespace hydra {
 		return modifiedVariables;
 	}
 
-	vector<BitsetIntVariable*> SumConstraint::GPUBoundsFilteringAlgorithm() {
-		vector<BitsetIntVariable*> modifiedVariables;
+	vector<Variable*> SumConstraint::GPUBoundsFilteringAlgorithm() {
+		vector<Variable*> modifiedVariables;
 		satisfied = true;
 		auto lowerBoundSum = 0;
 		auto upperBoundSum = 0;
@@ -111,15 +110,23 @@ namespace hydra {
 			auto bitsetVariableI = static_cast<BitsetIntVariable*>(variables[i]);
 			lowerBoundSum -= bitsetVariableI->getLowerBound();
 			upperBoundSum -= bitsetVariableI->getUpperBound();
+			auto oldLowerBound = bitsetVariableI->getLowerBound();
+			auto oldUpperBound = bitsetVariableI->getUpperBound();
 
-			auto nKernel = bitsetVariableI->getUpperBound() - bitsetVariableI->getLowerBound();
+			auto nKernel = bitsetVariableI->getUpperBound() - bitsetVariableI->getLowerBound() + 1;
 			auto bitSetPtr = bitsetVariableI->getBitSet();
 			launchFilteringKernels(nKernel, sum, lowerBoundSum, upperBoundSum, bitsetVariableI->getOriginalLowerBound(), bitSetPtr);
 			bitsetVariableI->updateLowerBound();
 			bitsetVariableI->updateUpperBound();
 
-			lowerBoundSum += variables[i]->getLowerBound();
-			upperBoundSum += variables[i]->getUpperBound();
+			if (oldLowerBound != bitsetVariableI->getLowerBound() || oldUpperBound != bitsetVariableI->getUpperBound()) {
+				modifiedVariables.push_back(static_cast<Variable*>(bitsetVariableI));
+				cout << "Variable filtree par le gpu" << endl;
+			}
+			satisfied = satisfied && bitsetVariableI->cardinality() != 0;
+
+			lowerBoundSum += bitsetVariableI->getLowerBound();
+			upperBoundSum += bitsetVariableI->getUpperBound();
 		}
 		return modifiedVariables;
 	}

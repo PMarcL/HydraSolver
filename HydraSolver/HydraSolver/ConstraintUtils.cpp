@@ -6,8 +6,8 @@ using namespace std;
 
 namespace hydra {
 
-	Constraint* CreateSumConstraint(const vector<Variable*>& variables, int sum) {
-		return new SumConstraint(variables, sum);
+	Constraint* CreateSumConstraint(const vector<Variable*>& variables, int sum, bool useGPU) {
+		return new SumConstraint(variables, sum, useGPU);
 	}
 
 	Constraint* CreateAllDifferentConstraint(const vector<Variable*>& variables) {

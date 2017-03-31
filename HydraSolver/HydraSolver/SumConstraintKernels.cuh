@@ -8,5 +8,5 @@ __global__ void filterVariableKernel(
 	int lowerBoundSum,
 	int upperBoundSum,
 	int offset,
-	bool* pBitset
+	uint8_t* pBitset
 );

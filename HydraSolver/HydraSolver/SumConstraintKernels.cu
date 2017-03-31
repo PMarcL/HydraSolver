@@ -9,11 +9,12 @@ __global__ void filterVariableKernel(
 	int lowerBoundSum,
 	int upperBoundSum,
 	int offset,
-	bool* pBitset
+	uint8_t* pBitset
 ) {
 	int value = threadIdx.x + offset;
 	lowerBoundSum += value;
 	upperBoundSum += value;
-	pBitset[threadIdx.x] = pBitset[threadIdx.x] && !(sum < lowerBoundSum || sum > upperBoundSum);
+	bool hasSupport = !(sum < lowerBoundSum || sum > upperBoundSum);
+	pBitset[threadIdx.x] = pBitset[threadIdx.x] && hasSupport;
 	return;
 }

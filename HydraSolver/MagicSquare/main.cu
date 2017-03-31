@@ -4,7 +4,7 @@
 #include <iostream>
 #include <string>
 
-const int N = 8;
+const int N = 3;
 const int SUM = N * (N * N + 1) / 2;
 
 int main() {
@@ -28,13 +28,13 @@ int main() {
 	std::vector<hydra::Variable*> diagonal1;
 	std::vector<hydra::Variable*> diagonal2;
 	for (auto i = 0; i < N; i++) {
-		model.postConstraint(CreateSumConstraint(lines[i], SUM));
-		model.postConstraint(CreateSumConstraint(columns[i], SUM));
+		model.postConstraint(CreateSumConstraint(lines[i], SUM, true));
+		model.postConstraint(CreateSumConstraint(columns[i], SUM, true));
 		diagonal1.push_back(lines[i][i]);
 		diagonal2.push_back(lines[N - i - 1][i]);
 	}
-	model.postConstraint(CreateSumConstraint(diagonal1, SUM));
-	model.postConstraint(CreateSumConstraint(diagonal2, SUM));
+	model.postConstraint(CreateSumConstraint(diagonal1, SUM, true));
+	model.postConstraint(CreateSumConstraint(diagonal2, SUM, true));
 
 	auto solver = hydra::Solver(&model, hydra::RANDOM);
 	solver.setLocalConsistencyConfig(hydra::BOUND_CONSISTENCY);
