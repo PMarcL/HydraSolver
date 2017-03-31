@@ -7,7 +7,6 @@ namespace hydra {
 
 	class Constraint;
 	class Variable;
-	class Solution;
 
 	class Model {
 	public:
