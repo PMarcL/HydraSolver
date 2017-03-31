@@ -16,40 +16,36 @@ namespace hydra {
 	}
 
 	MultiAgentSolver::~MultiAgentSolver() {
+		for (auto solver : solvers) {
+			delete solver;
+		}
+		solvers.clear();
 	}
 
 	Solution MultiAgentSolver::findSolution() {
-		//Pour tester la solution
-		return solvers[0]->findSolution();
+		auto position = 0;
+		auto sizevsols = solvers.size();
+		vector<Solution> vsols(sizevsols);
+		vector<Solution> vsolsf(sizevsols);
 
-
-		//		Solution sol;
-		//		int position = 0;
-
-		//		size_t sizevsols = solvers.size();
-		//		std::vector<Solution> vsols(sizevsols);
-		//		std::vector<Solution> vsolsf(sizevsols);
-
-		//#pragma omp parallel for
-		//		for (int i = 0; i < solvers.size(); i++)
-		//		{
-		//
-		//			vsols[i] = solvers[i].findSolution();
-		//#pragma omp critical
-		//			{
-		//				vsolsf[position] = vsols[i];
-		//				position += 1;
-		//				for (Solver& solver : solvers) {
-		//					solver.setOtherSolverHasFinished(true);
-		//				}
-		//			}
-
-		//		}
-		//		std::cout << vsolsf[0].getFormattedSolution() << std::endl;
-		//		std::cout << vsolsf[1].getFormattedSolution() << std::endl;
-		//		std::cout << vsolsf[2].getFormattedSolution() << std::endl;
-		//		std::cout << vsolsf[3].getFormattedSolution() << std::endl;
-		//		return vsolsf[4];
+#pragma omp parallel for
+		for (size_t i = 0; i < solvers.size(); i++) {
+			vsols[i] = solvers[i]->findSolution();
+#pragma omp critical
+			{
+				vsolsf[position] = vsols[i];
+				position += 1;
+				Solver::setOtherSolverHasFinished(true);
+			}
+		}
+		Solution solutionFound({}, false, nullptr);
+		for (auto solution : vsolsf) {
+			if (solution.isConsistent()) {
+				solutionFound = solution;
+				break;
+			}
+		}
+		return solutionFound;
 	}
 
 	void MultiAgentSolver::setLocalConsistencyConfig(LocalConsistencyConfig config) {

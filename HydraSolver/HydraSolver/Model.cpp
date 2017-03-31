@@ -2,12 +2,14 @@
 #include "Constraint.h"
 #include "Variable.h"
 #include "VariableUtils.h"
-#include "Solver.h"
-#include "omp.h"
 
 using namespace std;
 
 namespace hydra {
+
+	Model::Model(const Model& model) {
+		updateAttributesWithModel(model);
+	}
 
 	Model::Model(const string& name) : name(name) {
 	}
@@ -92,10 +94,6 @@ namespace hydra {
 
 	string Model::getName() const {
 		return name;
-	}
-
-	Model::Model(const Model& model) {
-		updateAttributesWithModel(model);
 	}
 
 	Model& Model::operator=(const Model& model) {

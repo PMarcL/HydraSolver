@@ -39,6 +39,7 @@ namespace hydra {
 
 	void AllDifferent::replaceVariable(Variable* varToReplace, Variable* replacement) {
 		Constraint::replaceVariable(varToReplace, replacement);
+		boundsFilter->replaceVariable(varToReplace, replacement);
 		for (size_t i = 0; i < variables.size(); i++) {
 			if (variables[i] == varToReplace) {
 				variables[i] = replacement;

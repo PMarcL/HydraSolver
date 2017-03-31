@@ -8,6 +8,8 @@ using namespace chrono;
 
 namespace hydra {
 
+	bool Solver::otherSolverHasFinished = false;
+
 	Solver::Solver(Model* model, Heuristic heuristic, Heuristic tieBreaker)
 		: model(model), variableSelector(heuristic, tieBreaker), propagator(model->getConstraints()), solution(Solution({}, false, model)),
 		nbOfBacktracks(0), nbOfRestarts(0), maxNbOfBacktracks(1) {
@@ -42,9 +44,6 @@ namespace hydra {
 	Solver::SolverState Solver::solve() {
 		auto nbOfEnvPush = 0;
 		do {
-			if (otherSolverHasFinished) {
-				return SOLUTION_FOUND;
-			}
 			auto result = propagator.propagate();
 			model->pushEnvironment();
 			nbOfEnvPush++;
@@ -79,7 +78,7 @@ namespace hydra {
 				model->popEnvironmentNTimes(nbOfEnvPush);
 				return solveResult;
 			}
-		} while (!solution.isConsistent());
+		} while (!solution.isConsistent() && !otherSolverHasFinished);
 		return SOLUTION_FOUND;
 	}
 } // namespace hydra

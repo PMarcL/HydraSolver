@@ -14,7 +14,8 @@ namespace hydra {
 
 		Solution findSolution();
 		void setLocalConsistencyConfig(LocalConsistencyConfig config);
-		void setOtherSolverHasFinished(bool boolean);
+
+		static void setOtherSolverHasFinished(bool boolean);
 
 	private:
 		enum SolverState {
@@ -34,7 +35,7 @@ namespace hydra {
 		int nbOfBacktracks;
 		int nbOfRestarts;
 		int maxNbOfBacktracks;
-		bool otherSolverHasFinished = false;
+		static bool otherSolverHasFinished;
 	};
 
 } // namespace hydra

@@ -4,7 +4,6 @@
 #include "Solution.h"
 #include "Propagator.h"
 
-
 namespace hydra {
 
 	class Solver;
