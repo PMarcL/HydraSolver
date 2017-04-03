@@ -22,7 +22,6 @@ namespace hydra {
 	private:
 		std::function<bool(int, int)> getOperation(Operator op, RelationalOperator relop);
 		bool filterVariableDomain(Variable* varToFilter, Variable* otherVar) const;
-		bool filterVariableBounds(Variable* varToFilter, Variable* otherVar) const;
 
 		Variable* var1;
 		Variable* var2;

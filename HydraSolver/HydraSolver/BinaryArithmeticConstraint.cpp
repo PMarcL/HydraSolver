@@ -65,30 +65,70 @@ namespace hydra {
 		return filteredVariables;
 	}
 
-	bool BinaryArithmeticConstraint::filterVariableBounds(Variable* varToFilter, Variable* otherVar) const {
-		auto variableWasFiltered = false;
-
-		auto iterator = varToFilter->iterator();
-		while (iterator->hasNextValue()) {
-			auto currentValue = iterator->next();
-			if (!operation(currentValue, otherVar->getLowerBound()) && !operation(currentValue, otherVar->getUpperBound())) {
-				varToFilter->filterValue(currentValue);
-				variableWasFiltered = true;
-			}
-		}
-		return variableWasFiltered;
-	}
-
 	vector<Variable*> BinaryArithmeticConstraint::filterDomains() {
 		satisfied = true;
 		vector<Variable*> filteredVariables;
 
-		if (filterVariableDomain(var1, var2)) {
-			filteredVariables.push_back(var1);
-		}
+		if (useGPU) {
+			filteredVariables = gpuFilter->filterDomainGPU();
+		} else {
+			// domain filtering for var1
+			auto var1WasFiltered = false;
+			auto iteratorV1 = var1->iterator();
+			while (iteratorV1->hasNextValue()) {
+				auto currentV1Value = iteratorV1->next();
+				auto valueHasSupport = false;
 
-		if (var1->cardinality() != 0 && filterVariableDomain(var2, var1)) {
-			filteredVariables.push_back(var2);
+				auto iteratorV2 = var2->iterator();
+				while (iteratorV2->hasNextValue()) {
+					auto currentV2Value = iteratorV2->next();
+					if (operation(currentV1Value, currentV2Value)) {
+						valueHasSupport = true;
+						break;
+					}
+				}
+				delete iteratorV2;
+				if (!valueHasSupport) {
+					var1->filterValue(currentV1Value);
+					var1WasFiltered = true;
+				}
+			}
+			delete iteratorV1;
+
+			if (var1WasFiltered) {
+				filteredVariables.push_back(var1);
+			}
+
+			if (var1->cardinality() == 0) {
+				satisfied = false;
+				return filteredVariables;
+			}
+			// domain filtering for var2
+			auto var2WasFiltered = false;
+			auto iteratorV2 = var2->iterator();
+			while (iteratorV2->hasNextValue()) {
+				auto currentV2Value = iteratorV2->next();
+				auto valueHasSupport = false;
+
+				iteratorV1 = var1->iterator();
+				while (iteratorV1->hasNextValue()) {
+					auto currentV1Value = iteratorV1->next();
+					if (operation(currentV1Value, currentV2Value)) {
+						valueHasSupport = true;
+						break;
+					}
+				}
+				delete iteratorV1;
+				if (!valueHasSupport) {
+					var2->filterValue(currentV2Value);
+					var2WasFiltered = true;
+				}
+			}
+			delete iteratorV2;
+
+			if (var2WasFiltered) {
+				filteredVariables.push_back(var2);
+			}
 		}
 
 		if (var1->cardinality() == 0 || var2->cardinality() == 0) {

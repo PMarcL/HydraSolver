@@ -35,6 +35,14 @@ namespace hydra {
 		cudaMalloc((void**)&deviceVar2_ub, sizeof(int));
 		cudaMemcpy(deviceVar2_ub, &var2_ub, sizeof(int), cudaMemcpyHostToDevice);
 
+		unsigned int size = var1->getOriginalSize();
+		cudaMalloc((void**)&deviceVar1_size, sizeof(unsigned int));
+		cudaMemcpy(deviceVar1_size, &size, sizeof(unsigned int), cudaMemcpyHostToDevice);
+
+		size = var2->getOriginalSize();
+		cudaMalloc((void**)&deviceVar2_size, sizeof(unsigned int));
+		cudaMemcpy(deviceVar2_size, &size, sizeof(unsigned int), cudaMemcpyHostToDevice);
+
 		auto sizeVar1 = var1->getOriginalSize();
 		bitset_host_var1 = (uint8_t *)malloc(sizeVar1);
 		cudaMalloc((void **)&bitset_device_var1, sizeVar1);
@@ -43,8 +51,8 @@ namespace hydra {
 		bitset_host_var2 = (uint8_t *)malloc(sizeVar2);
 		cudaMalloc((void **)&bitset_device_var2, sizeVar2);
 
-		//cudaMalloc((void**)bitset_matrix_var1, sizeVar1 * sizeVar2 * sizeof(uint8_t));
-		//cudaMalloc((void**)bitset_matrix_var2, sizeVar2 * sizeVar1 * sizeof(uint8_t));
+		cudaMalloc((void**)&bitset_matrix_var1, sizeVar1 * sizeVar2 * sizeof(uint8_t));
+		cudaMalloc((void**)&bitset_matrix_var2, sizeVar2 * sizeVar1 * sizeof(uint8_t));
 	}
 
 	BinaryArithmeticIncrementalGPUFilter::~BinaryArithmeticIncrementalGPUFilter() {
@@ -65,8 +73,8 @@ namespace hydra {
 		updateVar2DeviceAttributes();
 		vector<Variable*> filteredVariables;
 
-		auto valueIsFirst = true;
-		cudaMemcpyToSymbol("valueIsFirst", &valueIsFirst, sizeof(bool));
+		auto valueIsFirst_host = true;
+		cudaMemcpy(&valueIsFirst, &valueIsFirst_host, sizeof(bool), cudaMemcpyHostToDevice);
 		if (filterVariableBounds(var1, deviceVar2_lb, deviceVar2_ub, deviceVar1Original_lb, bitset_device_var1, bitset_host_var1)) {
 			filteredVariables.push_back(var1);
 		}
@@ -76,8 +84,8 @@ namespace hydra {
 		}
 
 		updateVar1DeviceAttributes();
-		valueIsFirst = false;
-		cudaMemcpyToSymbol("valueIsFirst", &valueIsFirst, sizeof(bool));
+		valueIsFirst_host = false;
+		cudaMemcpy(&valueIsFirst, &valueIsFirst_host, sizeof(bool), cudaMemcpyHostToDevice);
 		if (filterVariableBounds(var2, deviceVar1_lb, deviceVar1_ub, deviceVar2Original_lb, bitset_device_var2, bitset_host_var2)) {
 			filteredVariables.push_back(var2);
 		}
@@ -206,10 +214,16 @@ namespace hydra {
 		return var->mergeBitset(bitset_host);
 	}
 
-	vector<Variable*> BinaryArithmeticIncrementalGPUFilter::filterDomainGPU() {
+	vector<Variable*> BinaryArithmeticIncrementalGPUFilter::filterDomainGPU() const {
 		vector<Variable*> filteredVariables;
-		cudaMemcpy(bitset_device_var2, &(var2->getBitset()), var2->getOriginalSize(), cudaMemcpyHostToDevice);
-		if (filterVariableDomain(var1, var2, deviceVar1Original_lb, bitset_device_var1, bitset_device_var2, bitset_host_var1, bitset_matrix_var1)) {
+
+		auto valueIsFirst = true;
+		bool *var1IsFirst;
+		cudaMalloc((void**)&var1IsFirst, sizeof(bool));
+		cudaMemcpy(var1IsFirst, &valueIsFirst, sizeof(bool), cudaMemcpyHostToDevice);
+		cudaMemcpy(bitset_device_var2, var2->getBitset().data(), var2->getOriginalSize() * sizeof(uint8_t), cudaMemcpyHostToDevice);
+		if (filterVariableDomain(var1, var2, deviceVar1Original_lb, deviceVar2Original_lb, deviceVar2_size, bitset_device_var1,
+			bitset_device_var2, bitset_host_var1, bitset_matrix_var1, var1IsFirst)) {
 			filteredVariables.push_back(var1);
 		}
 
@@ -217,20 +231,24 @@ namespace hydra {
 			return filteredVariables;
 		}
 
-		cudaMemcpy(bitset_device_var1, &(var1->getBitset()), var1->getOriginalSize(), cudaMemcpyHostToDevice);
-		if (filterVariableDomain(var2, var1, deviceVar2Original_lb, bitset_device_var2, bitset_device_var1, bitset_host_var2, bitset_matrix_var2)) {
+		valueIsFirst = false;
+		cudaMemcpy(var1IsFirst, &valueIsFirst, sizeof(bool), cudaMemcpyHostToDevice);
+		cudaMemcpy(bitset_device_var1, var1->getBitset().data(), var1->getOriginalSize() * sizeof(uint8_t), cudaMemcpyHostToDevice);
+		if (filterVariableDomain(var2, var1, deviceVar2Original_lb, deviceVar1Original_lb, deviceVar1_size, bitset_device_var2,
+			bitset_device_var1, bitset_host_var2, bitset_matrix_var2, var1IsFirst)) {
 			filteredVariables.push_back(var2);
 		}
-
 		return filteredVariables;
 	}
 
-	bool BinaryArithmeticIncrementalGPUFilter::filterVariableDomain(BitsetIntVariable* var1, BitsetIntVariable* var2, int *originalLowerBound,
-		uint8_t *bitsetDeviceVar1, uint8_t *bitsetDeviceVar2, uint8_t *bitsetHostVar1, uint8_t *bitsetMatrix) {
+	bool BinaryArithmeticIncrementalGPUFilter::filterVariableDomain(BitsetIntVariable* var1, BitsetIntVariable* var2, int *var1OriginalLowerBound, int *var2OriginalLowerBound,
+		unsigned int *var2Size, uint8_t *bitsetDeviceVar1, uint8_t *bitsetDeviceVar2, uint8_t *bitsetHostVar1, uint8_t *bitset_matrix, bool *varIsFirst) const {
 		unsigned int sizeVar1 = var1->getOriginalSize();
 		unsigned int sizeVar2 = var2->getOriginalSize();
-		dim3 dimBlock(sizeVar1, sizeVar2);
+		dim3 dimBlock(sizeVar2, sizeVar1);
 
+		filterDomainMINUS_NEQ << <1, dimBlock >> > (device_rhs, var2Size, var1OriginalLowerBound, var2OriginalLowerBound, bitsetDeviceVar2, bitset_matrix, varIsFirst);
+		sumMatrixRows << <1, sizeVar1 >> > (bitset_matrix, var2Size, bitsetDeviceVar1);
 
 		cudaMemcpy(bitsetHostVar1, bitsetDeviceVar1, sizeVar1, cudaMemcpyDeviceToHost);
 		return var1->mergeBitset(bitsetHostVar1);

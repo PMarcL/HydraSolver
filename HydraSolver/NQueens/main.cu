@@ -4,7 +4,7 @@
 #include "ConstraintUtils.h"
 #include "Solver.h"
 
-const int N = 10;
+const int N = 8;
 
 int main() {
 	hydra::Model model(std::to_string(N) + "-Queens");
@@ -27,7 +27,7 @@ int main() {
 	}
 
 	auto solver = hydra::Solver(&model, hydra::RANDOM);
-	solver.setLocalConsistencyConfig(hydra::BOUND_CONSISTENCY);
+	solver.setLocalConsistencyConfig(hydra::DOMAIN_CONSISTENCY);
 
 	auto solution = solver.findSolution();
 	std::cout << solution.getFormattedSolution() << std::endl;
