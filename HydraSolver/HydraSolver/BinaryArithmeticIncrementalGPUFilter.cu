@@ -1,4 +1,4 @@
-#include "BinaryArithmeticConstraintUtils.cuh"
+#include "BinaryArithmeticIncrementalGPUFilter.cuh"
 #include "BinaryArithmeticConstraint.h"
 #include "Variable.h"
 #include "BitsetIntVariable.h"

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Constraint.h"
-#include "BinaryArithmeticConstraintUtils.cuh"
+#include "BinaryArithmeticIncrementalGPUFilter.cuh"
 #include <functional>
 #include "TimeLogger.h"
 

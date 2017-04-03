@@ -157,14 +157,14 @@ copy "$(CudaToolkitBinDir)\cudart*.dll" "$(OutDir)"</Command>
     </CudaCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <CudaCompile Include="BinaryArithmeticConstraintUtils.cu" />
+    <CudaCompile Include="BinaryArithmeticIncrementalGPUFilter.cu" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AllDiffBoundsFilter.h" />
     <ClInclude Include="AllDifferent.h" />
     <ClInclude Include="AllDifferentUtils.h" />
     <ClInclude Include="BinaryArithmeticConstraint.h" />
-    <ClInclude Include="BinaryArithmeticConstraintUtils.cuh" />
+    <ClInclude Include="BinaryArithmeticIncrementalGPUFilter.cuh" />
     <ClInclude Include="BinaryArithmeticKernels.cuh" />
     <ClInclude Include="BitsetIntVariable.h" />
     <ClInclude Include="Constraint.h" />
