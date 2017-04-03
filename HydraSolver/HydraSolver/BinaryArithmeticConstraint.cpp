@@ -27,11 +27,33 @@ namespace hydra {
 		if (useGPU) {
 			filteredVariables = gpuFilter->filterBoundsGPU();
 		} else {
-			if (filterVariableBounds(var1, var2)) {
+			auto var1WasFiltered = false;
+
+			auto iterator = var1->iterator();
+			while (iterator->hasNextValue()) {
+				auto currentValue = iterator->next();
+				if (!operation(currentValue, var2->getLowerBound()) && !operation(currentValue, var2->getUpperBound())) {
+					var1->filterValue(currentValue);
+					var1WasFiltered = true;
+				}
+			}
+			delete iterator;
+			if (var1WasFiltered) {
 				filteredVariables.push_back(var1);
 			}
 
-			if (var1->cardinality() != 0 && filterVariableBounds(var2, var1)) {
+			auto var2WasFiltered = false;
+
+			iterator = var2->iterator();
+			while (iterator->hasNextValue()) {
+				auto currentValue = iterator->next();
+				if (!operation(var1->getLowerBound(), currentValue) && !operation(var1->getUpperBound(), currentValue)) {
+					var2->filterValue(currentValue);
+					var2WasFiltered = true;
+				}
+			}
+			delete iterator;
+			if (var2WasFiltered) {
 				filteredVariables.push_back(var2);
 			}
 		}
