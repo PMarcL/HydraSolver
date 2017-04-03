@@ -1,5 +1,5 @@
 #include "Model.h"
-#include "Solver.h"
+#include "MultiAgentSolver.h"
 #include "ConstraintUtils.h"
 #include <iostream>
 #include <string>
@@ -8,6 +8,7 @@ const int N = 4;
 const int SUM = N * (N * N + 1) / 2;
 
 int main() {
+
 	hydra::Model model("Magic Square");
 	auto lines = model.createIntVarMatrix("x", N, N, 1, N*N);
 
@@ -36,10 +37,10 @@ int main() {
 	model.postConstraint(CreateSumConstraint(diagonal1, SUM));
 	model.postConstraint(CreateSumConstraint(diagonal2, SUM));
 
-	auto solver = hydra::Solver(&model, hydra::RANDOM);
-	solver.setLocalConsistencyConfig(hydra::BOUND_CONSISTENCY);
+	auto psolver = hydra::MultiAgentSolver(5, &model, hydra::RANDOM);
+	psolver.setLocalConsistencyConfig(hydra::BOUND_CONSISTENCY);
+	auto solution = psolver.findSolution();
 
-	auto solution = solver.findSolution();
 	std::cout << solution.getFormattedSolution() << std::endl;
 
 	return 0;

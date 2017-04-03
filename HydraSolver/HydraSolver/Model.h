@@ -10,6 +10,7 @@ namespace hydra {
 
 	class Model {
 	public:
+		Model(const Model&);
 		explicit Model(const std::string& = "Model-");
 		~Model();
 
@@ -31,7 +32,6 @@ namespace hydra {
 		std::vector<Variable*> getVariables() const;
 		std::string getName() const;
 
-		Model(const Model&);
 		Model& operator=(const Model&);
 	private:
 		void updateAttributesWithModel(const Model&);

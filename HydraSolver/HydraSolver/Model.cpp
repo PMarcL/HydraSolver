@@ -7,6 +7,10 @@ using namespace std;
 
 namespace hydra {
 
+	Model::Model(const Model& model) {
+		updateAttributesWithModel(model);
+	}
+
 	Model::Model(const string& name) : name(name) {
 	}
 
@@ -92,10 +96,6 @@ namespace hydra {
 		return name;
 	}
 
-	Model::Model(const Model& model) {
-		updateAttributesWithModel(model);
-	}
-
 	Model& Model::operator=(const Model& model) {
 		updateAttributesWithModel(model);
 		return *this;
@@ -125,5 +125,4 @@ namespace hydra {
 			}
 		}
 	}
-
 } // namespace hydra
