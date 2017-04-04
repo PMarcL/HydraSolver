@@ -4,10 +4,12 @@
 #include <iostream>
 #include <string>
 
-const int N = 3;
+const int N = 8;
+const bool USE_GPU = true;
 const int SUM = N * (N * N + 1) / 2;
 
 int main() {
+	std::cout << "Solving magic square of order " << N << ". The sum should be " << SUM << ". " << std::endl;
 	hydra::Model model("Magic Square");
 	auto lines = model.createIntVarMatrix("x", N, N, 1, N*N);
 
@@ -28,15 +30,15 @@ int main() {
 	std::vector<hydra::Variable*> diagonal1;
 	std::vector<hydra::Variable*> diagonal2;
 	for (auto i = 0; i < N; i++) {
-		model.postConstraint(CreateSumConstraint(lines[i], SUM, true));
-		model.postConstraint(CreateSumConstraint(columns[i], SUM, true));
+		model.postConstraint(CreateSumConstraint(lines[i], SUM, USE_GPU));
+		model.postConstraint(CreateSumConstraint(columns[i], SUM, USE_GPU));
 		diagonal1.push_back(lines[i][i]);
 		diagonal2.push_back(lines[N - i - 1][i]);
 	}
-	model.postConstraint(CreateSumConstraint(diagonal1, SUM, true));
-	model.postConstraint(CreateSumConstraint(diagonal2, SUM, true));
+	model.postConstraint(CreateSumConstraint(diagonal1, SUM, USE_GPU));
+	model.postConstraint(CreateSumConstraint(diagonal2, SUM, USE_GPU));
 
-	auto solver = hydra::Solver(&model, hydra::RANDOM);
+	auto solver = hydra::Solver(&model, hydra::SMALLEST_DOMAIN);
 	solver.setLocalConsistencyConfig(hydra::BOUND_CONSISTENCY);
 
 	auto solution = solver.findSolution();

@@ -110,19 +110,18 @@ namespace hydra {
 			auto bitsetVariableI = static_cast<BitsetIntVariable*>(variables[i]);
 			lowerBoundSum -= bitsetVariableI->getLowerBound();
 			upperBoundSum -= bitsetVariableI->getUpperBound();
-			auto oldLowerBound = bitsetVariableI->getLowerBound();
-			auto oldUpperBound = bitsetVariableI->getUpperBound();
 
-			auto nKernel = bitsetVariableI->getUpperBound() - bitsetVariableI->getLowerBound() + 1;
-			auto bitSetPtr = bitsetVariableI->getBitSet();
+			auto nKernel = bitsetVariableI->getUpperBound() - bitsetVariableI->getOriginalLowerBound() + 1;
+			auto bitSetPtr = new vector<uint8_t>(*bitsetVariableI->getBitSet());
 			launchFilteringKernels(nKernel, sum, lowerBoundSum, upperBoundSum, bitsetVariableI->getOriginalLowerBound(), bitSetPtr);
 			bitsetVariableI->updateLowerBound();
 			bitsetVariableI->updateUpperBound();
 
-			if (oldLowerBound != bitsetVariableI->getLowerBound() || oldUpperBound != bitsetVariableI->getUpperBound()) {
+			auto modified = bitsetVariableI->mergeBitset(bitSetPtr->data());
+			if (modified) {
 				modifiedVariables.push_back(static_cast<Variable*>(bitsetVariableI));
-				cout << "Variable filtree par le gpu" << endl;
 			}
+			delete bitSetPtr;
 			satisfied = satisfied && bitsetVariableI->cardinality() != 0;
 
 			lowerBoundSum += bitsetVariableI->getLowerBound();

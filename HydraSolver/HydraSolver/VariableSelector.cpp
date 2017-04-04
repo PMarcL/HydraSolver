@@ -35,9 +35,11 @@ namespace hydra {
 			if (variable->cardinality() > 1 && smallestVariables.empty()) {
 				smallestVariables.push_back(variable);
 				minCardinality = variable->cardinality();
-			} else if (variable->cardinality() == minCardinality) {
+			}
+			else if (variable->cardinality() == minCardinality) {
 				smallestVariables.push_back(variable);
-			} else if (variable->cardinality() > 1 && variable->cardinality() < minCardinality) {
+			}
+			else if (variable->cardinality() > 1 && variable->cardinality() < minCardinality) {
 				smallestVariables.erase(smallestVariables.begin(), smallestVariables.end());
 				smallestVariables.push_back(variable);
 			}
@@ -52,7 +54,7 @@ namespace hydra {
 
 	Variable* VariableSelector::randomSelection(const vector<Variable*>& variables) {
 		auto seed = system_clock::now().time_since_epoch().count();
-		default_random_engine generator(seed);
+		default_random_engine generator(3);
 		uniform_int_distribution<size_t> distribution(0, variables.size() - 1);
 		auto index = distribution(generator);
 

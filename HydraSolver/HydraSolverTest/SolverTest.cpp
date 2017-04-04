@@ -31,6 +31,7 @@ public:
 		Logger::WriteMessage(solution.getFormattedSolution().c_str());
 	}
 
+
 	TEST_METHOD(SolverTestWithFiltering_solutionShouldAddUpTo7) {
 		auto expectedSum = 7;
 		auto var1 = new BitsetIntVariable("var1", 1, 4);
@@ -41,6 +42,25 @@ public:
 		model.postConstraint(sumConstraint);
 
 		Solver solver(&model);
+		auto solution = solver.findSolution();
+
+		Assert::IsTrue(solution.isConsistent());
+
+		Logger::WriteMessage("SolverTestWithFiltering_solutionShouldAddUpTo7 results :");
+		Logger::WriteMessage(solution.getFormattedSolution().c_str());
+	}
+
+	TEST_METHOD(SolverTestWithFiltering_solutionShouldAddUpTo7_usingGPU) {
+		auto expectedSum = 7;
+		auto var1 = new BitsetIntVariable("var1", 1, 4);
+		auto var2 = new BitsetIntVariable("var2", 3, 8);
+		Model model("Solver test - sum with bitsets");
+		model.addVariableArray({ var1, var2 });
+		auto sumConstraint = new SumConstraint({ var1, var2 }, expectedSum, true);
+		model.postConstraint(sumConstraint);
+
+		Solver solver(&model);
+		solver.setLocalConsistencyConfig(hydra::BOUND_CONSISTENCY);
 		auto solution = solver.findSolution();
 
 		Assert::IsTrue(solution.isConsistent());
@@ -69,6 +89,27 @@ public:
 		Logger::WriteMessage(solution.getFormattedSolution().c_str());
 	}
 
+	TEST_METHOD(SolverTestWithFilteringAndRandomHeuristic_solutionShouldAddUpTo21_usingGPU) {
+		auto expectedSum = 21;
+		auto var1 = new BitsetIntVariable("var1", 1, 4);
+		auto var2 = new BitsetIntVariable("var2", 3, 8);
+		auto var3 = new BitsetIntVariable("var2", 1, 2);
+		auto var4 = new BitsetIntVariable("var2", 10, 15);
+		Model model("Solver test - sum with random heuristic");
+		model.addVariableArray({ var1, var2, var3, var4 });
+		auto sumConstraint = new SumConstraint({ var1, var2, var3, var4 }, expectedSum, true);
+		model.postConstraint(sumConstraint);
+
+		Solver solver(&model, RANDOM);
+		solver.setLocalConsistencyConfig(hydra::BOUND_CONSISTENCY);
+		auto solution = solver.findSolution();
+
+		Assert::IsTrue(solution.isConsistent());
+
+		Logger::WriteMessage("SolverTestWithFilteringAndRandomHeuristic_solutionShouldAddUpTo21 results :");
+		Logger::WriteMessage(solution.getFormattedSolution().c_str());
+	}
+
 	TEST_METHOD(SolverTestWithFiltering_NoSolution) {
 		auto var1 = new BitsetIntVariable("var1", 1, 4);
 		auto var2 = new BitsetIntVariable("var2", 3, 8);
@@ -78,6 +119,24 @@ public:
 		model.postConstraint(sumConstraint);
 
 		Solver solver(&model);
+		auto solution = solver.findSolution();
+
+		Assert::IsFalse(solution.isConsistent());
+
+		Logger::WriteMessage("SolverTestWithFiltering_NoSolution results :");
+		Logger::WriteMessage(solution.getFormattedSolution().c_str());
+	}
+
+	TEST_METHOD(SolverTestWithFiltering_NoSolution_usingGPU) {
+		auto var1 = new BitsetIntVariable("var1", 1, 4);
+		auto var2 = new BitsetIntVariable("var2", 3, 8);
+		Model model("Solver test - no solution");
+		model.addVariableArray({ var1, var2 });
+		auto sumConstraint = new SumConstraint({ var1, var2 }, 13, true);
+		model.postConstraint(sumConstraint);
+
+		Solver solver(&model);
+		solver.setLocalConsistencyConfig(hydra::BOUND_CONSISTENCY);
 		auto solution = solver.findSolution();
 
 		Assert::IsFalse(solution.isConsistent());
@@ -101,6 +160,30 @@ public:
 		model.postConstraint(sumConstraint2);
 
 		Solver solver(&model);
+		auto solution = solver.findSolution();
+
+		Assert::IsTrue(solution.isConsistent());
+
+		Logger::WriteMessage("SolverTestWithMultipleConstraints results :");
+		Logger::WriteMessage(solution.getFormattedSolution().c_str());
+	}
+
+	TEST_METHOD(SolverTestWithMultipleConstraints_usingGPU) {
+		auto expectedSum1 = 21;
+		auto expectedSum2 = 4;
+		auto var1 = new BitsetIntVariable("var1", 1, 4);
+		auto var2 = new BitsetIntVariable("var2", 3, 8);
+		auto var3 = new BitsetIntVariable("var2", 1, 2);
+		auto var4 = new BitsetIntVariable("var2", 10, 15);
+		Model model("Solver test - multiple constraints");
+		model.addVariableArray({ var1, var2, var3, var4 });
+		auto sumConstraint = new SumConstraint({ var1, var2, var3, var4 }, expectedSum1, true);
+		model.postConstraint(sumConstraint);
+		auto sumConstraint2 = new SumConstraint({ var1, var2 }, expectedSum2, true);
+		model.postConstraint(sumConstraint2);
+
+		Solver solver(&model);
+		solver.setLocalConsistencyConfig(hydra::BOUND_CONSISTENCY);
 		auto solution = solver.findSolution();
 
 		Assert::IsTrue(solution.isConsistent());

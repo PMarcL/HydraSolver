@@ -14,10 +14,10 @@ void launchFilteringKernels(
 	std::vector<uint8_t>* bitSetPtr) {
 
 	uint8_t* deviceBitSetPtr;
+	int* deviceModifiedPtr;
 	cudaMalloc((void**)&deviceBitSetPtr, bitSetPtr->size() * sizeof(uint8_t));
-	cudaMemcpy(deviceBitSetPtr, bitSetPtr, bitSetPtr->size(), cudaMemcpyHostToDevice);
+	cudaMemcpy(deviceBitSetPtr, bitSetPtr->data(), bitSetPtr->size() * sizeof(uint8_t), cudaMemcpyHostToDevice);
 
-	std::cout << "sum: " << sum << " lowerBoundSum: " << lowerBoundSum << " upperBoundSum: " << upperBoundSum << std::endl;
 	filterVariableKernel << < 1, nKernel >> > (
 		sum,
 		lowerBoundSum,
@@ -26,6 +26,5 @@ void launchFilteringKernels(
 		deviceBitSetPtr
 		);
 
-	cudaMemcpy(bitSetPtr, deviceBitSetPtr, bitSetPtr->size() * sizeof(uint8_t), cudaMemcpyDeviceToHost);
-
+	cudaMemcpy(bitSetPtr->data(), deviceBitSetPtr, bitSetPtr->size() * sizeof(uint8_t), cudaMemcpyDeviceToHost);
 }
