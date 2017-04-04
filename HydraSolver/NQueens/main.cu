@@ -4,7 +4,7 @@
 #include "ConstraintUtils.h"
 #include "Solver.h"
 
-const int N = 8;
+const int N = 10;
 
 int main() {
 	hydra::Model model(std::to_string(N) + "-Queens");

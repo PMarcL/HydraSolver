@@ -120,6 +120,7 @@ namespace hydra {
 	bool BinaryArithmeticIncrementalGPUFilter::filterVariableBounds(BitsetIntVariable* var, int *lb, int *ub, int *originalLowerBound, uint8_t *bitset_device,
 		uint8_t *bitset_host, bool *valueIsFirst) const {
 		unsigned int size = var->getOriginalSize();
+		
 		switch (op) {
 		case PLUS:
 			switch (relop) {
@@ -249,7 +250,121 @@ namespace hydra {
 		unsigned int sizeVar2 = var2->getOriginalSize();
 		dim3 dimBlock(sizeVar2, sizeVar1);
 
-		filterDomainMINUS_NEQ << <1, dimBlock >> > (device_rhs, var2Size, var1OriginalLowerBound, var2OriginalLowerBound, bitsetDeviceVar2, bitset_matrix, varIsFirst);
+		switch (op) {
+		case PLUS:
+			switch (relop) {
+			case EQ:
+				filterDomainPLUS_EQ << <1, dimBlock >> > (device_rhs, var2Size, var1OriginalLowerBound, var2OriginalLowerBound,
+					bitsetDeviceVar2, bitset_matrix, varIsFirst);
+				break;
+			case NEQ:
+				filterDomainPLUS_NEQ << <1, dimBlock >> > (device_rhs, var2Size, var1OriginalLowerBound, var2OriginalLowerBound,
+					bitsetDeviceVar2, bitset_matrix, varIsFirst);
+				break;
+			case GEQ:
+				filterDomainPLUS_GEQ << <1, dimBlock >> > (device_rhs, var2Size, var1OriginalLowerBound, var2OriginalLowerBound,
+					bitsetDeviceVar2, bitset_matrix, varIsFirst);
+				break;
+			case GT:
+				filterDomainPLUS_GT << <1, dimBlock >> > (device_rhs, var2Size, var1OriginalLowerBound, var2OriginalLowerBound,
+					bitsetDeviceVar2, bitset_matrix, varIsFirst);
+				break;
+			case LEQ:
+				filterDomainPLUS_LEQ << <1, dimBlock >> > (device_rhs, var2Size, var1OriginalLowerBound, var2OriginalLowerBound,
+					bitsetDeviceVar2, bitset_matrix, varIsFirst);
+				break;
+			case LT:
+				filterDomainPLUS_LT << <1, dimBlock >> > (device_rhs, var2Size, var1OriginalLowerBound, var2OriginalLowerBound,
+					bitsetDeviceVar2, bitset_matrix, varIsFirst);
+				break;
+			}
+			break;
+		case MINUS:
+			switch (relop) {
+			case EQ:
+				filterDomainMINUS_EQ << <1, dimBlock >> > (device_rhs, var2Size, var1OriginalLowerBound, var2OriginalLowerBound,
+					bitsetDeviceVar2, bitset_matrix, varIsFirst);
+				break;
+			case NEQ:
+				filterDomainMINUS_NEQ << <1, dimBlock >> > (device_rhs, var2Size, var1OriginalLowerBound, var2OriginalLowerBound,
+					bitsetDeviceVar2, bitset_matrix, varIsFirst);
+				break;
+			case GEQ:
+				filterDomainMINUS_GEQ << <1, dimBlock >> > (device_rhs, var2Size, var1OriginalLowerBound, var2OriginalLowerBound,
+					bitsetDeviceVar2, bitset_matrix, varIsFirst);
+				break;
+			case GT:
+				filterDomainMINUS_GT << <1, dimBlock >> > (device_rhs, var2Size, var1OriginalLowerBound, var2OriginalLowerBound,
+					bitsetDeviceVar2, bitset_matrix, varIsFirst);
+				break;
+			case LEQ:
+				filterDomainMINUS_LEQ << <1, dimBlock >> > (device_rhs, var2Size, var1OriginalLowerBound, var2OriginalLowerBound,
+					bitsetDeviceVar2, bitset_matrix, varIsFirst);
+				break;
+			case LT:
+				filterDomainMINUS_LT << <1, dimBlock >> > (device_rhs, var2Size, var1OriginalLowerBound, var2OriginalLowerBound,
+					bitsetDeviceVar2, bitset_matrix, varIsFirst);
+				break;
+			}
+			break;
+		case MULTIPLIES:
+			switch (relop) {
+			case EQ:
+				filterDomainMULTIPLIES_EQ << <1, dimBlock >> > (device_rhs, var2Size, var1OriginalLowerBound, var2OriginalLowerBound,
+					bitsetDeviceVar2, bitset_matrix, varIsFirst);
+				break;
+			case NEQ:
+				filterDomainMULTIPLIES_NEQ << <1, dimBlock >> > (device_rhs, var2Size, var1OriginalLowerBound, var2OriginalLowerBound,
+					bitsetDeviceVar2, bitset_matrix, varIsFirst);
+				break;
+			case GEQ:
+				filterDomainMULTIPLIES_GEQ << <1, dimBlock >> > (device_rhs, var2Size, var1OriginalLowerBound, var2OriginalLowerBound,
+					bitsetDeviceVar2, bitset_matrix, varIsFirst);
+				break;
+			case GT:
+				filterDomainMULTIPLIES_GT << <1, dimBlock >> > (device_rhs, var2Size, var1OriginalLowerBound, var2OriginalLowerBound,
+					bitsetDeviceVar2, bitset_matrix, varIsFirst);
+				break;
+			case LEQ:
+				filterDomainMULTIPLIES_LEQ << <1, dimBlock >> > (device_rhs, var2Size, var1OriginalLowerBound, var2OriginalLowerBound,
+					bitsetDeviceVar2, bitset_matrix, varIsFirst);
+				break;
+			case LT:
+				filterDomainMULTIPLIES_LT << <1, dimBlock >> > (device_rhs, var2Size, var1OriginalLowerBound, var2OriginalLowerBound,
+					bitsetDeviceVar2, bitset_matrix, varIsFirst);
+				break;
+			}
+			break;
+		case DIVIDES:
+			switch (relop) {
+			case EQ:
+				filterDomainDIVIDES_EQ << <1, dimBlock >> > (device_rhs, var2Size, var1OriginalLowerBound, var2OriginalLowerBound,
+					bitsetDeviceVar2, bitset_matrix, varIsFirst);
+				break;
+			case NEQ:
+				filterDomainDIVIDES_NEQ << <1, dimBlock >> > (device_rhs, var2Size, var1OriginalLowerBound, var2OriginalLowerBound,
+					bitsetDeviceVar2, bitset_matrix, varIsFirst);
+				break;
+			case GEQ:
+				filterDomainDIVIDES_GEQ << <1, dimBlock >> > (device_rhs, var2Size, var1OriginalLowerBound, var2OriginalLowerBound,
+					bitsetDeviceVar2, bitset_matrix, varIsFirst);
+				break;
+			case GT:
+				filterDomainDIVIDES_GT << <1, dimBlock >> > (device_rhs, var2Size, var1OriginalLowerBound, var2OriginalLowerBound,
+					bitsetDeviceVar2, bitset_matrix, varIsFirst);
+				break;
+			case LEQ:
+				filterDomainDIVIDES_LEQ << <1, dimBlock >> > (device_rhs, var2Size, var1OriginalLowerBound, var2OriginalLowerBound,
+					bitsetDeviceVar2, bitset_matrix, varIsFirst);
+				break;
+			case LT:
+				filterDomainDIVIDES_LT << <1, dimBlock >> > (device_rhs, var2Size, var1OriginalLowerBound, var2OriginalLowerBound,
+					bitsetDeviceVar2, bitset_matrix, varIsFirst);
+				break;
+			}
+			break;
+		}
+		
 		sumMatrixRows << <1, sizeVar1 >> > (bitset_matrix, var2Size, bitsetDeviceVar1);
 
 		cudaMemcpy(bitsetHostVar1, bitsetDeviceVar1, sizeVar1, cudaMemcpyDeviceToHost);

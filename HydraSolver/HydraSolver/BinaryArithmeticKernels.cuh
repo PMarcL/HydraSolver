@@ -231,6 +231,351 @@ __global__ void sumMatrixRows(uint8_t * matrix, unsigned int * rowSize, uint8_t 
 	}
 }
 
+__global__ void filterDomainDIVIDES_GT(int *rhs, unsigned int *sizeVar1Bitset, int *originalLowerBoundVar1, int *originalLowerboundVar2,
+	uint8_t *bitsetvar2, uint8_t * matrix, bool *var1IsFirst) {
+	int row = blockIdx.y * blockDim.y + threadIdx.y;
+	int col = blockIdx.x * blockDim.x + threadIdx.x;
+	int valueVar1 = *originalLowerBoundVar1 + threadIdx.y;
+	int valueVar2 = *originalLowerboundVar2 + threadIdx.x;
+	int matrixIndex = row * (*sizeVar1Bitset) + col;
+
+	if (*var1IsFirst) {
+		matrix[matrixIndex] = bitsetvar2[col] && valueVar1 / valueVar2 > *rhs;
+	} else {
+		matrix[matrixIndex] = bitsetvar2[col] && valueVar2 / valueVar1 > *rhs;
+	}
+}
+
+__global__ void filterDomainDIVIDES_LT(int *rhs, unsigned int *sizeVar1Bitset, int *originalLowerBoundVar1, int *originalLowerboundVar2,
+	uint8_t *bitsetvar2, uint8_t * matrix, bool *var1IsFirst) {
+	int row = blockIdx.y * blockDim.y + threadIdx.y;
+	int col = blockIdx.x * blockDim.x + threadIdx.x;
+	int valueVar1 = *originalLowerBoundVar1 + threadIdx.y;
+	int valueVar2 = *originalLowerboundVar2 + threadIdx.x;
+	int matrixIndex = row * (*sizeVar1Bitset) + col;
+
+	if (*var1IsFirst) {
+		matrix[matrixIndex] = bitsetvar2[col] && valueVar1 / valueVar2 < *rhs;
+	} else {
+		matrix[matrixIndex] = bitsetvar2[col] && valueVar2 / valueVar1 < *rhs;
+	}
+}
+
+__global__ void filterDomainDIVIDES_LEQ(int *rhs, unsigned int *sizeVar1Bitset, int *originalLowerBoundVar1, int *originalLowerboundVar2,
+	uint8_t *bitsetvar2, uint8_t * matrix, bool *var1IsFirst) {
+	int row = blockIdx.y * blockDim.y + threadIdx.y;
+	int col = blockIdx.x * blockDim.x + threadIdx.x;
+	int valueVar1 = *originalLowerBoundVar1 + threadIdx.y;
+	int valueVar2 = *originalLowerboundVar2 + threadIdx.x;
+	int matrixIndex = row * (*sizeVar1Bitset) + col;
+
+	if (*var1IsFirst) {
+		matrix[matrixIndex] = bitsetvar2[col] && valueVar1 / valueVar2 <= *rhs;
+	} else {
+		matrix[matrixIndex] = bitsetvar2[col] && valueVar2 / valueVar1 <= *rhs;
+	}
+}
+
+__global__ void filterDomainDIVIDES_GEQ(int *rhs, unsigned int *sizeVar1Bitset, int *originalLowerBoundVar1, int *originalLowerboundVar2,
+	uint8_t *bitsetvar2, uint8_t * matrix, bool *var1IsFirst) {
+	int row = blockIdx.y * blockDim.y + threadIdx.y;
+	int col = blockIdx.x * blockDim.x + threadIdx.x;
+	int valueVar1 = *originalLowerBoundVar1 + threadIdx.y;
+	int valueVar2 = *originalLowerboundVar2 + threadIdx.x;
+	int matrixIndex = row * (*sizeVar1Bitset) + col;
+
+	if (*var1IsFirst) {
+		matrix[matrixIndex] = bitsetvar2[col] && valueVar1 / valueVar2 >= *rhs;
+	} else {
+		matrix[matrixIndex] = bitsetvar2[col] && valueVar2 / valueVar1 >= *rhs;
+	}
+}
+
+__global__ void filterDomainDIVIDES_EQ(int *rhs, unsigned int *sizeVar1Bitset, int *originalLowerBoundVar1, int *originalLowerboundVar2,
+	uint8_t *bitsetvar2, uint8_t * matrix, bool *var1IsFirst) {
+	int row = blockIdx.y * blockDim.y + threadIdx.y;
+	int col = blockIdx.x * blockDim.x + threadIdx.x;
+	int valueVar1 = *originalLowerBoundVar1 + threadIdx.y;
+	int valueVar2 = *originalLowerboundVar2 + threadIdx.x;
+	int matrixIndex = row * (*sizeVar1Bitset) + col;
+
+	if (*var1IsFirst) {
+		matrix[matrixIndex] = bitsetvar2[col] && valueVar1 / valueVar2 == *rhs;
+	} else {
+		matrix[matrixIndex] = bitsetvar2[col] && valueVar2 / valueVar1 == *rhs;
+	}
+}
+
+__global__ void filterDomainDIVIDES_NEQ(int *rhs, unsigned int *sizeVar1Bitset, int *originalLowerBoundVar1, int *originalLowerboundVar2,
+	uint8_t *bitsetvar2, uint8_t * matrix, bool *var1IsFirst) {
+	int row = blockIdx.y * blockDim.y + threadIdx.y;
+	int col = blockIdx.x * blockDim.x + threadIdx.x;
+	int valueVar1 = *originalLowerBoundVar1 + threadIdx.y;
+	int valueVar2 = *originalLowerboundVar2 + threadIdx.x;
+	int matrixIndex = row * (*sizeVar1Bitset) + col;
+
+	if (*var1IsFirst) {
+		matrix[matrixIndex] = bitsetvar2[col] && valueVar1 / valueVar2 != *rhs;
+	} else {
+		matrix[matrixIndex] = bitsetvar2[col] && valueVar2 / valueVar1 != *rhs;
+	}
+}
+
+__global__ void filterDomainMULTIPLIES_GT(int *rhs, unsigned int *sizeVar1Bitset, int *originalLowerBoundVar1, int *originalLowerboundVar2,
+	uint8_t *bitsetvar2, uint8_t * matrix, bool *var1IsFirst) {
+	int row = blockIdx.y * blockDim.y + threadIdx.y;
+	int col = blockIdx.x * blockDim.x + threadIdx.x;
+	int valueVar1 = *originalLowerBoundVar1 + threadIdx.y;
+	int valueVar2 = *originalLowerboundVar2 + threadIdx.x;
+	int matrixIndex = row * (*sizeVar1Bitset) + col;
+
+	if (*var1IsFirst) {
+		matrix[matrixIndex] = bitsetvar2[col] && valueVar1 * valueVar2 > *rhs;
+	} else {
+		matrix[matrixIndex] = bitsetvar2[col] && valueVar2 * valueVar1 > *rhs;
+	}
+}
+
+__global__ void filterDomainMULTIPLIES_LT(int *rhs, unsigned int *sizeVar1Bitset, int *originalLowerBoundVar1, int *originalLowerboundVar2,
+	uint8_t *bitsetvar2, uint8_t * matrix, bool *var1IsFirst) {
+	int row = blockIdx.y * blockDim.y + threadIdx.y;
+	int col = blockIdx.x * blockDim.x + threadIdx.x;
+	int valueVar1 = *originalLowerBoundVar1 + threadIdx.y;
+	int valueVar2 = *originalLowerboundVar2 + threadIdx.x;
+	int matrixIndex = row * (*sizeVar1Bitset) + col;
+
+	if (*var1IsFirst) {
+		matrix[matrixIndex] = bitsetvar2[col] && valueVar1 * valueVar2 < *rhs;
+	} else {
+		matrix[matrixIndex] = bitsetvar2[col] && valueVar2 * valueVar1 < *rhs;
+	}
+}
+
+__global__ void filterDomainMULTIPLIES_LEQ(int *rhs, unsigned int *sizeVar1Bitset, int *originalLowerBoundVar1, int *originalLowerboundVar2,
+	uint8_t *bitsetvar2, uint8_t * matrix, bool *var1IsFirst) {
+	int row = blockIdx.y * blockDim.y + threadIdx.y;
+	int col = blockIdx.x * blockDim.x + threadIdx.x;
+	int valueVar1 = *originalLowerBoundVar1 + threadIdx.y;
+	int valueVar2 = *originalLowerboundVar2 + threadIdx.x;
+	int matrixIndex = row * (*sizeVar1Bitset) + col;
+
+	if (*var1IsFirst) {
+		matrix[matrixIndex] = bitsetvar2[col] && valueVar1 * valueVar2 <= *rhs;
+	} else {
+		matrix[matrixIndex] = bitsetvar2[col] && valueVar2 * valueVar1 <= *rhs;
+	}
+}
+
+__global__ void filterDomainMULTIPLIES_GEQ(int *rhs, unsigned int *sizeVar1Bitset, int *originalLowerBoundVar1, int *originalLowerboundVar2,
+	uint8_t *bitsetvar2, uint8_t * matrix, bool *var1IsFirst) {
+	int row = blockIdx.y * blockDim.y + threadIdx.y;
+	int col = blockIdx.x * blockDim.x + threadIdx.x;
+	int valueVar1 = *originalLowerBoundVar1 + threadIdx.y;
+	int valueVar2 = *originalLowerboundVar2 + threadIdx.x;
+	int matrixIndex = row * (*sizeVar1Bitset) + col;
+
+	if (*var1IsFirst) {
+		matrix[matrixIndex] = bitsetvar2[col] && valueVar1 * valueVar2 >= *rhs;
+	} else {
+		matrix[matrixIndex] = bitsetvar2[col] && valueVar2 * valueVar1 >= *rhs;
+	}
+}
+
+__global__ void filterDomainMULTIPLIES_EQ(int *rhs, unsigned int *sizeVar1Bitset, int *originalLowerBoundVar1, int *originalLowerboundVar2,
+	uint8_t *bitsetvar2, uint8_t * matrix, bool *var1IsFirst) {
+	int row = blockIdx.y * blockDim.y + threadIdx.y;
+	int col = blockIdx.x * blockDim.x + threadIdx.x;
+	int valueVar1 = *originalLowerBoundVar1 + threadIdx.y;
+	int valueVar2 = *originalLowerboundVar2 + threadIdx.x;
+	int matrixIndex = row * (*sizeVar1Bitset) + col;
+
+	if (*var1IsFirst) {
+		matrix[matrixIndex] = bitsetvar2[col] && valueVar1 * valueVar2 == *rhs;
+	} else {
+		matrix[matrixIndex] = bitsetvar2[col] && valueVar2 * valueVar1 == *rhs;
+	}
+}
+
+__global__ void filterDomainMULTIPLIES_NEQ(int *rhs, unsigned int *sizeVar1Bitset, int *originalLowerBoundVar1, int *originalLowerboundVar2,
+	uint8_t *bitsetvar2, uint8_t * matrix, bool *var1IsFirst) {
+	int row = blockIdx.y * blockDim.y + threadIdx.y;
+	int col = blockIdx.x * blockDim.x + threadIdx.x;
+	int valueVar1 = *originalLowerBoundVar1 + threadIdx.y;
+	int valueVar2 = *originalLowerboundVar2 + threadIdx.x;
+	int matrixIndex = row * (*sizeVar1Bitset) + col;
+
+	if (*var1IsFirst) {
+		matrix[matrixIndex] = bitsetvar2[col] && valueVar1 * valueVar2 != *rhs;
+	} else {
+		matrix[matrixIndex] = bitsetvar2[col] && valueVar2 * valueVar1 != *rhs;
+	}
+}
+
+__global__ void filterDomainPLUS_GT(int *rhs, unsigned int *sizeVar1Bitset, int *originalLowerBoundVar1, int *originalLowerboundVar2,
+	uint8_t *bitsetvar2, uint8_t * matrix, bool *var1IsFirst) {
+	int row = blockIdx.y * blockDim.y + threadIdx.y;
+	int col = blockIdx.x * blockDim.x + threadIdx.x;
+	int valueVar1 = *originalLowerBoundVar1 + threadIdx.y;
+	int valueVar2 = *originalLowerboundVar2 + threadIdx.x;
+	int matrixIndex = row * (*sizeVar1Bitset) + col;
+
+	if (*var1IsFirst) {
+		matrix[matrixIndex] = bitsetvar2[col] && valueVar1 + valueVar2 > *rhs;
+	} else {
+		matrix[matrixIndex] = bitsetvar2[col] && valueVar2 + valueVar1 > *rhs;
+	}
+}
+
+__global__ void filterDomainPLUS_LT(int *rhs, unsigned int *sizeVar1Bitset, int *originalLowerBoundVar1, int *originalLowerboundVar2,
+	uint8_t *bitsetvar2, uint8_t * matrix, bool *var1IsFirst) {
+	int row = blockIdx.y * blockDim.y + threadIdx.y;
+	int col = blockIdx.x * blockDim.x + threadIdx.x;
+	int valueVar1 = *originalLowerBoundVar1 + threadIdx.y;
+	int valueVar2 = *originalLowerboundVar2 + threadIdx.x;
+	int matrixIndex = row * (*sizeVar1Bitset) + col;
+
+	if (*var1IsFirst) {
+		matrix[matrixIndex] = bitsetvar2[col] && valueVar1 + valueVar2 < *rhs;
+	} else {
+		matrix[matrixIndex] = bitsetvar2[col] && valueVar2 + valueVar1 < *rhs;
+	}
+}
+
+__global__ void filterDomainPLUS_LEQ(int *rhs, unsigned int *sizeVar1Bitset, int *originalLowerBoundVar1, int *originalLowerboundVar2,
+	uint8_t *bitsetvar2, uint8_t * matrix, bool *var1IsFirst) {
+	int row = blockIdx.y * blockDim.y + threadIdx.y;
+	int col = blockIdx.x * blockDim.x + threadIdx.x;
+	int valueVar1 = *originalLowerBoundVar1 + threadIdx.y;
+	int valueVar2 = *originalLowerboundVar2 + threadIdx.x;
+	int matrixIndex = row * (*sizeVar1Bitset) + col;
+
+	if (*var1IsFirst) {
+		matrix[matrixIndex] = bitsetvar2[col] && valueVar1 + valueVar2 <= *rhs;
+	} else {
+		matrix[matrixIndex] = bitsetvar2[col] && valueVar2 + valueVar1 <= *rhs;
+	}
+}
+
+__global__ void filterDomainPLUS_GEQ(int *rhs, unsigned int *sizeVar1Bitset, int *originalLowerBoundVar1, int *originalLowerboundVar2,
+	uint8_t *bitsetvar2, uint8_t * matrix, bool *var1IsFirst) {
+	int row = blockIdx.y * blockDim.y + threadIdx.y;
+	int col = blockIdx.x * blockDim.x + threadIdx.x;
+	int valueVar1 = *originalLowerBoundVar1 + threadIdx.y;
+	int valueVar2 = *originalLowerboundVar2 + threadIdx.x;
+	int matrixIndex = row * (*sizeVar1Bitset) + col;
+
+	if (*var1IsFirst) {
+		matrix[matrixIndex] = bitsetvar2[col] && valueVar1 + valueVar2 >= *rhs;
+	} else {
+		matrix[matrixIndex] = bitsetvar2[col] && valueVar2 + valueVar1 >= *rhs;
+	}
+}
+
+__global__ void filterDomainPLUS_EQ(int *rhs, unsigned int *sizeVar1Bitset, int *originalLowerBoundVar1, int *originalLowerboundVar2,
+	uint8_t *bitsetvar2, uint8_t * matrix, bool *var1IsFirst) {
+	int row = blockIdx.y * blockDim.y + threadIdx.y;
+	int col = blockIdx.x * blockDim.x + threadIdx.x;
+	int valueVar1 = *originalLowerBoundVar1 + threadIdx.y;
+	int valueVar2 = *originalLowerboundVar2 + threadIdx.x;
+	int matrixIndex = row * (*sizeVar1Bitset) + col;
+
+	if (*var1IsFirst) {
+		matrix[matrixIndex] = bitsetvar2[col] && valueVar1 + valueVar2 == *rhs;
+	} else {
+		matrix[matrixIndex] = bitsetvar2[col] && valueVar2 + valueVar1 == *rhs;
+	}
+}
+
+__global__ void filterDomainPLUS_NEQ(int *rhs, unsigned int *sizeVar1Bitset, int *originalLowerBoundVar1, int *originalLowerboundVar2,
+	uint8_t *bitsetvar2, uint8_t * matrix, bool *var1IsFirst) {
+	int row = blockIdx.y * blockDim.y + threadIdx.y;
+	int col = blockIdx.x * blockDim.x + threadIdx.x;
+	int valueVar1 = *originalLowerBoundVar1 + threadIdx.y;
+	int valueVar2 = *originalLowerboundVar2 + threadIdx.x;
+	int matrixIndex = row * (*sizeVar1Bitset) + col;
+
+	if (*var1IsFirst) {
+		matrix[matrixIndex] = bitsetvar2[col] && valueVar1 + valueVar2 != *rhs;
+	} else {
+		matrix[matrixIndex] = bitsetvar2[col] && valueVar2 + valueVar1 != *rhs;
+	}
+}
+
+__global__ void filterDomainMINUS_GT(int *rhs, unsigned int *sizeVar1Bitset, int *originalLowerBoundVar1, int *originalLowerboundVar2,
+	uint8_t *bitsetvar2, uint8_t * matrix, bool *var1IsFirst) {
+	int row = blockIdx.y * blockDim.y + threadIdx.y;
+	int col = blockIdx.x * blockDim.x + threadIdx.x;
+	int valueVar1 = *originalLowerBoundVar1 + threadIdx.y;
+	int valueVar2 = *originalLowerboundVar2 + threadIdx.x;
+	int matrixIndex = row * (*sizeVar1Bitset) + col;
+
+	if (*var1IsFirst) {
+		matrix[matrixIndex] = bitsetvar2[col] && valueVar1 - valueVar2 > *rhs;
+	} else {
+		matrix[matrixIndex] = bitsetvar2[col] && valueVar2 + valueVar1 > *rhs;
+	}
+}
+
+__global__ void filterDomainMINUS_LT(int *rhs, unsigned int *sizeVar1Bitset, int *originalLowerBoundVar1, int *originalLowerboundVar2,
+	uint8_t *bitsetvar2, uint8_t * matrix, bool *var1IsFirst) {
+	int row = blockIdx.y * blockDim.y + threadIdx.y;
+	int col = blockIdx.x * blockDim.x + threadIdx.x;
+	int valueVar1 = *originalLowerBoundVar1 + threadIdx.y;
+	int valueVar2 = *originalLowerboundVar2 + threadIdx.x;
+	int matrixIndex = row * (*sizeVar1Bitset) + col;
+
+	if (*var1IsFirst) {
+		matrix[matrixIndex] = bitsetvar2[col] && valueVar1 - valueVar2 < *rhs;
+	} else {
+		matrix[matrixIndex] = bitsetvar2[col] && valueVar2 + valueVar1 < *rhs;
+	}
+}
+
+__global__ void filterDomainMINUS_LEQ(int *rhs, unsigned int *sizeVar1Bitset, int *originalLowerBoundVar1, int *originalLowerboundVar2,
+	uint8_t *bitsetvar2, uint8_t * matrix, bool *var1IsFirst) {
+	int row = blockIdx.y * blockDim.y + threadIdx.y;
+	int col = blockIdx.x * blockDim.x + threadIdx.x;
+	int valueVar1 = *originalLowerBoundVar1 + threadIdx.y;
+	int valueVar2 = *originalLowerboundVar2 + threadIdx.x;
+	int matrixIndex = row * (*sizeVar1Bitset) + col;
+
+	if (*var1IsFirst) {
+		matrix[matrixIndex] = bitsetvar2[col] && valueVar1 - valueVar2 <= *rhs;
+	} else {
+		matrix[matrixIndex] = bitsetvar2[col] && valueVar2 + valueVar1 <= *rhs;
+	}
+}
+
+__global__ void filterDomainMINUS_GEQ(int *rhs, unsigned int *sizeVar1Bitset, int *originalLowerBoundVar1, int *originalLowerboundVar2,
+	uint8_t *bitsetvar2, uint8_t * matrix, bool *var1IsFirst) {
+	int row = blockIdx.y * blockDim.y + threadIdx.y;
+	int col = blockIdx.x * blockDim.x + threadIdx.x;
+	int valueVar1 = *originalLowerBoundVar1 + threadIdx.y;
+	int valueVar2 = *originalLowerboundVar2 + threadIdx.x;
+	int matrixIndex = row * (*sizeVar1Bitset) + col;
+
+	if (*var1IsFirst) {
+		matrix[matrixIndex] = bitsetvar2[col] && valueVar1 - valueVar2 >= *rhs;
+	} else {
+		matrix[matrixIndex] = bitsetvar2[col] && valueVar2 + valueVar1 >= *rhs;
+	}
+}
+
+__global__ void filterDomainMINUS_EQ(int *rhs, unsigned int *sizeVar1Bitset, int *originalLowerBoundVar1, int *originalLowerboundVar2,
+	uint8_t *bitsetvar2, uint8_t * matrix, bool *var1IsFirst) {
+	int row = blockIdx.y * blockDim.y + threadIdx.y;
+	int col = blockIdx.x * blockDim.x + threadIdx.x;
+	int valueVar1 = *originalLowerBoundVar1 + threadIdx.y;
+	int valueVar2 = *originalLowerboundVar2 + threadIdx.x;
+	int matrixIndex = row * (*sizeVar1Bitset) + col;
+
+	if (*var1IsFirst) {
+		matrix[matrixIndex] = bitsetvar2[col] && valueVar1 - valueVar2 == *rhs;
+	} else {
+		matrix[matrixIndex] = bitsetvar2[col] && valueVar2 + valueVar1 == *rhs;
+	}
+}
+
 __global__ void filterDomainMINUS_NEQ(int *rhs, unsigned int *sizeVar1Bitset, int *originalLowerBoundVar1, int *originalLowerboundVar2,
 	uint8_t *bitsetvar2, uint8_t * matrix, bool *var1IsFirst) {
 	int row = blockIdx.y * blockDim.y + threadIdx.y;
@@ -242,6 +587,6 @@ __global__ void filterDomainMINUS_NEQ(int *rhs, unsigned int *sizeVar1Bitset, in
 	if (*var1IsFirst) {
 		matrix[matrixIndex] = bitsetvar2[col] && valueVar1 - valueVar2 != *rhs;
 	} else {
-		matrix[matrixIndex] = bitsetvar2[col] && valueVar2 - valueVar1 != *rhs;
+		matrix[matrixIndex] = bitsetvar2[col] && valueVar2 + valueVar1 != *rhs;
 	}
 }
