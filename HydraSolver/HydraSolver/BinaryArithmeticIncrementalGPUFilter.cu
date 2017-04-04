@@ -74,8 +74,10 @@ namespace hydra {
 		vector<Variable*> filteredVariables;
 
 		auto valueIsFirst_host = true;
-		cudaMemcpy(&valueIsFirst, &valueIsFirst_host, sizeof(bool), cudaMemcpyHostToDevice);
-		if (filterVariableBounds(var1, deviceVar2_lb, deviceVar2_ub, deviceVar1Original_lb, bitset_device_var1, bitset_host_var1)) {
+		bool *valueIsFirst;
+		cudaMalloc((void**)&valueIsFirst, sizeof(bool));
+		cudaMemcpy(valueIsFirst, &valueIsFirst_host, sizeof(bool), cudaMemcpyHostToDevice);
+		if (filterVariableBounds(var1, deviceVar2_lb, deviceVar2_ub, deviceVar1Original_lb, bitset_device_var1, bitset_host_var1, valueIsFirst)) {
 			filteredVariables.push_back(var1);
 		}
 
@@ -85,8 +87,8 @@ namespace hydra {
 
 		updateVar1DeviceAttributes();
 		valueIsFirst_host = false;
-		cudaMemcpy(&valueIsFirst, &valueIsFirst_host, sizeof(bool), cudaMemcpyHostToDevice);
-		if (filterVariableBounds(var2, deviceVar1_lb, deviceVar1_ub, deviceVar2Original_lb, bitset_device_var2, bitset_host_var2)) {
+		cudaMemcpy(valueIsFirst, &valueIsFirst_host, sizeof(bool), cudaMemcpyHostToDevice);
+		if (filterVariableBounds(var2, deviceVar1_lb, deviceVar1_ub, deviceVar2Original_lb, bitset_device_var2, bitset_host_var2, valueIsFirst)) {
 			filteredVariables.push_back(var2);
 		}
 
@@ -116,94 +118,94 @@ namespace hydra {
 	}
 
 	bool BinaryArithmeticIncrementalGPUFilter::filterVariableBounds(BitsetIntVariable* var, int *lb, int *ub, int *originalLowerBound, uint8_t *bitset_device,
-		uint8_t *bitset_host) const {
+		uint8_t *bitset_host, bool *valueIsFirst) const {
 		unsigned int size = var->getOriginalSize();
 		switch (op) {
 		case PLUS:
 			switch (relop) {
 			case EQ:
-				filterBoundPLUS_EQ << <1, size >> > (device_rhs, lb, ub, originalLowerBound, bitset_device);
+				filterBoundPLUS_EQ << <1, size >> > (device_rhs, lb, ub, originalLowerBound, bitset_device, valueIsFirst);
 				break;
 			case NEQ:
-				filterBoundPLUS_NEQ << <1, size >> > (device_rhs, lb, ub, originalLowerBound, bitset_device);
+				filterBoundPLUS_NEQ << <1, size >> > (device_rhs, lb, ub, originalLowerBound, bitset_device, valueIsFirst);
 				break;
 			case GEQ:
-				filterBoundPLUS_GEQ << <1, size >> > (device_rhs, lb, ub, originalLowerBound, bitset_device);
+				filterBoundPLUS_GEQ << <1, size >> > (device_rhs, lb, ub, originalLowerBound, bitset_device, valueIsFirst);
 				break;
 			case GT:
-				filterBoundPLUS_GT << <1, size >> > (device_rhs, lb, ub, originalLowerBound, bitset_device);
+				filterBoundPLUS_GT << <1, size >> > (device_rhs, lb, ub, originalLowerBound, bitset_device, valueIsFirst);
 				break;
 			case LEQ:
-				filterBoundPLUS_LEQ << <1, size >> > (device_rhs, lb, ub, originalLowerBound, bitset_device);
+				filterBoundPLUS_LEQ << <1, size >> > (device_rhs, lb, ub, originalLowerBound, bitset_device, valueIsFirst);
 				break;
 			case LT:
-				filterBoundPLUS_LT << <1, size >> > (device_rhs, lb, ub, originalLowerBound, bitset_device);
+				filterBoundPLUS_LT << <1, size >> > (device_rhs, lb, ub, originalLowerBound, bitset_device, valueIsFirst);
 				break;
 			}
 			break;
 		case MINUS:
 			switch (relop) {
 			case EQ:
-				filterBoundMINUS_EQ << <1, size >> > (device_rhs, lb, ub, originalLowerBound, bitset_device);
+				filterBoundMINUS_EQ << <1, size >> > (device_rhs, lb, ub, originalLowerBound, bitset_device, valueIsFirst);
 				break;
 			case NEQ:
-				filterBoundMINUS_NEQ << <1, size >> > (device_rhs, lb, ub, originalLowerBound, bitset_device);
+				filterBoundMINUS_NEQ << <1, size >> > (device_rhs, lb, ub, originalLowerBound, bitset_device, valueIsFirst);
 				break;
 			case GEQ:
-				filterBoundMINUS_GEQ << <1, size >> > (device_rhs, lb, ub, originalLowerBound, bitset_device);
+				filterBoundMINUS_GEQ << <1, size >> > (device_rhs, lb, ub, originalLowerBound, bitset_device, valueIsFirst);
 				break;
 			case GT:
-				filterBoundMINUS_GT << <1, size >> > (device_rhs, lb, ub, originalLowerBound, bitset_device);
+				filterBoundMINUS_GT << <1, size >> > (device_rhs, lb, ub, originalLowerBound, bitset_device, valueIsFirst);
 				break;
 			case LEQ:
-				filterBoundMINUS_LEQ << <1, size >> > (device_rhs, lb, ub, originalLowerBound, bitset_device);
+				filterBoundMINUS_LEQ << <1, size >> > (device_rhs, lb, ub, originalLowerBound, bitset_device, valueIsFirst);
 				break;
 			case LT:
-				filterBoundMINUS_LT << <1, size >> > (device_rhs, lb, ub, originalLowerBound, bitset_device);
+				filterBoundMINUS_LT << <1, size >> > (device_rhs, lb, ub, originalLowerBound, bitset_device, valueIsFirst);
 				break;
 			}
 			break;
 		case MULTIPLIES:
 			switch (relop) {
 			case EQ:
-				filterBoundMULTIPLIES_EQ << <1, size >> > (device_rhs, lb, ub, originalLowerBound, bitset_device);
+				filterBoundMULTIPLIES_EQ << <1, size >> > (device_rhs, lb, ub, originalLowerBound, bitset_device, valueIsFirst);
 				break;
 			case NEQ:
-				filterBoundMULTIPLIES_NEQ << <1, size >> > (device_rhs, lb, ub, originalLowerBound, bitset_device);
+				filterBoundMULTIPLIES_NEQ << <1, size >> > (device_rhs, lb, ub, originalLowerBound, bitset_device, valueIsFirst);
 				break;
 			case GEQ:
-				filterBoundMULTIPLIES_GEQ << <1, size >> > (device_rhs, lb, ub, originalLowerBound, bitset_device);
+				filterBoundMULTIPLIES_GEQ << <1, size >> > (device_rhs, lb, ub, originalLowerBound, bitset_device, valueIsFirst);
 				break;
 			case GT:
-				filterBoundMULTIPLIES_GT << <1, size >> > (device_rhs, lb, ub, originalLowerBound, bitset_device);
+				filterBoundMULTIPLIES_GT << <1, size >> > (device_rhs, lb, ub, originalLowerBound, bitset_device, valueIsFirst);
 				break;
 			case LEQ:
-				filterBoundMULTIPLIES_LEQ << <1, size >> > (device_rhs, lb, ub, originalLowerBound, bitset_device);
+				filterBoundMULTIPLIES_LEQ << <1, size >> > (device_rhs, lb, ub, originalLowerBound, bitset_device, valueIsFirst);
 				break;
 			case LT:
-				filterBoundMULTIPLIES_LT << <1, size >> > (device_rhs, lb, ub, originalLowerBound, bitset_device);
+				filterBoundMULTIPLIES_LT << <1, size >> > (device_rhs, lb, ub, originalLowerBound, bitset_device, valueIsFirst);
 				break;
 			}
 			break;
 		case DIVIDES:
 			switch (relop) {
 			case EQ:
-				filterBoundDIVIDES_EQ << <1, size >> > (device_rhs, lb, ub, originalLowerBound, bitset_device);
+				filterBoundDIVIDES_EQ << <1, size >> > (device_rhs, lb, ub, originalLowerBound, bitset_device, valueIsFirst);
 				break;
 			case NEQ:
-				filterBoundDIVIDES_NEQ << <1, size >> > (device_rhs, lb, ub, originalLowerBound, bitset_device);
+				filterBoundDIVIDES_NEQ << <1, size >> > (device_rhs, lb, ub, originalLowerBound, bitset_device, valueIsFirst);
 				break;
 			case GEQ:
-				filterBoundDIVIDES_GEQ << <1, size >> > (device_rhs, lb, ub, originalLowerBound, bitset_device);
+				filterBoundDIVIDES_GEQ << <1, size >> > (device_rhs, lb, ub, originalLowerBound, bitset_device, valueIsFirst);
 				break;
 			case GT:
-				filterBoundDIVIDES_GT << <1, size >> > (device_rhs, lb, ub, originalLowerBound, bitset_device);
+				filterBoundDIVIDES_GT << <1, size >> > (device_rhs, lb, ub, originalLowerBound, bitset_device, valueIsFirst);
 				break;
 			case LEQ:
-				filterBoundDIVIDES_LEQ << <1, size >> > (device_rhs, lb, ub, originalLowerBound, bitset_device);
+				filterBoundDIVIDES_LEQ << <1, size >> > (device_rhs, lb, ub, originalLowerBound, bitset_device, valueIsFirst);
 				break;
 			case LT:
-				filterBoundDIVIDES_LT << <1, size >> > (device_rhs, lb, ub, originalLowerBound, bitset_device);
+				filterBoundDIVIDES_LT << <1, size >> > (device_rhs, lb, ub, originalLowerBound, bitset_device, valueIsFirst);
 				break;
 			}
 			break;

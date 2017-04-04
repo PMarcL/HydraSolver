@@ -27,7 +27,7 @@ int main() {
 	}
 
 	auto solver = hydra::Solver(&model, hydra::RANDOM);
-	solver.setLocalConsistencyConfig(hydra::DOMAIN_CONSISTENCY);
+	solver.setLocalConsistencyConfig(hydra::BOUND_CONSISTENCY);
 
 	auto solution = solver.findSolution();
 	std::cout << solution.getFormattedSolution() << std::endl;
