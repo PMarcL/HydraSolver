@@ -11,6 +11,7 @@ namespace hydra {
 
 		int getOriginalLowerBound() const;
 		size_t getOriginalSize() const;
+		const std::vector<uint8_t>& getBitset() const;
 		bool mergeBitset(uint8_t *bitset);
 
 		std::string getFormattedDomain() const override;

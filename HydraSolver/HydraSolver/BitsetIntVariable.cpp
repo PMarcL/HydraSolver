@@ -25,6 +25,11 @@ namespace hydra {
 		return bitset.size();
 	}
 
+	const vector<uint8_t>& BitsetIntVariable::getBitset() const {
+		return bitset;
+	}
+
+
 	bool BitsetIntVariable::mergeBitset(uint8_t* bitsetToMerge) {
 		auto modified = false;
 		for (size_t i = 0; i < bitset.size(); i++) {
