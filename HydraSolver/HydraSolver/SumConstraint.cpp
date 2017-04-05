@@ -52,7 +52,7 @@ namespace hydra {
 	}
 
 	Constraint* SumConstraint::clone() const {
-		return new SumConstraint(variables, sum);
+		return new SumConstraint(variables, sum, useGPU);
 	}
 
 	vector<Variable*> SumConstraint::CPUBoundsFilteringAlgorithm() {
