@@ -4,7 +4,7 @@
 #include <iostream>
 #include <string>
 
-const int N = 8;
+const int N = 9;
 const bool USE_GPU = true;
 const int SUM = N * (N * N + 1) / 2;
 
@@ -44,5 +44,6 @@ int main() {
 	auto solution = solver.findSolution();
 	std::cout << solution.getFormattedSolution() << std::endl;
 
+	std::cout << solution.isConsistent() << std::endl;
 	return 0;
 }
