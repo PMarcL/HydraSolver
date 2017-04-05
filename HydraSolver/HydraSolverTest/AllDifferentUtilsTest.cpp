@@ -131,8 +131,7 @@ public:
 				Assert::IsTrue(component.find(node2) != component.end());
 				Assert::IsTrue(component.find(node3) != component.end());
 				Assert::IsFalse(component.find(node4) != component.end());
-			}
-			else {
+			} else {
 				Assert::IsTrue(component.find(node4) != component.end());
 				Assert::IsFalse(component.find(node1) != component.end());
 				Assert::IsFalse(component.find(node2) != component.end());
@@ -210,13 +209,11 @@ public:
 				Assert::IsTrue(component.size() == 3);
 				Assert::IsTrue(component.find(node2) != component.end());
 				Assert::IsTrue(component.find(node5) != component.end());
-			}
-			else if (component.find(node3) != component.end()) {
+			} else if (component.find(node3) != component.end()) {
 				Assert::IsTrue(component.size() == 3);
 				Assert::IsTrue(component.find(node4) != component.end());
 				Assert::IsTrue(component.find(node8) != component.end());
-			}
-			else {
+			} else {
 				Assert::IsTrue(component.size() == 2);
 				Assert::IsTrue(component.find(node6) != component.end());
 				Assert::IsTrue(component.find(node7) != component.end());

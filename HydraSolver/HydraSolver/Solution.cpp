@@ -37,8 +37,7 @@ namespace hydra {
 		os << "- Complete search - ";
 		if (!isConsistent()) {
 			os << "no solution found." << endl;
-		}
-		else {
+		} else {
 			os << "solution found." << endl;
 		}
 

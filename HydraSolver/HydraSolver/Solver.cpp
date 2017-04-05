@@ -74,8 +74,7 @@ namespace hydra {
 					return INCONSISTENT_SOLUTION;
 				}
 				instantiatedVariable->filterValue(v);
-			}
-			else if (solveResult == RESTART) {
+			} else if (solveResult == RESTART) {
 				model->popEnvironmentNTimes(nbOfEnvPush);
 				return solveResult;
 			}

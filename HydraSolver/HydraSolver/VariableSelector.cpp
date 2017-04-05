@@ -35,11 +35,9 @@ namespace hydra {
 			if (variable->cardinality() > 1 && smallestVariables.empty()) {
 				smallestVariables.push_back(variable);
 				minCardinality = variable->cardinality();
-			}
-			else if (variable->cardinality() == minCardinality) {
+			} else if (variable->cardinality() == minCardinality) {
 				smallestVariables.push_back(variable);
-			}
-			else if (variable->cardinality() > 1 && variable->cardinality() < minCardinality) {
+			} else if (variable->cardinality() > 1 && variable->cardinality() < minCardinality) {
 				smallestVariables.erase(smallestVariables.begin(), smallestVariables.end());
 				smallestVariables.push_back(variable);
 			}
