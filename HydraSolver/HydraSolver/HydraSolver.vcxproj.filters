@@ -1,9 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <CudaCompile Include="BinaryArithmeticConstraintUtils.cu">
-      <Filter>constraints</Filter>
-    </CudaCompile>
     <CudaCompile Include="SumConstraintKernels.cu">
       <Filter>constraints</Filter>
     </CudaCompile>
@@ -63,6 +60,7 @@
       <Filter>constraints</Filter>
     </ClCompile>
     <ClCompile Include="TimeLogger.cpp" />
+    <ClCompile Include="MultiAgentSolver.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Model.h" />
@@ -115,9 +113,6 @@
     <ClInclude Include="BinaryArithmeticConstraint.h">
       <Filter>constraints</Filter>
     </ClInclude>
-    <ClInclude Include="BinaryArithmeticConstraintUtils.cuh">
-      <Filter>constraints</Filter>
-    </ClInclude>
     <ClInclude Include="BinaryArithmeticKernels.cuh">
       <Filter>constraints</Filter>
     </ClInclude>
@@ -128,6 +123,10 @@
       <Filter>constraints</Filter>
     </ClInclude>
     <ClInclude Include="TimeLogger.h" />
+    <ClInclude Include="MultiAgentSolver.h" />
+    <ClInclude Include="BinaryArithmeticIncrementalGPUFilter.cuh">
+      <Filter>constraints</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="constraints">
@@ -139,5 +138,10 @@
     <Filter Include="heuristics">
       <UniqueIdentifier>{87d30b01-b043-41da-bfba-2e2273063d30}</UniqueIdentifier>
     </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <CudaCompile Include="BinaryArithmeticIncrementalGPUFilter.cu">
+      <Filter>constraints</Filter>
+    </CudaCompile>
   </ItemGroup>
 </Project>

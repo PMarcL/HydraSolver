@@ -1,10 +1,10 @@
 #include "Model.h"
-#include "Solver.h"
+#include "MultiAgentSolver.h"
 #include "ConstraintUtils.h"
 #include <iostream>
 #include <string>
 
-const int N = 9;
+const int N = 8;
 const bool USE_GPU = true;
 const int SUM = N * (N * N + 1) / 2;
 
@@ -38,10 +38,14 @@ int main() {
 	model.postConstraint(CreateSumConstraint(diagonal1, SUM, USE_GPU));
 	model.postConstraint(CreateSumConstraint(diagonal2, SUM, USE_GPU));
 
-	auto solver = hydra::Solver(&model, hydra::SMALLEST_DOMAIN);
-	solver.setLocalConsistencyConfig(hydra::BOUND_CONSISTENCY);
 
-	auto solution = solver.findSolution();
+	// auto solver = hydra::Solver(&model, hydra::SMALLEST_DOMAIN);
+	// solver.setLocalConsistencyConfig(hydra::BOUND_CONSISTENCY);
+
+	auto psolver = hydra::MultiAgentSolver(5, &model, hydra::RANDOM);
+	psolver.setLocalConsistencyConfig(hydra::BOUND_CONSISTENCY);
+	auto solution = psolver.findSolution();
+
 	std::cout << solution.getFormattedSolution() << std::endl;
 
 	std::cout << solution.isConsistent() << std::endl;

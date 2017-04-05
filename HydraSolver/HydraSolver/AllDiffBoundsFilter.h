@@ -32,6 +32,7 @@ namespace hydra {
 		~AllDiffBoundsFilter();
 
 		bool filter(std::vector<Variable*>& modifiedVariables);
+		void replaceVariable(Variable* varToReplace, Variable* replacement);
 
 	private:
 		void sortit();

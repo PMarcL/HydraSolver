@@ -54,6 +54,15 @@ namespace hydra {
 		free(t);
 	}
 
+	void AllDiffBoundsFilter::replaceVariable(Variable* varToReplace, Variable* replacement) {
+		for (size_t i = 0; i < _vars.size(); i++) {
+			if (_vars[i] == varToReplace) {
+				_vars[i] = replacement;
+				break;
+			}
+		}
+	}
+
 	void sortmin(interval *v[], int n) {
 		int i, current;
 		bool sorted;

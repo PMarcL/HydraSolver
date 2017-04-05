@@ -81,6 +81,23 @@ public:
 		Assert::AreEqual(expectedSize, filteredVariables.size());
 	}
 
+	TEST_METHOD(ShouldFilterConsistentVariablesAndBeSatisfiedUsingGPUFilter) {
+		BitsetIntVariable var1("var1", 5, 6);
+		BitsetIntVariable var2("var2", 2, 2);
+		BinaryArithmeticConstraint constraint(&var1, &var2, 3, MINUS, NEQ);
+		constraint.setGPUFilteringActive();
+
+		auto filteredVariables = constraint.filterDomains();
+		size_t expectedSize = 1;
+
+		Assert::IsTrue(var1.cardinality() == 1);
+		Assert::IsTrue(var1.containsValue(6));
+		Assert::IsTrue(var2.cardinality() == 1);
+		Assert::IsTrue(var2.containsValue(2));
+		Assert::IsTrue((constraint.isSatisfied()));
+		Assert::AreEqual(expectedSize, filteredVariables.size());
+	}
+
 	TEST_METHOD(ShouldFilterInconsistentVariablesAndNotBeSatisfied) {
 		BitsetIntVariable var1("var1", 0, 2);
 		BitsetIntVariable var2("var2", 0, 3);
