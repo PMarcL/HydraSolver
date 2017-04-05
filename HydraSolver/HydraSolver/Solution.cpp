@@ -75,6 +75,7 @@ namespace hydra {
 		variables = solution.variables;
 		nbOfBacktracks = solution.nbOfBacktracks;
 		computingTime = solution.computingTime;
+		nbOfRestarts = solution.nbOfRestarts;
 		model = solution.model;
 		return *this;
 	}

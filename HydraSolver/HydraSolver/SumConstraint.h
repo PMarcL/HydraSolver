@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Constraint.h"
+#include "BitsetIntVariable.h"
 
 namespace hydra {
 
@@ -22,6 +23,7 @@ namespace hydra {
 	private:
 		std::vector<Variable*> CPUDomainFilteringAlgorithm();
 		std::vector<Variable*> CPUBoundsFilteringAlgorithm();
+		std::vector<Variable*> GPUBoundsFilteringAlgorithm();
 
 		std::vector<Variable*> variables;
 		int sum;

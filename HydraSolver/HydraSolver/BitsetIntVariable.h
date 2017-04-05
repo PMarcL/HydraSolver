@@ -3,6 +3,7 @@
 #include <vector>
 #include <stack>
 #include "Variable.h"
+#include "SumConstraint.h"
 
 namespace hydra {
 	class BitsetIntVariable : public Variable {

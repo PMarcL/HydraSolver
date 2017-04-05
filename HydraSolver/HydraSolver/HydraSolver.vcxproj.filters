@@ -1,6 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
+    <CudaCompile Include="SumConstraintKernels.cu">
+      <Filter>constraints</Filter>
+    </CudaCompile>
+    <CudaCompile Include="SumConstraintUtils.cu">
+      <Filter>constraints</Filter>
+    </CudaCompile>
+  </ItemGroup>
+  <ItemGroup>
     <ClCompile Include="Model.cpp" />
     <ClCompile Include="Constraint.cpp">
       <Filter>constraints</Filter>
@@ -15,12 +23,6 @@
     </ClCompile>
     <ClCompile Include="IllegalVariableOperationException.cpp">
       <Filter>variables</Filter>
-    </ClCompile>
-    <ClCompile Include="BitsetIntVariable.cpp">
-      <Filter>variables</Filter>
-    </ClCompile>
-    <ClCompile Include="SumConstraint.cpp">
-      <Filter>constraints</Filter>
     </ClCompile>
     <ClCompile Include="IntVariableIterator.cpp">
       <Filter>variables</Filter>
@@ -43,6 +45,12 @@
       <Filter>constraints</Filter>
     </ClCompile>
     <ClCompile Include="VariableUtils.cpp">
+      <Filter>variables</Filter>
+    </ClCompile>
+    <ClCompile Include="SumConstraint.cpp">
+      <Filter>constraints</Filter>
+    </ClCompile>
+    <ClCompile Include="BitsetIntVariable.cpp">
       <Filter>variables</Filter>
     </ClCompile>
     <ClCompile Include="AllDiffBoundsFilter.cpp">
@@ -70,12 +78,6 @@
     <ClInclude Include="IllegalVariableOperationException.h">
       <Filter>variables</Filter>
     </ClInclude>
-    <ClInclude Include="BitsetIntVariable.h">
-      <Filter>variables</Filter>
-    </ClInclude>
-    <ClInclude Include="SumConstraint.h">
-      <Filter>constraints</Filter>
-    </ClInclude>
     <ClInclude Include="IntVariableIterator.h">
       <Filter>variables</Filter>
     </ClInclude>
@@ -99,6 +101,12 @@
     <ClInclude Include="VariableUtils.h">
       <Filter>variables</Filter>
     </ClInclude>
+    <ClInclude Include="SumConstraint.h">
+      <Filter>constraints</Filter>
+    </ClInclude>
+    <ClInclude Include="BitsetIntVariable.h">
+      <Filter>variables</Filter>
+    </ClInclude>
     <ClInclude Include="AllDiffBoundsFilter.h">
       <Filter>constraints</Filter>
     </ClInclude>
@@ -106,6 +114,12 @@
       <Filter>constraints</Filter>
     </ClInclude>
     <ClInclude Include="BinaryArithmeticKernels.cuh">
+      <Filter>constraints</Filter>
+    </ClInclude>
+    <ClInclude Include="SumConstraintKernels.cuh">
+      <Filter>constraints</Filter>
+    </ClInclude>
+    <ClInclude Include="SumConstraintUtils.cuh">
       <Filter>constraints</Filter>
     </ClInclude>
     <ClInclude Include="TimeLogger.h" />

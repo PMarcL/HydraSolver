@@ -1,6 +1,7 @@
 #include "SumConstraint.h"
 #include "Variable.h"
 #include "IntVariableIterator.h"
+#include "SumConstraintUtils.cuh"
 #include <list>
 #include <unordered_set>
 #include <unordered_map>
@@ -24,6 +25,9 @@ namespace hydra {
 	}
 
 	vector<Variable*> SumConstraint::filterBounds() {
+		if (useGPU) {
+			return GPUBoundsFilteringAlgorithm();
+		}
 		return CPUBoundsFilteringAlgorithm();
 	}
 
@@ -42,7 +46,9 @@ namespace hydra {
 	}
 
 	Constraint* SumConstraint::clone() const {
-		return new SumConstraint(variables, sum);
+		auto constraint = new SumConstraint(variables, sum);
+		constraint->useGPU = useGPU;
+		return constraint;
 	}
 
 	vector<Variable*> SumConstraint::CPUBoundsFilteringAlgorithm() {
@@ -76,13 +82,43 @@ namespace hydra {
 				lowerBoundSum -= currentValue;
 				upperBoundSum -= currentValue;
 			}
-			satisfied = satisfied && variables[i]->cardinality() > 0;
+			satisfied = satisfied && variables[i]->cardinality() != 0;
 			delete iterator;
 
 			lowerBoundSum += variables[i]->getLowerBound();
 			upperBoundSum += variables[i]->getUpperBound();
 		}
+		return modifiedVariables;
+	}
 
+	vector<Variable*> SumConstraint::GPUBoundsFilteringAlgorithm() {
+		vector<Variable*> modifiedVariables;
+		satisfied = true;
+		auto lowerBoundSum = 0;
+		auto upperBoundSum = 0;
+
+		for (size_t i = 0; i < variables.size(); i++) {
+			lowerBoundSum += variables[i]->getLowerBound();
+			upperBoundSum += variables[i]->getUpperBound();
+		}
+
+		for (size_t i = 0; i < variables.size(); i++) {
+			auto bitsetVariableI = static_cast<BitsetIntVariable*>(variables[i]);
+			lowerBoundSum -= bitsetVariableI->getLowerBound();
+			upperBoundSum -= bitsetVariableI->getUpperBound();
+
+			auto bitSetPtr = new vector<uint8_t>(bitsetVariableI->getOriginalSize());
+			launchFilteringKernels(bitsetVariableI->getOriginalSize(), sum, lowerBoundSum, upperBoundSum, bitsetVariableI->getOriginalLowerBound(), bitSetPtr);
+
+			if (bitsetVariableI->mergeBitset(bitSetPtr->data())) {
+				modifiedVariables.push_back(static_cast<Variable*>(bitsetVariableI));
+			}
+			delete bitSetPtr;
+			satisfied = satisfied && bitsetVariableI->cardinality() != 0;
+
+			lowerBoundSum += bitsetVariableI->getLowerBound();
+			upperBoundSum += bitsetVariableI->getUpperBound();
+		}
 		return modifiedVariables;
 	}
 
