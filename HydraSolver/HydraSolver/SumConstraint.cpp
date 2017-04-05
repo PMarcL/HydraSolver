@@ -2,18 +2,15 @@
 #include "Variable.h"
 #include "IntVariableIterator.h"
 #include "SumConstraintUtils.cuh"
-#include "cuda_runtime.h"
 #include <list>
 #include <unordered_set>
 #include <unordered_map>
-#include <iostream>
 
 using namespace std;
 
 namespace hydra {
 
-	SumConstraint::SumConstraint(const vector<Variable*>& variables, int sum, bool pUseGPU) : Constraint(variables), variables(variables), sum(sum) {
-		useGPU = pUseGPU;
+	SumConstraint::SumConstraint(const vector<Variable*>& variables, int sum) : Constraint(variables), variables(variables), sum(sum) {
 	}
 
 	SumConstraint::~SumConstraint() {
@@ -29,12 +26,9 @@ namespace hydra {
 
 	vector<Variable*> SumConstraint::filterBounds() {
 		if (useGPU) {
-			// TODO Assert variables are bitsets
 			return GPUBoundsFilteringAlgorithm();
 		}
-		else {
-			return CPUBoundsFilteringAlgorithm();
-		}
+		return CPUBoundsFilteringAlgorithm();
 	}
 
 	bool SumConstraint::isSatisfied() const {
@@ -52,7 +46,9 @@ namespace hydra {
 	}
 
 	Constraint* SumConstraint::clone() const {
-		return new SumConstraint(variables, sum, useGPU);
+		auto constraint = new SumConstraint(variables, sum);
+		constraint->useGPU = useGPU;
+		return constraint;
 	}
 
 	vector<Variable*> SumConstraint::CPUBoundsFilteringAlgorithm() {
@@ -108,26 +104,20 @@ namespace hydra {
 
 		for (size_t i = 0; i < variables.size(); i++) {
 			auto bitsetVariableI = static_cast<BitsetIntVariable*>(variables[i]);
-			auto oldLowerBound = bitsetVariableI->getLowerBound();
-			auto oldUpperBound = bitsetVariableI->getUpperBound();
-			lowerBoundSum -= oldLowerBound;
-			upperBoundSum -= oldUpperBound;
+			lowerBoundSum -= bitsetVariableI->getLowerBound();
+			upperBoundSum -= bitsetVariableI->getUpperBound();
 
-			auto nKernel = bitsetVariableI->getUpperBound() - bitsetVariableI->getOriginalLowerBound() + 1;
-			auto bitSetPtr = new vector<uint8_t>(*bitsetVariableI->getBitSet());
-			launchFilteringKernels(nKernel, sum, lowerBoundSum, upperBoundSum, bitsetVariableI->getOriginalLowerBound(), bitSetPtr);
-			bitsetVariableI->updateLowerBound();
-			bitsetVariableI->updateUpperBound();
+			auto bitSetPtr = new vector<uint8_t>(bitsetVariableI->getOriginalSize());
+			launchFilteringKernels(bitsetVariableI->getOriginalSize(), sum, lowerBoundSum, upperBoundSum, bitsetVariableI->getOriginalLowerBound(), bitSetPtr);
 
-			auto modified = bitsetVariableI->mergeBitset(bitSetPtr->data());
-			if (modified) {
+			if (bitsetVariableI->mergeBitset(bitSetPtr->data())) {
 				modifiedVariables.push_back(static_cast<Variable*>(bitsetVariableI));
 			}
 			delete bitSetPtr;
 			satisfied = satisfied && bitsetVariableI->cardinality() != 0;
 
-			lowerBoundSum += oldLowerBound;
-			upperBoundSum += oldUpperBound;
+			lowerBoundSum += bitsetVariableI->getLowerBound();
+			upperBoundSum += bitsetVariableI->getUpperBound();
 		}
 		return modifiedVariables;
 	}
@@ -170,8 +160,7 @@ namespace hydra {
 
 					if (iteratorToNode == nodesAtThisLevel.end()) {
 						child = new TrickNode(currentNode->value + currentValue);
-					}
-					else {
+					} else {
 						child = (*iteratorToNode).second;
 					}
 
@@ -194,8 +183,7 @@ namespace hydra {
 				if (it == nodeQueue.end()) {
 					break;
 				}
-			}
-			else {
+			} else {
 				++it;
 			}
 		}

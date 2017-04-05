@@ -83,7 +83,8 @@ public:
 		BitsetIntVariable var2("var2", 1, 2);
 		auto sum = 3;
 
-		SumConstraint sumConstraint({ &var1, &var2 }, sum, true);
+		SumConstraint sumConstraint({ &var1, &var2 }, sum);
+		sumConstraint.setGPUFilteringActive();
 
 		sumConstraint.filterBounds();
 
@@ -131,7 +132,8 @@ public:
 		BitsetIntVariable var2("var2", 1, 4);
 		auto sum = 12;
 
-		SumConstraint sumConstraint({ &var1, &var2 }, sum, true);
+		SumConstraint sumConstraint({ &var1, &var2 }, sum);
+		sumConstraint.setGPUFilteringActive();
 
 		sumConstraint.filterBounds();
 
@@ -197,7 +199,8 @@ public:
 		BitsetIntVariable var2("var2", 1, 3);
 		auto sum = 4;
 
-		SumConstraint sumConstraint({ &var1, &var2 }, sum, true);
+		SumConstraint sumConstraint({ &var1, &var2 }, sum);
+		sumConstraint.setGPUFilteringActive();
 
 		sumConstraint.filterBounds();
 
@@ -226,7 +229,8 @@ public:
 		BitsetIntVariable var2("var2", 1, 3);
 		auto sum = 4;
 
-		SumConstraint sumConstraint({ &var1, &var2 }, sum, true);
+		SumConstraint sumConstraint({ &var1, &var2 }, sum);
+		sumConstraint.setGPUFilteringActive();
 
 		auto modifiedVariables = sumConstraint.filterBounds();
 
@@ -266,7 +270,8 @@ public:
 		BitsetIntVariable var4("var2", 0, 5);
 		auto sum = 14;
 
-		SumConstraint sumConstraint({ &var1, &var2, &var3, &var4 }, sum, true);
+		SumConstraint sumConstraint({ &var1, &var2, &var3, &var4 }, sum);
+		sumConstraint.setGPUFilteringActive();
 
 		sumConstraint.filterBounds();
 

@@ -27,7 +27,6 @@ namespace hydra {
 		void filterUpperBound(int newUpperBound) override;
 		int getLowerBound() const override;
 		int getUpperBound() const override;
-		std::vector<uint8_t>* getBitSet();
 		bool containsValue(int value) const override;
 		IntVariableIterator* iterator() override;
 		Variable* clone() const override;
@@ -65,7 +64,6 @@ namespace hydra {
 		void reinsertValues();
 		void updateLowerBound();
 		void updateUpperBound();
-		friend class SumConstraint; // needed for low level gpu access
 
 		std::stack<std::vector<BitsetAction>> statesStack;
 		std::vector<BitsetAction> currentRemovedValues;
@@ -73,6 +71,5 @@ namespace hydra {
 		int currentLowerBound;
 		int currentUpperBound;
 		int originalLowerBound; // needed to find index in the bitset after filtering the original lower bound
-
 	};
 } // namespace hydra

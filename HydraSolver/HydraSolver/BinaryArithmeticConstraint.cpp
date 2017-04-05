@@ -222,6 +222,7 @@ namespace hydra {
 	Constraint* BinaryArithmeticConstraint::clone() const {
 		auto clone = new BinaryArithmeticConstraint(var1, var2, rhs, MINUS, EQ);
 		clone->operation = operation;
+		clone->useGPU = useGPU;
 		return clone;
 	}
 

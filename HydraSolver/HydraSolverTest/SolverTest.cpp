@@ -31,7 +31,6 @@ public:
 		Logger::WriteMessage(solution.getFormattedSolution().c_str());
 	}
 
-
 	TEST_METHOD(SolverTestWithFiltering_solutionShouldAddUpTo7) {
 		auto expectedSum = 7;
 		auto var1 = new BitsetIntVariable("var1", 1, 4);
@@ -56,7 +55,8 @@ public:
 		auto var2 = new BitsetIntVariable("var2", 3, 8);
 		Model model("Solver test - sum with bitsets");
 		model.addVariableArray({ var1, var2 });
-		auto sumConstraint = new SumConstraint({ var1, var2 }, expectedSum, true);
+		auto sumConstraint = new SumConstraint({ var1, var2 }, expectedSum);
+		sumConstraint->setGPUFilteringActive();
 		model.postConstraint(sumConstraint);
 
 		Solver solver(&model);
@@ -97,11 +97,12 @@ public:
 		auto var4 = new BitsetIntVariable("var2", 10, 15);
 		Model model("Solver test - sum with random heuristic");
 		model.addVariableArray({ var1, var2, var3, var4 });
-		auto sumConstraint = new SumConstraint({ var1, var2, var3, var4 }, expectedSum, true);
+		auto sumConstraint = new SumConstraint({ var1, var2, var3, var4 }, expectedSum);
+		sumConstraint->setGPUFilteringActive();
 		model.postConstraint(sumConstraint);
 
 		Solver solver(&model, RANDOM);
-		solver.setLocalConsistencyConfig(hydra::BOUND_CONSISTENCY);
+		solver.setLocalConsistencyConfig(BOUND_CONSISTENCY);
 		auto solution = solver.findSolution();
 
 		Assert::IsTrue(solution.isConsistent());
@@ -132,11 +133,12 @@ public:
 		auto var2 = new BitsetIntVariable("var2", 3, 8);
 		Model model("Solver test - no solution");
 		model.addVariableArray({ var1, var2 });
-		auto sumConstraint = new SumConstraint({ var1, var2 }, 13, true);
+		auto sumConstraint = new SumConstraint({ var1, var2 }, 13);
+		sumConstraint->setGPUFilteringActive();
 		model.postConstraint(sumConstraint);
 
 		Solver solver(&model);
-		solver.setLocalConsistencyConfig(hydra::BOUND_CONSISTENCY);
+		solver.setLocalConsistencyConfig(BOUND_CONSISTENCY);
 		auto solution = solver.findSolution();
 
 		Assert::IsFalse(solution.isConsistent());
@@ -177,13 +179,15 @@ public:
 		auto var4 = new BitsetIntVariable("var2", 10, 15);
 		Model model("Solver test - multiple constraints");
 		model.addVariableArray({ var1, var2, var3, var4 });
-		auto sumConstraint = new SumConstraint({ var1, var2, var3, var4 }, expectedSum1, true);
+		auto sumConstraint = new SumConstraint({ var1, var2, var3, var4 }, expectedSum1);
+		sumConstraint->setGPUFilteringActive();
 		model.postConstraint(sumConstraint);
-		auto sumConstraint2 = new SumConstraint({ var1, var2 }, expectedSum2, true);
+		auto sumConstraint2 = new SumConstraint({ var1, var2 }, expectedSum2);
+		sumConstraint->setGPUFilteringActive();
 		model.postConstraint(sumConstraint2);
 
 		Solver solver(&model);
-		solver.setLocalConsistencyConfig(hydra::BOUND_CONSISTENCY);
+		solver.setLocalConsistencyConfig(BOUND_CONSISTENCY);
 		auto solution = solver.findSolution();
 
 		Assert::IsTrue(solution.isConsistent());
