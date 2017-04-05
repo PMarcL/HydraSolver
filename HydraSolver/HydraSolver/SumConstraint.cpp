@@ -108,8 +108,10 @@ namespace hydra {
 
 		for (size_t i = 0; i < variables.size(); i++) {
 			auto bitsetVariableI = static_cast<BitsetIntVariable*>(variables[i]);
-			lowerBoundSum -= bitsetVariableI->getLowerBound();
-			upperBoundSum -= bitsetVariableI->getUpperBound();
+			auto oldLowerBound = bitsetVariableI->getLowerBound();
+			auto oldUpperBound = bitsetVariableI->getUpperBound();
+			lowerBoundSum -= oldLowerBound;
+			upperBoundSum -= oldUpperBound;
 
 			auto nKernel = bitsetVariableI->getUpperBound() - bitsetVariableI->getOriginalLowerBound() + 1;
 			auto bitSetPtr = new vector<uint8_t>(*bitsetVariableI->getBitSet());
@@ -124,8 +126,8 @@ namespace hydra {
 			delete bitSetPtr;
 			satisfied = satisfied && bitsetVariableI->cardinality() != 0;
 
-			lowerBoundSum += bitsetVariableI->getLowerBound();
-			upperBoundSum += bitsetVariableI->getUpperBound();
+			lowerBoundSum += oldLowerBound;
+			upperBoundSum += oldUpperBound;
 		}
 		return modifiedVariables;
 	}

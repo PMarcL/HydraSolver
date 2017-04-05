@@ -37,7 +37,8 @@ namespace hydra {
 		os << "- Complete search - ";
 		if (!isConsistent()) {
 			os << "no solution found." << endl;
-		} else {
+		}
+		else {
 			os << "solution found." << endl;
 		}
 
@@ -75,6 +76,7 @@ namespace hydra {
 		variables = solution.variables;
 		nbOfBacktracks = solution.nbOfBacktracks;
 		computingTime = solution.computingTime;
+		nbOfRestarts = solution.nbOfRestarts;
 		model = solution.model;
 		return *this;
 	}

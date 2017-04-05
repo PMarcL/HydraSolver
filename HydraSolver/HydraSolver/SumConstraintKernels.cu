@@ -15,6 +15,7 @@ __global__ void filterVariableKernel(
 	lowerBoundSum += value;
 	upperBoundSum += value;
 	auto hasSupport = !(sum < lowerBoundSum || sum > upperBoundSum);
+	// printf("On filtre %i , la lowerBoundSum est %i, et uperBoundSum est %i \n", value, lowerBoundSum, upperBoundSum);
 	pBitset[threadIdx.x] = uint8_t(bool(pBitset[threadIdx.x]) && hasSupport);
 	return;
 }

@@ -4,8 +4,8 @@
 #include <iostream>
 #include <string>
 
-const int N = 3;
-const bool USE_GPU = true;
+const int N = 5;
+const bool USE_GPU = false;
 const int SUM = N * (N * N + 1) / 2;
 
 int main() {
