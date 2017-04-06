@@ -9,4 +9,5 @@ void launchFilteringKernels(int nKernel, int sum, int lowerBoundSum, int upperBo
 	filterVariableKernel << < 1, nKernel >> > (sum, lowerBoundSum, upperBoundSum, originalLowerBound, deviceBitSetPtr);
 
 	cudaMemcpy(bitSetPtr->data(), deviceBitSetPtr, bitSetPtr->size() * sizeof(uint8_t), cudaMemcpyDeviceToHost);
+	cudaFree(deviceBitSetPtr);
 }
