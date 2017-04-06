@@ -65,6 +65,10 @@ namespace hydra {
 		cudaFree(deviceVar2Original_lb);
 		cudaFree(bitset_device_var1);
 		cudaFree(bitset_device_var2);
+		cudaFree(bitset_matrix_var1);
+		cudaFree(bitset_matrix_var2);
+		cudaFree(deviceVar1_size);
+		cudaFree(deviceVar2_size);
 		free(bitset_host_var1);
 		free(bitset_host_var2);
 	}
@@ -92,6 +96,7 @@ namespace hydra {
 			filteredVariables.push_back(var2);
 		}
 
+		cudaFree(valueIsFirst);
 		return filteredVariables;
 	}
 
@@ -241,6 +246,8 @@ namespace hydra {
 			bitset_device_var1, bitset_host_var2, bitset_matrix_var2, var1IsFirst)) {
 			filteredVariables.push_back(var2);
 		}
+
+		cudaFree(var1IsFirst);
 		return filteredVariables;
 	}
 
