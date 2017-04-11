@@ -4,7 +4,7 @@
 #include "ConstraintUtils.h"
 #include "Solver.h"
 
-const int N = 8;
+const int N = 10;
 const bool USE_GPU = true;
 
 int main() {
@@ -25,7 +25,7 @@ int main() {
 	}
 
 	auto solver = hydra::Solver(&model, hydra::RANDOM);
-	solver.setLocalConsistencyConfig(hydra::BOUND_CONSISTENCY);
+	solver.setLocalConsistencyConfig(hydra::DOMAIN_CONSISTENCY);
 
 	auto solution = solver.findSolution();
 	std::cout << solution.getFormattedSolution() << std::endl;

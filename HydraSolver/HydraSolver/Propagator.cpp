@@ -30,12 +30,14 @@ namespace hydra {
 				return INCONSISTENT_STATE;
 			}
 
-			for (auto it = filteredConstraints.begin(); it != filteredConstraints.end(); ) {
-				if (any_of(modifiedVariables.begin(), modifiedVariables.end(), [it](auto var) { return (*it)->containsVariable(var); })) {
-					constraintToFilter.push_back(*it);
-					filteredConstraints.erase(it++);
-				} else {
-					++it;
+			if (!modifiedVariables.empty()) {
+				for (auto it = filteredConstraints.begin(); it != filteredConstraints.end(); ) {
+					if (any_of(modifiedVariables.begin(), modifiedVariables.end(), [it](auto var) { return (*it)->containsVariable(var); })) {
+						constraintToFilter.push_back(*it);
+						filteredConstraints.erase(it++);
+					} else {
+						++it;
+					}
 				}
 			}
 
