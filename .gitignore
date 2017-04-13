@@ -279,3 +279,4 @@ __pycache__/
 
 HydraSolver/NQueens/*.txt
 HydraSolver/MagicSquare/*.txt
+HydraSolver/BanchmarkBinaryArithmeticConstraint/*.txt

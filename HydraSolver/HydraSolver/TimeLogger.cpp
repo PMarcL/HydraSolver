@@ -1,23 +1,25 @@
 #include "TimeLogger.h"
 #include <string>
 #include <sstream>
-#include <stdlib.h>
 
 using namespace std;
 using namespace chrono;
 
 namespace hydra {
 
+	int TimeLogger::instances = 0;
+
 	TimeLogger::TimeLogger(string filename) : currentTime(high_resolution_clock::now()) {
+		instances++;
 		ostringstream os;
 		os << filename << "_";
-		os << rand() % 10000 << ".txt";
+		os << instances << ".txt";
 		file = ofstream(os.str());
 	}
 
 	TimeLogger::~TimeLogger() {
 		for (auto time : times) {
-			file << time << endl;
+			file << time.first << " " << time.second << endl;
 		}
 		file.close();
 	}
@@ -26,9 +28,9 @@ namespace hydra {
 		currentTime = high_resolution_clock::now();
 	}
 
-	void TimeLogger::toc() {
+	void TimeLogger::toc(int i) {
 		auto toc = high_resolution_clock::now();
-		times.push_back(duration_cast<microseconds>(toc - currentTime).count());
+		times.push_back(pair<long long, int>(duration_cast<microseconds>(toc - currentTime).count(), i));
 	}
 
 }

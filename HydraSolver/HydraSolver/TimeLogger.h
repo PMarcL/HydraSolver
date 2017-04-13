@@ -3,6 +3,7 @@
 #include <vector>
 #include <fstream>
 #include <chrono>
+#include <utility>
 
 namespace hydra {
 
@@ -12,12 +13,14 @@ namespace hydra {
 		~TimeLogger();
 
 		void tic();
-		void toc();
+		void toc(int = 0);
 
 	private:
+		static int instances;
+
 		std::ofstream file;
 		std::chrono::steady_clock::time_point currentTime;
-		std::vector<long long> times;
+		std::vector<std::pair<long long, int>> times;
 	};
 
 }
