@@ -13,6 +13,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MagicSquare", "MagicSquare\
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "NQueens", "NQueens\NQueens.vcxproj", "{D31CFF75-9D19-4FD2-8AA2-36A5BC3C4514}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BanchmarkBinaryArithmeticConstraint", "BanchmarkBinaryArithmeticConstraint\BanchmarkBinaryArithmeticConstraint.vcxproj", "{7F93F512-BCA0-4842-AB1C-A3D0798A4428}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -61,6 +63,14 @@ Global
 		{D31CFF75-9D19-4FD2-8AA2-36A5BC3C4514}.Release|x64.Build.0 = Release|x64
 		{D31CFF75-9D19-4FD2-8AA2-36A5BC3C4514}.Release|x86.ActiveCfg = Release|Win32
 		{D31CFF75-9D19-4FD2-8AA2-36A5BC3C4514}.Release|x86.Build.0 = Release|Win32
+		{7F93F512-BCA0-4842-AB1C-A3D0798A4428}.Debug|x64.ActiveCfg = Debug|x64
+		{7F93F512-BCA0-4842-AB1C-A3D0798A4428}.Debug|x64.Build.0 = Debug|x64
+		{7F93F512-BCA0-4842-AB1C-A3D0798A4428}.Debug|x86.ActiveCfg = Debug|Win32
+		{7F93F512-BCA0-4842-AB1C-A3D0798A4428}.Debug|x86.Build.0 = Debug|Win32
+		{7F93F512-BCA0-4842-AB1C-A3D0798A4428}.Release|x64.ActiveCfg = Release|x64
+		{7F93F512-BCA0-4842-AB1C-A3D0798A4428}.Release|x64.Build.0 = Release|x64
+		{7F93F512-BCA0-4842-AB1C-A3D0798A4428}.Release|x86.ActiveCfg = Release|Win32
+		{7F93F512-BCA0-4842-AB1C-A3D0798A4428}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
