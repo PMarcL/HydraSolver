@@ -26,7 +26,7 @@ namespace hydra {
 		auto sizevsols = solvers.size();
 		vector<Solution> vsols(sizevsols);
 		vector<Solution> vsolsf(sizevsols);
-
+		Solver::setOtherSolverHasFinished(false);
 #pragma omp parallel for
 		for (int i = 0; i < solvers.size(); i++) {
 			vsols[i] = solvers[i]->findSolution();
