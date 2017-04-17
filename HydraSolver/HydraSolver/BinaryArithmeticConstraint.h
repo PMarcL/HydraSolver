@@ -30,7 +30,6 @@ namespace hydra {
 		RelationalOperator relop;
 		std::function<bool(int, int)> operation;
 		BinaryArithmeticIncrementalGPUFilter *gpuFilter;
-		TimeLogger timelogger;
 	};
 
 } // namespace hydra
