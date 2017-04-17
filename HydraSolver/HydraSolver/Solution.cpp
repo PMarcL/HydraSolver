@@ -28,6 +28,15 @@ namespace hydra {
 		return isAConsistentSolution;
 	}
 
+	int Solution::getNumberOfBacktracks() const {
+		return nbOfBacktracks;
+	}
+
+	int Solution::getNumberOfRestarts() const {
+		return nbOfRestarts;
+	}
+
+
 	string Solution::getFormattedSolution() const {
 		ostringstream os;
 		os << "- Model - " << model->getName() << endl;

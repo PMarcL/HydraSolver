@@ -20,6 +20,8 @@ namespace hydra {
 		void setComputingtime(long long executionTime);
 		void setNumberOfBacktracks(int backtracks);
 		void setNumberOfRestarts(int restarts);
+		int getNumberOfBacktracks() const;
+		int getNumberOfRestarts() const;
 
 		Solution& operator=(const Solution& solution);
 	private:
