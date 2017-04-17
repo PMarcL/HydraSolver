@@ -39,7 +39,7 @@ int main() {
 	model.postConstraint(CreateSumConstraint(diagonal2, SUM, USE_GPU));
 
 	auto psolver = hydra::MultiAgentSolver(8, &model, hydra::RANDOM);
-	psolver.setLocalConsistencyConfig(hydra::BOUND_CONSISTENCY);
+	psolver.setLocalConsistencyConfig(hydra::INTERVAL_CONSISTENCY);
 	auto solution = psolver.findSolution();
 
 	std::cout << solution.getFormattedSolution() << std::endl;

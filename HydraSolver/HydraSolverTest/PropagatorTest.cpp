@@ -37,7 +37,7 @@ public:
 
 	TEST_METHOD(ShouldOnlyCallFilterBoundsOnPropagateWithDomainFilteringConfig) {
 		ConstraintImpl constraint;
-		Propagator propagator({ &constraint }, BOUND_CONSISTENCY);
+		Propagator propagator({ &constraint }, INTERVAL_CONSISTENCY);
 
 		propagator.propagate();
 
@@ -108,7 +108,7 @@ public:
 		BitsetIntVariable var2("var2", 1, 4);
 		SumConstraint sumConstraint({ &var1, &var2 }, 8);
 
-		Propagator propagator({ &sumConstraint }, BOUND_CONSISTENCY);
+		Propagator propagator({ &sumConstraint }, INTERVAL_CONSISTENCY);
 		auto result = propagator.propagate();
 
 		Assert::IsTrue(result == LOCAL_CONSISTENCY);
@@ -119,7 +119,7 @@ public:
 		BitsetIntVariable var2("var2", 1, 3);
 		SumConstraint sumConstraint({ &var1, &var2 }, 2);
 
-		Propagator propagator({ &sumConstraint }, BOUND_CONSISTENCY);
+		Propagator propagator({ &sumConstraint }, INTERVAL_CONSISTENCY);
 		auto result = propagator.propagate();
 
 		Assert::IsTrue(result == INCONSISTENT_STATE);

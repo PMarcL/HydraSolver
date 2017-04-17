@@ -60,7 +60,7 @@ public:
 		model.postConstraint(sumConstraint);
 
 		Solver solver(&model);
-		solver.setLocalConsistencyConfig(hydra::BOUND_CONSISTENCY);
+		solver.setLocalConsistencyConfig(hydra::INTERVAL_CONSISTENCY);
 		auto solution = solver.findSolution();
 
 		Assert::IsTrue(solution.isConsistent());
@@ -102,7 +102,7 @@ public:
 		model.postConstraint(sumConstraint);
 
 		Solver solver(&model, RANDOM);
-		solver.setLocalConsistencyConfig(BOUND_CONSISTENCY);
+		solver.setLocalConsistencyConfig(INTERVAL_CONSISTENCY);
 		auto solution = solver.findSolution();
 
 		Assert::IsTrue(solution.isConsistent());
@@ -138,7 +138,7 @@ public:
 		model.postConstraint(sumConstraint);
 
 		Solver solver(&model);
-		solver.setLocalConsistencyConfig(BOUND_CONSISTENCY);
+		solver.setLocalConsistencyConfig(INTERVAL_CONSISTENCY);
 		auto solution = solver.findSolution();
 
 		Assert::IsFalse(solution.isConsistent());
@@ -187,7 +187,7 @@ public:
 		model.postConstraint(sumConstraint2);
 
 		Solver solver(&model);
-		solver.setLocalConsistencyConfig(BOUND_CONSISTENCY);
+		solver.setLocalConsistencyConfig(INTERVAL_CONSISTENCY);
 		auto solution = solver.findSolution();
 
 		Assert::IsTrue(solution.isConsistent());

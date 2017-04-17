@@ -56,7 +56,7 @@ namespace hydra {
 			return constraint->filter();
 		case DOMAIN_CONSISTENCY:
 			return constraint->filterDomains();
-		case BOUND_CONSISTENCY:
+		case INTERVAL_CONSISTENCY:
 			return constraint->filterBounds();
 		default:
 			return constraint->filter();

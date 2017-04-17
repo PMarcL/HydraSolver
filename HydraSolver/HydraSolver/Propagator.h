@@ -8,7 +8,7 @@ namespace hydra {
 
 	enum LocalConsistencyConfig {
 		DEFAULT_FILTERING_ALGO,
-		BOUND_CONSISTENCY,
+		INTERVAL_CONSISTENCY,
 		DOMAIN_CONSISTENCY
 	};
 
